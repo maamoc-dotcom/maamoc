@@ -301,6 +301,41 @@
                         </header>
                     </article>
 
+                    <!-- 5.5 ENG OIL SERVICING -->
+                    <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition relative group">
+                        <div onclick="toggleProjectMenu('menu-starter')" 
+                             onkeypress="if(event.key==='Enter') toggleProjectMenu('menu-starter')"
+                             class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative" 
+                             tabindex="0"
+                             aria-label="Click to open menu for PNEUMATIC STARTER">
+                             
+                            <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770139005/oil_hhq1wf.png" 
+                                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1581092921461-eab62e97a783?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';"
+                                 alt="PNEUMATIC STARTER" 
+                                 class="w-full h-full object-cover transform transition duration-500 hover:scale-110" />
+
+                            <!-- Added md:group-hover:flex here -->
+                            <div id="menu-starter" onclick="event.stopPropagation()" class="hidden md:group-hover:flex absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex-col justify-center items-center space-y-2">
+                                <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbweXIls6u4khtDxFAZr3rA7jGIBkp1qQmeB5iy8accP0eyhmAOzpaoVlAqBxoME3faL/exec" target="_blank" class="w-full text-center py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-500 transition font-semibold shadow-md text-sm border border-blue-400">
+                                    <i class="fa-solid fa-file-contract mr-2"></i> REPORT FORM
+                                </a>
+                                
+                                <a href="https://docs.google.com/spreadsheets/d/1FMlo_qZ-Aon1iSTPSThb3fEEuGJewM8s3NoIP8eXCL8/edit?gid=0#gid=0" target="_blank" class="w-full text-center py-2 px-4 bg-green-600 text-white rounded hover:bg-green-500 transition font-semibold shadow-md text-sm border border-green-400">
+                                    <i class="fa-brands fa-google mr-2"></i> GOOGLE SHEET DATA
+                                </a>
+                                
+                            </div>
+                        </div>
+                        <header class="p-6">
+                            <h3 class="text-xl font-bold mb-2">ENG OIL SERVICING</h3>
+                            <p class="text-sm text-gray-400 italic mb-2 md:hidden"><i class="fa-solid fa-hand-pointer mr-1"></i> Tap the photo to see options</p>
+                            <p class="text-sm text-gray-400 italic mb-2 hidden md:block"><i class="fa-solid fa-mouse-pointer mr-1"></i> Hover to see options</p>
+                        </header>
+                    </article>
+
+
+
+                    
                     <!-- 5. PNEUMATIC STARTER -->
                     <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition relative group">
                         <div onclick="toggleProjectMenu('menu-starter')" 
@@ -416,3 +451,4 @@
     </script>
 </body>
 </html>
+
