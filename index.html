@@ -204,13 +204,13 @@
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
 <style>
-  /* Hide content by default until authenticated */
-  body { display: none; } 
+  /* ซ่อนเนื้อหาทั้งหมดไว้จนกว่าจะผ่านการเช็คชื่อ */
+  body { display: none !important; } 
 </style>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyBoHj4s99iMQLKKT8ZZHD4uTugLXlQRxWg",
@@ -226,28 +226,28 @@
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
 
+  // ตรวจสอบผลลัพธ์หลังจาก Redirect กลับมา
+  getRedirectResult(auth).catch((error) => {
+    console.error("Redirect Result Error:", error);
+  });
+
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      // *** IMPORTANT: Change "@your-org.com" to your actual organization domain ***
+      // *** เปลี่ยนตรงนี้เป็นโดเมนองค์กรของคุณ ***
       if (user.email.endsWith("@airasia.com")) {
-        console.log("Access Granted:", user.email);
-        document.body.style.display = "block"; 
+        document.body.style.display = "block"; // อนุญาตให้แสดงเว็บ
       } else {
-        alert("Access Denied: This website is restricted to organization members only.");
-        signOut(auth).then(() => {
-          window.location.reload();
-        });
+        alert("Access Denied: This site is for organization members only.");
+        signOut(auth).then(() => { window.location.replace("https://www.google.com"); });
       }
     } else {
-      document.body.style.display = "none";
-      signInWithRedirect(auth, provider).catch((error) => {
-        console.error("Authentication Error:", error);
-        alert("Please enable pop-ups for this website to sign in.");
-      });
+      // ถ้าไม่มี User ให้ส่งไปหน้า Login ของ Google ทันที (ไม่ใช่ป๊อปอัพ)
+      signInWithRedirect(auth, provider);
     }
   });
 </script>
 	</body>
 
 </html>
+
 
