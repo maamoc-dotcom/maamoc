@@ -203,14 +203,9 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
-<style>
-  /* ซ่อนเนื้อหาทั้งหมดไว้จนกว่าจะผ่านการเช็คชื่อ */
-  body { display: none !important; } 
-</style>
-
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyBoHj4s99iMQLKKT8ZZHD4uTugLXlQRxWg",
@@ -226,28 +221,35 @@
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
 
-  // ตรวจสอบผลลัพธ์หลังจาก Redirect กลับมา
-  getRedirectResult(auth).catch((error) => {
-    console.error("Redirect Result Error:", error);
+  // ตรวจสอบผลจากการ Redirect กลับมา
+  getRedirectResult(auth).then((result) => {
+    if (result?.user) {
+      console.log("Logged in as:", result.user.email);
+    }
+  }).catch((error) => {
+    console.error("Auth Error:", error);
   });
 
   onAuthStateChanged(auth, (user) => {
+    const overlay = document.getElementById('auth-overlay');
     if (user) {
-      // *** เปลี่ยนตรงนี้เป็นโดเมนองค์กรของคุณ ***
+      // *** เปลี่ยนเป็น @airasia.com ตามรูปของคุณ ***
       if (user.email.endsWith("@airasia.com")) {
-        document.body.style.display = "block"; // อนุญาตให้แสดงเว็บ
+        overlay.style.display = "none"; 
+        document.body.style.display = "block";
       } else {
-        alert("Access Denied: This site is for organization members only.");
-        signOut(auth).then(() => { window.location.replace("https://www.google.com"); });
+        alert("Access Denied: This site is for @airasia.com members only.");
+        auth.signOut().then(() => window.location.reload());
       }
     } else {
-      // ถ้าไม่มี User ให้ส่งไปหน้า Login ของ Google ทันที (ไม่ใช่ป๊อปอัพ)
-      signInWithRedirect(auth, provider);
+      overlay.style.display = "flex";
+      // ระบบจะรอให้คุณกดปุ่ม Sign in (ที่สร้างไว้ในขั้นตอนก่อนหน้า)
     }
   });
 </script>
 	</body>
 
 </html>
+
 
 
