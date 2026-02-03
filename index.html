@@ -203,6 +203,50 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+<style>
+  /* Hide content by default until authenticated */
+  body { display: none; } 
+</style>
 
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBoHj4s99iMQLKKT8ZZHD4uTugLXlQRxWg",
+    authDomain: "maa-moc.firebaseapp.com",
+    projectId: "maa-moc",
+    storageBucket: "maa-moc.firebasestorage.app",
+    messagingSenderId: "1025979944090",
+    appId: "1:1025979944090:web:4e4408870e740fa34ba323",
+    measurementId: "G-77MC6DQX0T"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth();
+  const provider = new GoogleAuthProvider();
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // *** IMPORTANT: Change "@your-org.com" to your actual organization domain ***
+      if (user.email.endsWith("@airasia.com")) {
+        console.log("Access Granted:", user.email);
+        document.body.style.display = "block"; 
+      } else {
+        alert("Access Denied: This website is restricted to organization members only.");
+        signOut(auth).then(() => {
+          window.location.reload();
+        });
+      }
+    } else {
+      document.body.style.display = "none";
+      signInWithPopup(auth, provider).catch((error) => {
+        console.error("Authentication Error:", error);
+        alert("Please enable pop-ups for this website to sign in.");
+      });
+    }
+  });
+</script>
 	</body>
+
 </html>
