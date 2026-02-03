@@ -1,224 +1,400 @@
-<!DOCTYPE HTML>
-<!--
-	Prologue by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAA ENGINEERING LINK HUB</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-		<title>MAA ENGINEERING LINK HUB</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-	</head>
-	<body class="is-preload">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        .sidebar-bg {
+            background-color: #222629;
+            background-image: url('https://res.cloudinary.com/dzgov6mcu/image/upload/v1770112701/Gemini_Generated_Image_avn34iavn34iavn3_k2ry12.png');
+            background-blend-mode: overlay;
+            background-size: cover;
+            background-position: center; 
+        }
+        .dark-overlay {
+            background-color: rgba(0, 0, 0, 0.75);
+        }
+        
+        /* Animation สำหรับเมนูเลื่อนขึ้น */
+        @keyframes slide-up {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .animate-slide-up {
+            animation: slide-up 0.3s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-600 bg-white flex flex-col md:flex-row">
 
-		<!-- Header -->
-			<div id="header">
+    <!-- MOBILE MENU BUTTON -->
+    <button id="mobile-menu-btn" class="fixed top-4 left-4 z-[60] text-white bg-gray-800 bg-opacity-80 p-3 rounded-md md:hidden hover:bg-gray-700 transition shadow-lg border border-gray-600">
+        <i class="fa-solid fa-bars text-xl"></i>
+    </button>
 
-				<div class="top">
+    <!-- SIDEBAR -->
+    <div id="header" class="fixed inset-y-0 left-0 w-64 h-screen sidebar-bg text-white shadow-2xl z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
+        <div class="dark-overlay w-full h-full p-6 flex flex-col justify-between overflow-y-auto">
+            
+            <div class="text-right flex flex-col items-end">
+                <div class="mb-4">
+                    <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770126241/logomaa_wwii3a.png" 
+                         alt="MAA Logo" 
+                         class="w-16 h-16 rounded-full border-2 border-gray-500 ml-auto object-cover">
+                </div>
+                <h1 class="text-xl font-bold leading-tight">MAA</h1>
+                <h1 class="text-xl font-bold leading-tight text-gray-300">ENGINEERING</h1>
+                <h1 class="text-xs font-light tracking-widest mt-1 text-gray-400">MOC LINKS HUB</h1>
+                <p class="text-[10px] text-green-400 mt-2 font-mono"><i class="fa-solid fa-signal"></i> New Episode</p>
+            </div>
 
-					<!-- Logo -->
-						<div id="logo">
-							<span class="image avatar48"><img src="images/avatar.jpg" alt="" /></span>
-							<h1 id="title">MAA</h1>
-							<h1 id="title">ENGINEERING</h1>
-							<h1 id="title">MOC LINKS HUB</h1>
-							<p>New Episode</p>
-						</div>
+            <!-- Navigation -->
+            <nav class="mt-8">
+                <ul class="space-y-4 text-right">
+                    <li>
+                        <a href="#projects" onclick="closeMobileMenu()" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
+                            <span class="text-sm uppercase tracking-wide group-hover:underline">Projects</span>
+                            <i class="fa-solid fa-shuttle-space text-lg w-6 text-center"></i>
+                        </a>
+                    </li>
+                    
+                    <!-- เมนูเสริม (ใส่ target="_blank" ให้แล้ว รอใส่ลิงก์) -->
+                    <li>
+                        <a href="https://docs.google.com/spreadsheets/d/1feAD2dXpGe6V_55qVL0AdpghzPQ2_mnlSE5H21xNkL8/edit?gid=1352464537#gid=1352464537" target="_blank" onclick="closeMobileMenu()" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
+                            <span class="text-sm uppercase tracking-wide group-hover:underline">HANDOVER SHEET</span>
+                            <i class="fa-solid fa-file-signature text-lg w-6 text-center"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://docs.google.com/spreadsheets/d/1mN4E5cXsxGxsloWB8NGPsJMU0OIL0ANO1CgnbNSh0gU/edit?gid=1459300150#gid=1459300150" target="_blank" onclick="closeMobileMenu()" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
+                            <span class="text-sm uppercase tracking-wide group-hover:underline">COMAT SHEET</span>
+                            <i class="fa-solid fa-boxes-packing text-lg w-6 text-center"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://docs.google.com/spreadsheets/d/10LFoNKmrFMcwXQmzfbszxhQu7R8fBZrzGQFgM7tfnNg/edit?gid=1291803062#gid=1291803062" target="_blank" onclick="closeMobileMenu()" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
+                            <span class="text-sm uppercase tracking-wide group-hover:underline">REQUEST ENS SHEET</span>
+                            <i class="fa-solid fa-file-circle-check text-lg w-6 text-center"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://docs.google.com/spreadsheets/d/1v1NaHf5eas1atch8cM_sM0WEjcPuCdFGaw9uXMB0VVk/edit?gid=1145119591#gid=1145119591" target="_blank" onclick="closeMobileMenu()" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
+                            <span class="text-sm uppercase tracking-wide group-hover:underline">STN MAINT SUPPORT</span>
+                            <i class="fa-solid fa-screwdriver-wrench text-lg w-6 text-center"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://elevade.io" target="_blank" onclick="closeMobileMenu()" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
+                            <span class="text-sm uppercase tracking-wide group-hover:underline">ELEVADE</span>
+                            <i class="fa-solid fa-arrow-up-right-dots text-lg w-6 text-center"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://w3.airbus.com/H380/world/airbusworld/forms/airbus.fcc?TYPE=33554433&REALMOID=06-2c93f4bb-1103-4238-98fa-62ca07aab930&GUID=&SMAUTHREASON=0&METHOD=GET&SMAGENTNAME=-SM-t%2fTX88CtTFIPqQ15ugBfOME66PQGCWGuAAOSByMZUiVIJPozo431pS4LE4YuSGzU&TARGET=-SM-HTTPS%3a%2f%2fw3%2eairbus%2ecom%2fU980%2fU980_redirect_world%2ehtml%3fresumePath%3d-%2Fidp-%2FBYORNf75HT-%2FresumeSAML20-%2Fidp-%2FSSO%2eping-%3FpfLoginRedirect-%3Dtrue" target="_blank" onclick="closeMobileMenu()" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
+                            <span class="text-sm uppercase tracking-wide group-hover:underline">AIRBUS WORLD</span>
+                            <i class="fa-solid fa-earth-europe text-lg w-6 text-center"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://vdiairfase.airasia.com/RDWeb/webclient/" target="_blank" onclick="closeMobileMenu()" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
+                            <span class="text-sm uppercase tracking-wide group-hover:underline">AIRFAST</span>
+                            <i class="fa-solid fa-jet-fighter text-lg w-6 text-center"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://skyaims.airasia.com" target="_blank" onclick="closeMobileMenu()" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
+                            <span class="text-sm uppercase tracking-wide group-hover:underline">AIMS</span>
+                            <i class="fa-solid fa-bullseye text-lg w-6 text-center"></i>
+                        </a>
+                    </li>
 
-					<!-- Nav -->
-						<nav id="nav">
-							<ul>
-								<li><a href="#top" id="top-link"><span class="icon solid fa-buffer">PROJECTS</span></a></li>
-								<li><a href="#portfolio" id="portfolio-link"><span class="icon solid fa-th">Portfolio</span></a></li>
-								<li><a href="#about" id="about-link"><span class="icon solid fa-user">About Me</span></a></li>
-								<li><a href="#contact" id="contact-link"><span class="icon solid fa-envelope">Contact</span></a></li>
-							</ul>
-						</nav>
+                    <li>
+                        <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbzWpwTbW9jYYO-knwIqrg4Hb5bgnlx5eJwenYRyOwUWxCtMslgtzzsgGgfdsw2RQzHg/exec" target="_blank" onclick="closeMobileMenu()" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
+                            <span class="text-sm uppercase tracking-wide group-hover:underline">ELH OLD VERSION</span>
+                            <i class="fa-solid fa-clock-rotate-left text-lg w-6 text-center"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
 
-				</div>
+        </div>
+    </div>
 
-				<div class="bottom">
+    <!-- MAIN CONTENT -->
+    <div id="main" class="flex-1 w-full md:ml-64 transition-all duration-300">
 
-					<!-- Social Icons -->
-						<ul class="icons">
-							<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-							<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-							<li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>
-							<li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
-							<li><a href="#" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
-						</ul>
+        <!-- Banner Section -->
+        <section id="top" class="relative w-full">
+            <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770126320/banner_sq0hej.jpg" 
+                 alt="Banner" 
+                 class="w-full h-auto block min-h-[200px] object-cover">
 
-				</div>
+            <div class="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center">
+                <div class="container mx-auto px-6 text-center max-w-3xl text-white pt-10 md:pt-0">
+                    <header>
+                        <h2 class="text-xl md:text-3xl lg:text-5xl font-bold leading-tight mb-2 md:mb-6 drop-shadow-lg">
+                            Hello, this is the central hub of our daily essential links for <strong class="text-blue-400">MOC</strong>.
+                        </h2>
+                    </header>
+                </div>
+            </div>
+        </section>
 
-			</div>
+        <!-- Projects Section -->
+        <section id="projects" class="pt-8 pb-20 bg-gray-100">
+            <div class="container mx-auto px-6 max-w-5xl">
+                <header class="mb-10 border-b pb-4">
+                    <h2 class="text-3xl font-bold text-gray-800"><i class="fa-solid fa-shuttle-space mr-2 text-gray-400"></i> Projects</h2>
+                </header>
 
-		<!-- Main -->
-			<div id="main">
+                <p class="mb-8 leading-relaxed text-gray-600">
+                    Vitae natoque dictum etiam semper magnis enim feugiat convallis convallis
+                    egestas rhoncus ridiculus in quis risus amet curabitur tempor orci penatibus.
+                </p>
 
-				<!-- Intro -->
-					<section id="top" class="one dark cover"> 
-						<div class="container">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    
+                    <!-- 1. DELAY CAPTURE & EDSR -->
+                    <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition relative group">
+                        <div onclick="toggleProjectMenu('menu-delay')" 
+                             onkeypress="if(event.key==='Enter') toggleProjectMenu('menu-delay')"
+                             class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative" 
+                             tabindex="0"
+                             aria-label="Click to open menu for DELAY CAPTURE & EDSR DRAFT">
+                             
+                            <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770129978/delay_qu18ng.png" 
+                                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1474487548417-781cb714c223?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';"
+                                 alt="DELAY CAPTURE & EDSR DRAFT" 
+                                 class="w-full h-full object-cover transform transition duration-500 hover:scale-110" />
 
-							<header>
-								<h2 class="alt">Hello, this is the central hub of our daily essential links for <strong>MOC</strong>,</a>.</h2>
-							
-							</header>
+                            <div id="menu-delay" onclick="event.stopPropagation()" class="hidden absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex flex-col justify-center items-center space-y-2">
+                                <!-- [ใส่ลิงก์ตรง href="#" ด้านล่าง] -->
+                                <a href="https://docs.google.com/spreadsheets/d/15hzmr796muPK4Qg24eo1PDX9r8MGYwcEa_wWEOaTYsI/edit?pli=1&gid=381084786#gid=381084786" target="_blank" class="w-full text-center py-2 px-4 bg-green-600 text-white rounded hover:bg-green-500 transition font-semibold shadow-md text-sm border border-green-400">
+                                    <i class="fa-brands fa-google mr-2"></i> GOOGLE SHEET DATA
+                                </a>
+                                <a href="https://docs.google.com/spreadsheets/d/1-aHRMHSciihQUT8CnDdZWIQo4_KlSUAZs3fcoYyDbNs/edit?gid=1650993066#gid=1650993066" target="_blank" class="w-full text-center py-2 px-4 bg-purple-600 text-white rounded hover:bg-purple-500 transition font-semibold shadow-md text-sm border border-purple-400">
+                                    <i class="fa-solid fa-file-excel mr-2"></i> SHEET (MOCF/03 REV02)
+                                </a>
+                            </div>
+                        </div>
+                        <header class="p-6">
+                            <h3 class="text-xl font-bold mb-2">DELAY CAPTURE & EDSR DRAFT</h3>
+                            <p class="text-sm text-gray-400 italic mb-2"><i class="fa-solid fa-hand-pointer mr-1"></i> Tap the photo to see options</p>
+                        </header>
+                    </article>
 
-							<footer>
-								<a href="#portfolio" class="button scrolly">Magna Aliquam</a>
-							</footer>
+                    <!-- 2. 36HRS & WEEKLY -->
+                    <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition relative group">
+                        <div onclick="toggleProjectMenu('menu-36hrs')" 
+                             onkeypress="if(event.key==='Enter') toggleProjectMenu('menu-36hrs')"
+                             class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative" 
+                             tabindex="0"
+                             aria-label="Click to open menu for 36HRS & WEEKLY">
+                             
+                            <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770129380/36hrweekly_cymzfd.png" 
+                                 alt="36HRS & WEEKLY" 
+                                 class="w-full h-full object-cover transform transition duration-500 hover:scale-110" />
 
-						</div>
-					</section>
+                            <div id="menu-36hrs" onclick="event.stopPropagation()" class="hidden absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex flex-col justify-center items-center space-y-2">
+                                <!-- [ใส่ลิงก์ตรง href="#" ด้านล่าง] -->
+                                <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbwtfXs0ElPqbXRe47Q44D9YER3op9Mj_ToAyPtgi-To_6pVrAJtId-2BpVMsWGRNeYg/exec" target="_blank" class="w-full text-center py-2 px-4 bg-orange-600 text-white rounded hover:bg-orange-500 transition font-semibold shadow-md text-sm border border-orange-400">
+                                    <i class="fa-solid fa-calendar-days mr-2"></i> PLANNER + GANTT
+                                </a>
+                            </div>
+                        </div>
+                        <header class="p-6">
+                            <h3 class="text-xl font-bold mb-2">36HRS & WEEKLY</h3>
+                            <p class="text-sm text-gray-400 italic mb-2"><i class="fa-solid fa-hand-pointer mr-1"></i> Tap the photo to see options</p>
+                        </header>
+                    </article>
 
-				<!-- Portfolio -->
-					<section id="portfolio" class="two">
-						<div class="container">
+                    <!-- 3. COCKPIT WINDOWS -->
+                    <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition relative group">
+                        <div onclick="toggleProjectMenu('menu-cockpit')" 
+                             onkeypress="if(event.key==='Enter') toggleProjectMenu('menu-cockpit')"
+                             class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative" 
+                             tabindex="0"
+                             aria-label="Click to open menu for Cockpit Windows">
+                             
+                            <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770127588/WDDL_ywuirm.png" 
+                                 alt="COCKPIT WINDOWS" 
+                                 class="w-full h-full object-cover transform transition duration-500 hover:scale-110" />
 
-							<header>
-								<h2>Portfolio</h2>
-							</header>
+                            <div id="menu-cockpit" onclick="event.stopPropagation()" class="hidden absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex flex-col justify-center items-center space-y-2">
+                                <!-- [ใส่ลิงก์ตรง href="#" ด้านล่าง] -->
+                                <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbzANRaZP38ZfMW-u285DYCOfbzZW6446bk4JoiVNSYCkPc3c5XTDXWvKgXRQ4XuesMd/exec" target="_blank" class="w-full text-center py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-500 transition font-semibold shadow-md text-sm border border-blue-400">
+                                    <i class="fa-solid fa-file-contract mr-2"></i> REPORT FORM
+                                </a>
+                                <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbxMPlhgrnzNndvr7tJfU2T2gd0o_ZjxiOcy8rHvk5RDbMp5YDpGThhEis13qZuN_WJuIg/exec" target="_blank" class="w-full text-center py-2 px-4 bg-teal-600 text-white rounded hover:bg-teal-500 transition font-semibold shadow-md text-sm border border-teal-400">
+                                    <i class="fa-solid fa-eye mr-2"></i> VIEW REPORT
+                                </a>
+                                <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbxvislr4mcYrl6og6M-InSr4xpuSpgTBCD7sGgkwLlmui9TJCLBnM-2vL9ER_njUMm5/exec" target="_blank" class="w-full text-center py-2 px-4 bg-purple-600 text-white rounded hover:bg-purple-500 transition font-semibold shadow-md text-sm border border-purple-400">
+                                    <i class="fa-solid fa-chart-line mr-2"></i> SUMMARY BOARD
+                                </a>
+                                <a href="https://docs.google.com/spreadsheets/d/16AUNk-n2xzs-HE3nQJp52QLkPjyxOfPh3JNNrSrz-GM/edit?usp=sharing" target="_blank" class="w-full text-center py-2 px-4 bg-green-600 text-white rounded hover:bg-green-500 transition font-semibold shadow-md text-sm border border-green-400">
+                                    <i class="fa-brands fa-google mr-2"></i> GOOGLE SHEET DATA
+                                </a>
+                            </div>
+                        </div>
+                        <header class="p-6">
+                            <h3 class="text-xl font-bold mb-2">COCKPIT WINDOWS</h3>
+                            <p class="text-sm text-gray-400 italic mb-2"><i class="fa-solid fa-hand-pointer mr-1"></i> Tap the photo to see options</p>
+                        </header>
+                    </article>
 
-							<p>Vitae natoque dictum etiam semper magnis enim feugiat convallis convallis
-							egestas rhoncus ridiculus in quis risus amet curabitur tempor orci penatibus.
-							Tellus erat mauris ipsum fermentum etiam vivamus eget. Nunc nibh morbi quis
-							fusce hendrerit lacus ridiculus.</p>
+                    <!-- 4. FUEL DRAIN MONITOR -->
+                    <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition relative group">
+                        <div onclick="toggleProjectMenu('menu-fuel')" 
+                             onkeypress="if(event.key==='Enter') toggleProjectMenu('menu-fuel')"
+                             class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative" 
+                             tabindex="0"
+                             aria-label="Click to open menu for FUEL DRAIN MONITOR">
+                             
+                            <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770130942/fuel_bbbev9.png" 
+                                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';"
+                                 alt="FUEL DRAIN MONITOR" 
+                                 class="w-full h-full object-cover transform transition duration-500 hover:scale-110" />
 
-							<div class="row">
-								<div class="col-4 col-12-mobile">
-									<article class="item">
-										<a href="#" class="image fit"><img src="images/pic02.jpg" alt="" /></a>
-										<header>
-											<h3>Ipsum Feugiat</h3>
-										</header>
-									</article>
-									<article class="item">
-										<a href="#" class="image fit"><img src="images/pic03.jpg" alt="" /></a>
-										<header>
-											<h3>Rhoncus Semper</h3>
-										</header>
-									</article>
-								</div>
-								<div class="col-4 col-12-mobile">
-									<article class="item">
-										<a href="#" class="image fit"><img src="images/pic04.jpg" alt="" /></a>
-										<header>
-											<h3>Magna Nullam</h3>
-										</header>
-									</article>
-									<article class="item">
-										<a href="#" class="image fit"><img src="images/pic05.jpg" alt="" /></a>
-										<header>
-											<h3>Natoque Vitae</h3>
-										</header>
-									</article>
-								</div>
-								<div class="col-4 col-12-mobile">
-									<article class="item">
-										<a href="#" class="image fit"><img src="images/pic06.jpg" alt="" /></a>
-										<header>
-											<h3>Dolor Penatibus</h3>
-										</header>
-									</article>
-									<article class="item">
-										<a href="#" class="image fit"><img src="images/pic07.jpg" alt="" /></a>
-										<header>
-											<h3>Orci Convallis</h3>
-										</header>
-									</article>
-								</div>
-							</div>
+                            <div id="menu-fuel" onclick="event.stopPropagation()" class="hidden absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex flex-col justify-center items-center space-y-2">
+                                <!-- [ใส่ลิงก์ตรง href="#" ด้านล่าง] -->
+                                <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbz1bMuKjwUm7hG6z2nRfc5kTYVAaRkjS6Lj-6wZueOme3OgqKctYPQxYegZJD4G4h8_/exec" target="_blank" class="w-full text-center py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-500 transition font-semibold shadow-md text-sm border border-blue-400">
+                                    <i class="fa-solid fa-file-contract mr-2"></i> REPORT FORM
+                                </a>
+                                
+                                <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbxM3fGeCoxjC7bhZxb2jJZu3hnkpWRRhRqBI4mR8CeWAwtUNe8mEksMxKStD5ZuYPfzPg/exec" target="_blank" class="w-full text-center py-2 px-4 bg-purple-600 text-white rounded hover:bg-purple-500 transition font-semibold shadow-md text-sm border border-purple-400">
+                                    <i class="fa-solid fa-chart-line mr-2"></i> SUMMARY BOARD
+                                </a>
+                                
+                                <a href="https://docs.google.com/spreadsheets/d/1dERSv5F9Vz-bQv-010ResmCJ7-kI8zggnG3aqFXZ_1o/edit?usp=sharing" target="_blank" class="w-full text-center py-2 px-4 bg-green-600 text-white rounded hover:bg-green-500 transition font-semibold shadow-md text-sm border border-green-400">
+                                    <i class="fa-brands fa-google mr-2"></i> GOOGLE SHEET DATA
+                                </a>
+                                
+                                <a href="https://docs.google.com/spreadsheets/d/1ct0ydAJXArnnMRaFuYK5H5kbKYhGO7NABT5dHkY1rJg/edit?gid=0#gid=0" target="_blank" class="w-full text-center py-2 px-4 bg-gray-600 text-white rounded hover:bg-gray-500 transition font-semibold shadow-md text-sm border border-gray-400">
+                                    <i class="fa-solid fa-database mr-2"></i> TODAY's back-up
+                                </a>
+                                
+                                <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbwUcSU5dHqMmb8MBv8z0z2tzjRHcgII1V9DFV6tGAsc8e6Pu8Ylb7RdR-JHrLkJzuKrIA/exec" target="_blank" class="w-full text-center py-2 px-4 bg-cyan-600 text-white rounded hover:bg-cyan-500 transition font-semibold shadow-md text-sm border border-cyan-400">
+                                    <i class="fa-solid fa-plane-arrival mr-2"></i> KUL Bay Planner
+                                </a>
 
-						</div>
-					</section>
+                            </div>
+                        </div>
+                        <header class="p-6">
+                            <h3 class="text-xl font-bold mb-2">FUEL DRAIN MONITOR</h3>
+                            <p class="text-sm text-gray-400 italic mb-2"><i class="fa-solid fa-hand-pointer mr-1"></i> Tap the photo to see options</p>
+                        </header>
+                    </article>
 
-				<!-- About Me -->
-					<section id="about" class="three">
-						<div class="container">
+                    <!-- 5. PNEUMATIC STARTER -->
+                    <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition relative group">
+                        <div onclick="toggleProjectMenu('menu-starter')" 
+                             onkeypress="if(event.key==='Enter') toggleProjectMenu('menu-starter')"
+                             class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative" 
+                             tabindex="0"
+                             aria-label="Click to open menu for PNEUMATIC STARTER">
+                             
+                            <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770131568/Starter_rql29z.png" 
+                                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1581092921461-eab62e97a783?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';"
+                                 alt="PNEUMATIC STARTER" 
+                                 class="w-full h-full object-cover transform transition duration-500 hover:scale-110" />
 
-							<header>
-								<h2>About Me</h2>
-							</header>
+                            <div id="menu-starter" onclick="event.stopPropagation()" class="hidden absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex flex-col justify-center items-center space-y-2">
+                                <!-- [ใส่ลิงก์ตรง href="#" ด้านล่าง] -->
+                                <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbzr_vQawaSi0MXTSQQ_rqSY0p0dEU9OLoZOL6kG9Io/dev" target="_blank" class="w-full text-center py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-500 transition font-semibold shadow-md text-sm border border-blue-400">
+                                    <i class="fa-solid fa-file-contract mr-2"></i> REPORT FORM
+                                </a>
+                                
+                                <a href="https://docs.google.com/spreadsheets/d/1buS6egAcQKYReOYJ_pCIj8FhXNmevkor5ZMJoYe3N5g/edit?usp=sharing" target="_blank" class="w-full text-center py-2 px-4 bg-green-600 text-white rounded hover:bg-green-500 transition font-semibold shadow-md text-sm border border-green-400">
+                                    <i class="fa-brands fa-google mr-2"></i> GOOGLE SHEET DATA
+                                </a>
+                                
+                            </div>
+                        </div>
+                        <header class="p-6">
+                            <h3 class="text-xl font-bold mb-2">PNEUMATIC STARTER</h3>
+                            <p class="text-sm text-gray-400 italic mb-2"><i class="fa-solid fa-hand-pointer mr-1"></i> Tap the photo to see options</p>
+                        </header>
+                    </article>
 
-							<a href="#" class="image featured"><img src="images/pic08.jpg" alt="" /></a>
+                    <!-- 6. ENG SPINNER CONE -->
+                    <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition relative group">
+                        <div onclick="toggleProjectMenu('menu-spinner')" 
+                             onkeypress="if(event.key==='Enter') toggleProjectMenu('menu-spinner')"
+                             class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative" 
+                             tabindex="0"
+                             aria-label="Click to open menu for ENG SPINNER CONE">
+                             
+                            <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770133170/Screenshot_2569-02-03_at_23.38.50_xyxagd.png" 
+                                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1542461927-a0e445377858?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';"
+                                 alt="ENG SPINNER CONE" 
+                                 class="w-full h-full object-cover transform transition duration-500 hover:scale-110" />
 
-							<p>Tincidunt eu elit diam magnis pretium accumsan etiam id urna. Ridiculus
-							ultricies curae quis et rhoncus velit. Lobortis elementum aliquet nec vitae
-							laoreet eget cubilia quam non etiam odio tincidunt montes. Elementum sem
-							parturient nulla quam placerat viverra mauris non cum elit tempus ullamcorper
-							dolor. Libero rutrum ut lacinia donec curae mus vel quisque sociis nec
-							ornare iaculis.</p>
+                            <div id="menu-spinner" onclick="event.stopPropagation()" class="hidden absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex flex-col justify-center items-center space-y-2">
+                                <!-- [ใส่ลิงก์ตรง href="#" ด้านล่าง] -->
+                                <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbxzBqHE0vcoXpWV4NI1ba3H9pTS4IRzvxiuuVG-qEoE/dev" target="_blank" class="w-full text-center py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-500 transition font-semibold shadow-md text-sm border border-blue-400">
+                                    <i class="fa-solid fa-file-contract mr-2"></i> REPORT FORM
+                                </a>
+                                
+                                <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbx3XdGe19vjxDN91kZ3I2owOJWmR_XFzt4uLH3djGC0zU4Ru5iZVxYq0vFPJtE0daQt8w/exec" target="_blank" class="w-full text-center py-2 px-4 bg-teal-600 text-white rounded hover:bg-teal-500 transition font-semibold shadow-md text-sm border border-teal-400">
+                                    <i class="fa-solid fa-eye mr-2"></i> VIEW REPORT
+                                </a>
+                                
+                                <a href="https://docs.google.com/spreadsheets/d/1FYK35P9TaySA-4A8F5t04m3kTTaCeBIwJgDa874JKFg/edit?usp=sharing" target="_blank" class="w-full text-center py-2 px-4 bg-green-600 text-white rounded hover:bg-green-500 transition font-semibold shadow-md text-sm border border-green-400">
+                                    <i class="fa-brands fa-google mr-2"></i> MAIN GG SHEET
+                                </a>
+                                
+                            </div>
+                        </div>
+                        <header class="p-6">
+                            <h3 class="text-xl font-bold mb-2">ENG SPINNER CONE</h3>
+                            <p class="text-sm text-gray-400 italic mb-2"><i class="fa-solid fa-hand-pointer mr-1"></i> Tap the photo to see options</p>
+                        </header>
+                    </article>
+                    
+                </div>
+            </div>
+        </section>
 
-						</div>
-					</section>
+        <div id="footer" class="bg-gray-200 py-6 text-center text-sm text-gray-500">
+            <ul class="copyright space-x-2">
+                <li class="inline">&copy; jack & sonic. All rights not really reserved.</li>
+                <li class="inline">| Design: sonic</li>
+            </ul>
+        </div>
 
-				<!-- Contact -->
-					<section id="contact" class="four">
-						<div class="container">
+    </div>
 
-							<header>
-								<h2>Contact</h2>
-							</header>
+    <!-- SCRIPT -->
+    <script>
+        const btn = document.getElementById('mobile-menu-btn');
+        const sidebar = document.getElementById('header');
+        
+        btn.addEventListener('click', () => {
+            sidebar.classList.toggle('-translate-x-full');
+        });
 
-							<p>Elementum sem parturient nulla quam placerat viverra
-							mauris non cum elit tempus ullamcorper dolor. Libero rutrum ut lacinia
-							donec curae mus. Eleifend id porttitor ac ultricies lobortis sem nunc
-							orci ridiculus faucibus a consectetur. Porttitor curae mauris urna mi dolor.</p>
+        function closeMobileMenu() {
+            if (window.innerWidth < 768) {
+                sidebar.classList.add('-translate-x-full');
+            }
+        }
 
-							<form method="post" action="#">
-								<div class="row">
-									<div class="col-6 col-12-mobile"><input type="text" name="name" placeholder="Name" /></div>
-									<div class="col-6 col-12-mobile"><input type="text" name="email" placeholder="Email" /></div>
-									<div class="col-12">
-										<textarea name="message" placeholder="Message"></textarea>
-									</div>
-									<div class="col-12">
-										<input type="submit" value="Send Message" />
-									</div>
-								</div>
-							</form>
-
-						</div>
-					</section>
-
-			</div>
-
-		<!-- Footer -->
-			<div id="footer">
-
-				<!-- Copyright -->
-					<ul class="copyright">
-						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-					</ul>
-
-			</div>
-
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-
-	</body>
-
+        function toggleProjectMenu(menuId) {
+            const menu = document.getElementById(menuId);
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+            } else {
+                menu.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
