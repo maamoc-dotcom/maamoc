@@ -66,7 +66,7 @@
                         </a>
                     </li>
                     
-                    <!-- เมนูเสริม (ใส่ target="_blank" ให้แล้ว รอใส่ลิงก์) -->
+                    <!-- เมนูเสริม -->
                     <li>
                         <a href="https://docs.google.com/spreadsheets/d/1feAD2dXpGe6V_55qVL0AdpghzPQ2_mnlSE5H21xNkL8/edit?gid=1352464537#gid=1352464537" target="_blank" onclick="closeMobileMenu()" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
                             <span class="text-sm uppercase tracking-wide group-hover:underline">HANDOVER SHEET</span>
@@ -110,7 +110,7 @@
                         </a>
                     </li>
 
-                     <li>
+                      <li>
                         <a href="https://redwatch.airasia.com/eops#" target="_blank" onclick="closeMobileMenu()" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
                             <span class="text-sm uppercase tracking-wide group-hover:underline">RED WATCH</span>
                             <i class="fa-solid fa-bullseye text-lg w-6 text-center"></i>
@@ -179,8 +179,8 @@
                                  alt="DELAY CAPTURE & EDSR DRAFT" 
                                  class="w-full h-full object-cover transform transition duration-500 hover:scale-110" />
 
-                            <div id="menu-delay" onclick="event.stopPropagation()" class="hidden absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex flex-col justify-center items-center space-y-2">
-                                <!-- [ใส่ลิงก์ตรง href="#" ด้านล่าง] -->
+                            <!-- Added md:group-hover:flex here -->
+                            <div id="menu-delay" onclick="event.stopPropagation()" class="hidden md:group-hover:flex absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex-col justify-center items-center space-y-2">
                                 <a href="https://docs.google.com/spreadsheets/d/15hzmr796muPK4Qg24eo1PDX9r8MGYwcEa_wWEOaTYsI/edit?pli=1&gid=381084786#gid=381084786" target="_blank" class="w-full text-center py-2 px-4 bg-green-600 text-white rounded hover:bg-green-500 transition font-semibold shadow-md text-sm border border-green-400">
                                     <i class="fa-brands fa-google mr-2"></i> GOOGLE SHEET DATA
                                 </a>
@@ -191,7 +191,8 @@
                         </div>
                         <header class="p-6">
                             <h3 class="text-xl font-bold mb-2">DELAY CAPTURE & EDSR DRAFT</h3>
-                            <p class="text-sm text-gray-400 italic mb-2"><i class="fa-solid fa-hand-pointer mr-1"></i> Tap the photo to see options</p>
+                            <p class="text-sm text-gray-400 italic mb-2 md:hidden"><i class="fa-solid fa-hand-pointer mr-1"></i> Tap the photo to see options</p>
+                            <p class="text-sm text-gray-400 italic mb-2 hidden md:block"><i class="fa-solid fa-mouse-pointer mr-1"></i> Hover to see options</p>
                         </header>
                     </article>
 
@@ -207,8 +208,8 @@
                                  alt="36HRS & WEEKLY" 
                                  class="w-full h-full object-cover transform transition duration-500 hover:scale-110" />
 
-                            <div id="menu-36hrs" onclick="event.stopPropagation()" class="hidden absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex flex-col justify-center items-center space-y-2">
-                                <!-- [ใส่ลิงก์ตรง href="#" ด้านล่าง] -->
+                            <!-- Added md:group-hover:flex here -->
+                            <div id="menu-36hrs" onclick="event.stopPropagation()" class="hidden md:group-hover:flex absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex-col justify-center items-center space-y-2">
                                 <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbwtfXs0ElPqbXRe47Q44D9YER3op9Mj_ToAyPtgi-To_6pVrAJtId-2BpVMsWGRNeYg/exec" target="_blank" class="w-full text-center py-2 px-4 bg-orange-600 text-white rounded hover:bg-orange-500 transition font-semibold shadow-md text-sm border border-orange-400">
                                     <i class="fa-solid fa-calendar-days mr-2"></i> PLANNER + GANTT
                                 </a>
@@ -216,7 +217,8 @@
                         </div>
                         <header class="p-6">
                             <h3 class="text-xl font-bold mb-2">36HRS & WEEKLY</h3>
-                            <p class="text-sm text-gray-400 italic mb-2"><i class="fa-solid fa-hand-pointer mr-1"></i> Tap the photo to see options</p>
+                            <p class="text-sm text-gray-400 italic mb-2 md:hidden"><i class="fa-solid fa-hand-pointer mr-1"></i> Tap the photo to see options</p>
+                            <p class="text-sm text-gray-400 italic mb-2 hidden md:block"><i class="fa-solid fa-mouse-pointer mr-1"></i> Hover to see options</p>
                         </header>
                     </article>
 
@@ -232,8 +234,8 @@
                                  alt="COCKPIT WINDOWS" 
                                  class="w-full h-full object-cover transform transition duration-500 hover:scale-110" />
 
-                            <div id="menu-cockpit" onclick="event.stopPropagation()" class="hidden absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex flex-col justify-center items-center space-y-2">
-                                <!-- [ใส่ลิงก์ตรง href="#" ด้านล่าง] -->
+                            <!-- Added md:group-hover:flex here -->
+                            <div id="menu-cockpit" onclick="event.stopPropagation()" class="hidden md:group-hover:flex absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex-col justify-center items-center space-y-2">
                                 <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbzANRaZP38ZfMW-u285DYCOfbzZW6446bk4JoiVNSYCkPc3c5XTDXWvKgXRQ4XuesMd/exec" target="_blank" class="w-full text-center py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-500 transition font-semibold shadow-md text-sm border border-blue-400">
                                     <i class="fa-solid fa-file-contract mr-2"></i> REPORT FORM
                                 </a>
@@ -250,7 +252,8 @@
                         </div>
                         <header class="p-6">
                             <h3 class="text-xl font-bold mb-2">COCKPIT WINDOWS</h3>
-                            <p class="text-sm text-gray-400 italic mb-2"><i class="fa-solid fa-hand-pointer mr-1"></i> Tap the photo to see options</p>
+                            <p class="text-sm text-gray-400 italic mb-2 md:hidden"><i class="fa-solid fa-hand-pointer mr-1"></i> Tap the photo to see options</p>
+                            <p class="text-sm text-gray-400 italic mb-2 hidden md:block"><i class="fa-solid fa-mouse-pointer mr-1"></i> Hover to see options</p>
                         </header>
                     </article>
 
@@ -267,8 +270,8 @@
                                  alt="FUEL DRAIN MONITOR" 
                                  class="w-full h-full object-cover transform transition duration-500 hover:scale-110" />
 
-                            <div id="menu-fuel" onclick="event.stopPropagation()" class="hidden absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex flex-col justify-center items-center space-y-2">
-                                <!-- [ใส่ลิงก์ตรง href="#" ด้านล่าง] -->
+                            <!-- Added md:group-hover:flex here -->
+                            <div id="menu-fuel" onclick="event.stopPropagation()" class="hidden md:group-hover:flex absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex-col justify-center items-center space-y-2">
                                 <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbz1bMuKjwUm7hG6z2nRfc5kTYVAaRkjS6Lj-6wZueOme3OgqKctYPQxYegZJD4G4h8_/exec" target="_blank" class="w-full text-center py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-500 transition font-semibold shadow-md text-sm border border-blue-400">
                                     <i class="fa-solid fa-file-contract mr-2"></i> REPORT FORM
                                 </a>
@@ -293,7 +296,8 @@
                         </div>
                         <header class="p-6">
                             <h3 class="text-xl font-bold mb-2">FUEL DRAIN MONITOR</h3>
-                            <p class="text-sm text-gray-400 italic mb-2"><i class="fa-solid fa-hand-pointer mr-1"></i> Tap the photo to see options</p>
+                            <p class="text-sm text-gray-400 italic mb-2 md:hidden"><i class="fa-solid fa-hand-pointer mr-1"></i> Tap the photo to see options</p>
+                            <p class="text-sm text-gray-400 italic mb-2 hidden md:block"><i class="fa-solid fa-mouse-pointer mr-1"></i> Hover to see options</p>
                         </header>
                     </article>
 
@@ -310,8 +314,8 @@
                                  alt="PNEUMATIC STARTER" 
                                  class="w-full h-full object-cover transform transition duration-500 hover:scale-110" />
 
-                            <div id="menu-starter" onclick="event.stopPropagation()" class="hidden absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex flex-col justify-center items-center space-y-2">
-                                <!-- [ใส่ลิงก์ตรง href="#" ด้านล่าง] -->
+                            <!-- Added md:group-hover:flex here -->
+                            <div id="menu-starter" onclick="event.stopPropagation()" class="hidden md:group-hover:flex absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex-col justify-center items-center space-y-2">
                                 <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbzr_vQawaSi0MXTSQQ_rqSY0p0dEU9OLoZOL6kG9Io/dev" target="_blank" class="w-full text-center py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-500 transition font-semibold shadow-md text-sm border border-blue-400">
                                     <i class="fa-solid fa-file-contract mr-2"></i> REPORT FORM
                                 </a>
@@ -324,7 +328,8 @@
                         </div>
                         <header class="p-6">
                             <h3 class="text-xl font-bold mb-2">PNEUMATIC STARTER</h3>
-                            <p class="text-sm text-gray-400 italic mb-2"><i class="fa-solid fa-hand-pointer mr-1"></i> Tap the photo to see options</p>
+                            <p class="text-sm text-gray-400 italic mb-2 md:hidden"><i class="fa-solid fa-hand-pointer mr-1"></i> Tap the photo to see options</p>
+                            <p class="text-sm text-gray-400 italic mb-2 hidden md:block"><i class="fa-solid fa-mouse-pointer mr-1"></i> Hover to see options</p>
                         </header>
                     </article>
 
@@ -341,8 +346,8 @@
                                  alt="ENG SPINNER CONE" 
                                  class="w-full h-full object-cover transform transition duration-500 hover:scale-110" />
 
-                            <div id="menu-spinner" onclick="event.stopPropagation()" class="hidden absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex flex-col justify-center items-center space-y-2">
-                                <!-- [ใส่ลิงก์ตรง href="#" ด้านล่าง] -->
+                            <!-- Added md:group-hover:flex here -->
+                            <div id="menu-spinner" onclick="event.stopPropagation()" class="hidden md:group-hover:flex absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex-col justify-center items-center space-y-2">
                                 <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbxzBqHE0vcoXpWV4NI1ba3H9pTS4IRzvxiuuVG-qEoE/dev" target="_blank" class="w-full text-center py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-500 transition font-semibold shadow-md text-sm border border-blue-400">
                                     <i class="fa-solid fa-file-contract mr-2"></i> REPORT FORM
                                 </a>
@@ -359,7 +364,8 @@
                         </div>
                         <header class="p-6">
                             <h3 class="text-xl font-bold mb-2">ENG SPINNER CONE</h3>
-                            <p class="text-sm text-gray-400 italic mb-2"><i class="fa-solid fa-hand-pointer mr-1"></i> Tap the photo to see options</p>
+                            <p class="text-sm text-gray-400 italic mb-2 md:hidden"><i class="fa-solid fa-hand-pointer mr-1"></i> Tap the photo to see options</p>
+                            <p class="text-sm text-gray-400 italic mb-2 hidden md:block"><i class="fa-solid fa-mouse-pointer mr-1"></i> Hover to see options</p>
                         </header>
                     </article>
                     
@@ -392,15 +398,21 @@
         }
 
         function toggleProjectMenu(menuId) {
+            // Check if screen width is md (768px) or larger
+            // If it is Desktop, we DO NOT toggle on click (CSS Hover handles it)
+            if (window.innerWidth >= 768) {
+                return;
+            }
+
             const menu = document.getElementById(menuId);
             if (menu.classList.contains('hidden')) {
                 menu.classList.remove('hidden');
+                menu.classList.add('flex'); // Add flex to ensure it shows properly
             } else {
                 menu.classList.add('hidden');
+                menu.classList.remove('flex');
             }
         }
     </script>
 </body>
 </html>
-
-
