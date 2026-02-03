@@ -240,7 +240,7 @@
       }
     } else {
       document.body.style.display = "none";
-      signInWithPopup(auth, provider).catch((error) => {
+      signInWithRedirect(auth, provider).catch((error) => {
         console.error("Authentication Error:", error);
         alert("Please enable pop-ups for this website to sign in.");
       });
@@ -250,3 +250,4 @@
 	</body>
 
 </html>
+
