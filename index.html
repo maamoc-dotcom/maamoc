@@ -6,65 +6,8 @@
 -->
 <html>
 	<head>
-		<head>
-    <meta charset="utf-8" />
-    <style>
-      body { display: none !important; } 
-      #auth-overlay {
-        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background: #222629; color: white; display: none; /* เริ่มต้นที่ซ่อนไว้ก่อน */
-        flex-direction: column; align-items: center; justify-content: center;
-        z-index: 999999; font-family: sans-serif;
-      }
-      .login-btn {
-        padding: 12px 24px; background: #4285F4; color: white;
-        border: none; border-radius: 4px; cursor: pointer; font-size: 16px; margin-top: 20px;
-      }
-    </style>
-    
-    <div id="auth-overlay">
-      <h1>MAAMOC.COM</h1>
-      <p>Please sign in with your corporate email (@airasia.com) to continue.</p>
-      <button class="login-btn" id="login-button">Sign in with Google</button>
-    </div>
+		
 
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-      import { getAuth, GoogleAuthProvider, signInWithRedirect, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-
-      const firebaseConfig = {
-        apiKey: "AIzaSyBoHj4s99iMQLKKT8ZZHD4uTugLXlQRxWg",
-        authDomain: "maa-moc.firebaseapp.com",
-        projectId: "maa-moc",
-        storageBucket: "maa-moc.firebasestorage.app",
-        messagingSenderId: "1025979944090",
-        appId: "1:1025979944090:web:4e4408870e740fa34ba323"
-      };
-
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth();
-      const provider = new GoogleAuthProvider();
-
-      document.getElementById('login-button').onclick = () => signInWithRedirect(auth, provider);
-
-      onAuthStateChanged(auth, (user) => {
-        const overlay = document.getElementById('auth-overlay');
-        if (user) {
-          if (user.email.endsWith("@airasia.com")) {
-            overlay.style.display = "none";
-            document.body.style.display = "block"; // ปลดล็อกหน้าเว็บ
-          } else {
-            alert("Access Denied: @airasia.com emails only.");
-            signOut(auth).then(() => window.location.reload());
-          }
-        } else {
-          overlay.style.display = "flex";
-          document.body.style.display = "block"; // ต้องให้ body block เพื่อให้เห็น overlay
-        }
-      });
-    </script>
-    ...
-</head>
 		<title>Prologue by HTML5 UP</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -263,53 +206,11 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyBoHj4s99iMQLKKT8ZZHD4uTugLXlQRxWg",
-    authDomain: "maa-moc.firebaseapp.com",
-    projectId: "maa-moc",
-    storageBucket: "maa-moc.firebasestorage.app",
-    messagingSenderId: "1025979944090",
-    appId: "1:1025979944090:web:4e4408870e740fa34ba323",
-    measurementId: "G-77MC6DQX0T"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth();
-  const provider = new GoogleAuthProvider();
-
-  // ตรวจสอบผลจากการ Redirect กลับมา
-  getRedirectResult(auth).then((result) => {
-    if (result?.user) {
-      console.log("Logged in as:", result.user.email);
-    }
-  }).catch((error) => {
-    console.error("Auth Error:", error);
-  });
-
-  onAuthStateChanged(auth, (user) => {
-    const overlay = document.getElementById('auth-overlay');
-    if (user) {
-      // *** เปลี่ยนเป็น @airasia.com ตามรูปของคุณ ***
-      if (user.email.endsWith("@airasia.com")) {
-        overlay.style.display = "none"; 
-        document.body.style.display = "block";
-      } else {
-        alert("Access Denied: This site is for @airasia.com members only.");
-        auth.signOut().then(() => window.location.reload());
-      }
-    } else {
-      overlay.style.display = "flex";
-      // ระบบจะรอให้คุณกดปุ่ม Sign in (ที่สร้างไว้ในขั้นตอนก่อนหน้า)
-    }
-  });
-</script>
 	</body>
 
 </html>
+
 
 
 
