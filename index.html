@@ -247,6 +247,9 @@
                                         <div id="ddml-str" class="text-lg font-bold text-red-400">-</div>
                                     </div>
                                 </div>
+                                <div class="mt-2 text-[8px] text-gray-500 text-center relative z-10">
+                                    Refer from MAA AIRCRAFT STATUS EMAIL
+                                </div>
                             </div>
 
                             <!-- Card 2 (Graph) -->
@@ -619,16 +622,22 @@
                 
                 const data = await response.json();
 
-                if (Array.isArray(data) && data.length > 0) {
-                    const labels = data.map(d => d.date);
+                // FILTER: Only include data points where the main value (OTP15/valueB) is significantly greater than 0
+                const validData = data.filter(d => {
+                    const val = parseFloat(d.valueB || d.value);
+                    return !isNaN(val) && val > 0.001; // Strict filter for non-zero values
+                });
+
+                if (Array.isArray(validData) && validData.length > 0) {
+                    const labels = validData.map(d => d.date);
                     const processValue = (val) => {
                         let n = parseFloat(val);
                         if (isNaN(n)) return 0;
                         return (n > 0 && n <= 1.0) ? (n * 100) : n;
                     };
 
-                    const valuesB = data.map(d => processValue(d.valueB || d.value));
-                    const valuesC = data.map(d => processValue(d.valueC || 0));
+                    const valuesB = validData.map(d => processValue(d.valueB || d.value));
+                    const valuesC = validData.map(d => processValue(d.valueC || 0));
 
                     updateChart(labels, valuesB, valuesC);
                     
@@ -728,3 +737,5 @@
         fetchOTPData();
         fetchDDMLData();
     </script>
+</body>
+</html>
