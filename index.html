@@ -7,6 +7,7 @@
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         html {
@@ -23,13 +24,24 @@
             background-color: rgba(0, 0, 0, 0.75);
         }
         
-        /* Animation สำหรับเมนูเลื่อนขึ้น */
         @keyframes slide-up {
             from { transform: translateY(100%); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
         .animate-slide-up {
             animation: slide-up 0.3s ease-out forwards;
+        }
+
+        .dashboard-card {
+            background: rgba(31, 41, 55, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(75, 85, 99, 0.4);
+            transition: all 0.3s ease;
+        }
+        .dashboard-card:hover {
+            border-color: rgba(96, 165, 250, 0.6);
+            transform: translateY(-2px);
+            background: rgba(31, 41, 55, 0.8);
         }
     </style>
 </head>
@@ -53,10 +65,9 @@
                 <h1 class="text-xl font-bold leading-tight">MAA</h1>
                 <h1 class="text-xl font-bold leading-tight text-gray-300">ENGINEERING</h1>
                 <h1 class="text-xs font-light tracking-widest mt-1 text-gray-400">MOC LINKS HUB</h1>
-                <p class="text-[10px] text-green-400 mt-2 font-mono"><i class="fa-solid fa-signal"></i> New Episode</p>
+                <p class="text-[10px] text-green-400 mt-2 font-mono"><i class="fa-solid fa-signal"></i> Live System</p>
             </div>
 
-            <!-- Navigation -->
             <nav class="mt-8">
                 <ul class="space-y-4 text-right">
                     <li>
@@ -65,28 +76,27 @@
                             <i class="fa-solid fa-shuttle-space text-lg w-6 text-center"></i>
                         </a>
                     </li>
-                    
                     <li>
                         <a href="https://docs.google.com/spreadsheets/d/1feAD2dXpGe6V_55qVL0AdpghzPQ2_mnlSE5H21xNkL8/edit?gid=1352464537#gid=1352464537" target="_blank" onclick="closeMobileMenu()" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
-                            <span class="text-sm uppercase tracking-wide group-hover:underline">HANDOVER SHEET</span>
+                            <span class="text-sm uppercase tracking-wide group-hover:underline text-[11px]">HANDOVER SHEET</span>
                             <i class="fa-solid fa-file-signature text-lg w-6 text-center"></i>
                         </a>
                     </li>
                     <li>
                         <a href="https://docs.google.com/spreadsheets/d/1mN4E5cXsxGxsloWB8NGPsJMU0OIL0ANO1CgnbNSh0gU/edit?gid=1459300150#gid=1459300150" target="_blank" onclick="closeMobileMenu()" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
-                            <span class="text-sm uppercase tracking-wide group-hover:underline">COMAT SHEET</span>
+                            <span class="text-sm uppercase tracking-wide group-hover:underline text-[11px]">COMAT SHEET</span>
                             <i class="fa-solid fa-boxes-packing text-lg w-6 text-center"></i>
                         </a>
                     </li>
                     <li>
                         <a href="https://docs.google.com/spreadsheets/d/10LFoNKmrFMcwXQmzfbszxhQu7R8fBZrzGQFgM7tfnNg/edit?gid=1291803062#gid=1291803062" target="_blank" onclick="closeMobileMenu()" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
-                            <span class="text-sm uppercase tracking-wide group-hover:underline">REQUEST ENS SHEET</span>
+                            <span class="text-sm uppercase tracking-wide group-hover:underline text-[11px]">REQUEST ENS</span>
                             <i class="fa-solid fa-file-circle-check text-lg w-6 text-center"></i>
                         </a>
                     </li>
                     <li>
                         <a href="https://docs.google.com/spreadsheets/d/1v1NaHf5eas1atch8cM_sM0WEjcPuCdFGaw9uXMB0VVk/edit?gid=1145119591#gid=1145119591" target="_blank" onclick="closeMobileMenu()" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
-                            <span class="text-sm uppercase tracking-wide group-hover:underline">STN MAINT SUPPORT</span>
+                            <span class="text-sm uppercase tracking-wide group-hover:underline text-[11px]">STN MAINT SUPPORT</span>
                             <i class="fa-solid fa-screwdriver-wrench text-lg w-6 text-center"></i>
                         </a>
                     </li>
@@ -97,7 +107,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="https://w3.airbus.com/H380/world/airbusworld/forms/airbus.fcc?TYPE=33554433&REALMOID=06-2c93f4bb-1103-4238-98fa-62ca07aab930&GUID=&SMAUTHREASON=0&METHOD=GET&SMAGENTNAME=-SM-t%2fTX88CtTFIPqQ15ugBfOME66PQGCWGuAAOSByMZUiVIJPozo431pS4LE4YuSGzU&TARGET=-SM-HTTPS%3a%2f%2fw3%2eairbus%2ecom%2fU980%2fU980_redirect_world%2ehtml%3fresumePath%3d-%2Fidp-%2FBYORNf75HT-%2FresumeSAML20-%2Fidp-%2FSSO%2eping-%3FpfLoginRedirect-%3Dtrue" target="_blank" onclick="closeMobileMenu()" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
+                        <a href="https://w3.airbus.com/H380/world/airbusworld/forms/airbus.fcc" target="_blank" onclick="closeMobileMenu()" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
                             <span class="text-sm uppercase tracking-wide group-hover:underline">AIRBUS WORLD</span>
                             <i class="fa-solid fa-earth-europe text-lg w-6 text-center"></i>
                         </a>
@@ -108,76 +118,114 @@
                             <i class="fa-solid fa-jet-fighter text-lg w-6 text-center"></i>
                         </a>
                     </li>
-
-                      <li>
+                    <li>
                         <a href="https://redwatch.airasia.com/eops#" target="_blank" onclick="closeMobileMenu()" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
                             <span class="text-sm uppercase tracking-wide group-hover:underline">RED WATCH</span>
                             <i class="fa-solid fa-bullseye text-lg w-6 text-center"></i>
                         </a>
                     </li>
-                    
                     <li>
                         <a href="https://skyaims.airasia.com" target="_blank" onclick="closeMobileMenu()" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
                             <span class="text-sm uppercase tracking-wide group-hover:underline">AIMS</span>
-                            <i class="fa-solid fa-bullseye text-lg w-6 text-center"></i>
+                            <i class="fa-solid fa-crosshairs text-lg w-6 text-center"></i>
                         </a>
                     </li>
-
                     <li>
                         <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbzWpwTbW9jYYO-knwIqrg4Hb5bgnlx5eJwenYRyOwUWxCtMslgtzzsgGgfdsw2RQzHg/exec" target="_blank" onclick="closeMobileMenu()" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
-                            <span class="text-sm uppercase tracking-wide group-hover:underline">ELH OLD VERSION</span>
+                            <span class="text-sm uppercase tracking-wide group-hover:underline text-[11px]">ELH OLD VERSION</span>
                             <i class="fa-solid fa-clock-rotate-left text-lg w-6 text-center"></i>
                         </a>
                     </li>
                 </ul>
             </nav>
-
         </div>
     </div>
 
     <!-- MAIN CONTENT -->
     <div id="main" class="flex-1 w-full md:ml-64 transition-all duration-300">
 
-        <!-- Banner Section -->
+        <!-- Banner & Dashboard Section (Improved Version) -->
         <section id="top" class="relative w-full">
             <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770126320/banner_sq0hej.jpg" 
                  alt="Banner" 
-                 class="w-full h-auto block min-h-[200px] object-cover">
+                 class="w-full h-auto block min-h-[500px] object-cover">
 
-            <div class="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center">
-                <div class="container mx-auto px-6 text-center max-w-3xl text-white pt-10 md:pt-0">
-                    <header>
-                        <h2 class="text-xl md:text-3xl lg:text-5xl font-bold leading-tight mb-2 md:mb-6 drop-shadow-lg">
-                            Hello, this is the central hub of our daily essential links for <strong class="text-blue-400">MOC</strong>.
+            <div class="absolute inset-0 bg-black bg-opacity-75 flex items-center justify-center pt-20 pb-10 md:pt-0 md:pb-0">
+                <div class="container mx-auto px-6 max-w-6xl">
+                    <div class="text-center mb-8">
+                        <h2 class="text-2xl md:text-4xl font-bold text-white drop-shadow-lg uppercase tracking-wider">
+                            MOC <span class="text-blue-400">ENGINEERING</span> DASHBOARD
                         </h2>
-                    </header>
+                        <div class="h-1 w-24 bg-blue-500 mx-auto mt-4 rounded-full"></div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                        <div class="dashboard-card p-5 rounded-2xl text-white">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="bg-blue-500 bg-opacity-20 p-2 rounded-lg"><i class="fa-solid fa-plane-up text-blue-400"></i></div>
+                                <span class="text-[10px] font-mono text-blue-300">LIVE</span>
+                            </div>
+                            <div class="text-3xl font-bold">12</div>
+                            <div class="text-[11px] text-gray-400 uppercase mt-1">Active Projects</div>
+                        </div>
+
+                        <!-- Graph Card -->
+                        <div class="dashboard-card p-5 rounded-2xl text-white col-span-1 min-h-[240px] flex flex-col">
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="bg-green-500 bg-opacity-20 p-2 rounded-lg"><i class="fa-solid fa-chart-line text-green-400"></i></div>
+                                <span id="otp-trend" class="text-[9px] font-mono text-blue-300 px-1 border border-blue-500 rounded uppercase tracking-tighter">CONNECTING...</span>
+                            </div>
+                            <div class="flex-1 min-h-[140px] relative">
+                                <canvas id="otpChart"></canvas>
+                            </div>
+                            <div class="mt-2 flex items-center justify-between text-[10px]">
+                                <div class="flex items-center space-x-2">
+                                    <span class="w-2 h-2 rounded-full bg-blue-400"></span>
+                                    <span class="text-gray-400 uppercase">OTP15</span>
+                                    <span class="w-2 h-2 rounded-full bg-red-400 ml-2"></span>
+                                    <span class="text-gray-400 uppercase">ENG DLY</span>
+                                </div>
+                                <div id="otp-value" class="text-lg font-bold text-blue-400 leading-none">--.--%</div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card p-5 rounded-2xl text-white">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="bg-yellow-500 bg-opacity-20 p-2 rounded-lg"><i class="fa-solid fa-list-check text-yellow-400"></i></div>
+                                <span class="text-[10px] font-mono text-yellow-300">DUE TODAY</span>
+                            </div>
+                            <div class="text-3xl font-bold">08</div>
+                            <div class="text-[11px] text-gray-400 uppercase mt-1">Pending Reports</div>
+                        </div>
+
+                        <div class="dashboard-card p-5 rounded-2xl text-white">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="bg-red-500 bg-opacity-20 p-2 rounded-lg"><i class="fa-solid fa-triangle-exclamation text-red-400"></i></div>
+                                <span class="text-[10px] font-mono text-red-300">ALERT</span>
+                            </div>
+                            <div class="text-3xl font-bold">02</div>
+                            <div class="text-[11px] text-gray-400 uppercase mt-1">Critical Delays</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Projects Section -->
+        <!-- Projects Section (Full Content) -->
         <section id="projects" class="pt-8 pb-20 bg-gray-100">
-            <div class="container mx-auto px-6 max-w-7xl"> <!-- ปรับจาก max-w-5xl เป็น max-w-7xl เพื่อให้หน้ากว้างขึ้น -->
+            <div class="container mx-auto px-6 max-w-7xl">
                 <header class="mb-10 border-b pb-4">
                     <h2 class="text-3xl font-bold text-gray-800"><i class="fa-solid fa-shuttle-space mr-2 text-gray-400"></i> Projects</h2>
                 </header>
 
-                <!-- Grid System: 1 คอลัมน์บนมือถือ, 2 คอลัมน์บนแท็บเล็ต, 3 คอลัมน์บนหน้าจอใหญ่ -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div id="project-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     
                     <!-- 1. DELAY CAPTURE & EDSR -->
                     <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition relative group">
-                        <div onclick="toggleProjectMenu('menu-delay')" 
-                             onkeypress="if(event.key==='Enter') toggleProjectMenu('menu-delay')"
-                             class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative" 
-                             tabindex="0"
-                             aria-label="Click to open menu for DELAY CAPTURE & EDSR DRAFT">
-                             
+                        <div onclick="toggleProjectMenu('menu-delay')" class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative">
                             <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770129978/delay_qu18ng.png" 
-                                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1474487548417-781cb714c223?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';"
-                                 alt="DELAY CAPTURE & EDSR DRAFT" 
-                                 class="w-full h-full object-cover transform transition duration-500 hover:scale-110" />
-
+                                 class="w-full h-full object-cover transform transition duration-500 hover:scale-110" 
+                                 alt="DELAY CAPTURE">
                             <div id="menu-delay" onclick="event.stopPropagation()" class="hidden md:group-hover:flex absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex-col justify-center items-center space-y-2">
                                 <a href="https://docs.google.com/spreadsheets/d/15hzmr796muPK4Qg24eo1PDX9r8MGYwcEa_wWEOaTYsI/edit?pli=1&gid=1575409481#gid=1575409481" target="_blank" class="w-full text-center py-2 px-4 bg-green-600 text-white rounded hover:bg-green-500 transition font-semibold shadow-md text-sm border border-green-400">
                                     <i class="fa-brands fa-google mr-2"></i> GOOGLE SHEET DATA
@@ -187,50 +235,30 @@
                                 </a>
                             </div>
                         </div>
-                        <header class="p-6">
-                            <h3 class="text-xl font-bold mb-2">DELAY CAPTURE & EDSR DRAFT</h3>
-                            <p class="text-sm text-gray-400 italic mb-2 md:hidden"><i class="fa-solid fa-hand-pointer mr-1"></i> Tap the photo to see options</p>
-                            <p class="text-sm text-gray-400 italic mb-2 hidden md:block"><i class="fa-solid fa-mouse-pointer mr-1"></i> Hover to see options</p>
-                        </header>
+                        <div class="p-6"><h3 class="font-bold text-lg">DELAY CAPTURE & EDSR DRAFT</h3></div>
                     </article>
 
                     <!-- 2. 36HRS & WEEKLY -->
                     <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition relative group">
-                        <div onclick="toggleProjectMenu('menu-36hrs')" 
-                             onkeypress="if(event.key==='Enter') toggleProjectMenu('menu-36hrs')"
-                             class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative" 
-                             tabindex="0"
-                             aria-label="Click to open menu for 36HRS & WEEKLY">
-                             
+                        <div onclick="toggleProjectMenu('menu-36hrs')" class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative">
                             <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770129380/36hrweekly_cymzfd.png" 
-                                 alt="36HRS & WEEKLY" 
-                                 class="w-full h-full object-cover transform transition duration-500 hover:scale-110" />
-
+                                 class="w-full h-full object-cover transform transition duration-500 hover:scale-110" 
+                                 alt="36HRS">
                             <div id="menu-36hrs" onclick="event.stopPropagation()" class="hidden md:group-hover:flex absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex-col justify-center items-center space-y-2">
                                 <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbwtfXs0ElPqbXRe47Q44D9YER3op9Mj_ToAyPtgi-To_6pVrAJtId-2BpVMsWGRNeYg/exec" target="_blank" class="w-full text-center py-2 px-4 bg-orange-600 text-white rounded hover:bg-orange-500 transition font-semibold shadow-md text-sm border border-orange-400">
                                     <i class="fa-solid fa-calendar-days mr-2"></i> PLANNER + GANTT
                                 </a>
                             </div>
                         </div>
-                        <header class="p-6">
-                            <h3 class="text-xl font-bold mb-2">36HRS & WEEKLY</h3>
-                            <p class="text-sm text-gray-400 italic mb-2 md:hidden"><i class="fa-solid fa-hand-pointer mr-1"></i> Tap the photo to see options</p>
-                            <p class="text-sm text-gray-400 italic mb-2 hidden md:block"><i class="fa-solid fa-mouse-pointer mr-1"></i> Hover to see options</p>
-                        </header>
+                        <div class="p-6"><h3 class="font-bold text-lg">36HRS & WEEKLY</h3></div>
                     </article>
 
                     <!-- 3. COCKPIT WINDOWS -->
                     <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition relative group">
-                        <div onclick="toggleProjectMenu('menu-cockpit')" 
-                             onkeypress="if(event.key==='Enter') toggleProjectMenu('menu-cockpit')"
-                             class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative" 
-                             tabindex="0"
-                             aria-label="Click to open menu for Cockpit Windows">
-                             
+                        <div onclick="toggleProjectMenu('menu-cockpit')" class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative">
                             <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770127588/WDDL_ywuirm.png" 
-                                 alt="COCKPIT WINDOWS" 
-                                 class="w-full h-full object-cover transform transition duration-500 hover:scale-110" />
-
+                                 class="w-full h-full object-cover transform transition duration-500 hover:scale-110" 
+                                 alt="COCKPIT">
                             <div id="menu-cockpit" onclick="event.stopPropagation()" class="hidden md:group-hover:flex absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex-col justify-center items-center space-y-2">
                                 <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbzANRaZP38ZfMW-u285DYCOfbzZW6446bk4JoiVNSYCkPc3c5XTDXWvKgXRQ4XuesMd/exec" target="_blank" class="w-full text-center py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-500 transition font-semibold shadow-md text-sm border border-blue-400">
                                     <i class="fa-solid fa-file-contract mr-2"></i> REPORT FORM
@@ -246,35 +274,21 @@
                                 </a>
                             </div>
                         </div>
-                        <header class="p-6">
-                            <h3 class="text-xl font-bold mb-2">COCKPIT WINDOWS</h3>
-                            <p class="text-sm text-gray-400 italic mb-2 md:hidden"><i class="fa-solid fa-hand-pointer mr-1"></i> Tap the photo to see options</p>
-                            <p class="text-sm text-gray-400 italic mb-2 hidden md:block"><i class="fa-solid fa-mouse-pointer mr-1"></i> Hover to see options</p>
-                        </header>
+                        <div class="p-6"><h3 class="font-bold text-lg">COCKPIT WINDOWS</h3></div>
                     </article>
 
                     <!-- 4. FUEL DRAIN MONITOR -->
                     <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition relative group">
-                        <div onclick="toggleProjectMenu('menu-fuel')" 
-                             onkeypress="if(event.key==='Enter') toggleProjectMenu('menu-fuel')"
-                             class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative" 
-                             tabindex="0"
-                             aria-label="Click to open menu for FUEL DRAIN MONITOR">
-                             
+                        <div onclick="toggleProjectMenu('menu-fuel')" class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative">
                             <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770130942/fuel_bbbev9.png" 
-                                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';"
-                                 alt="FUEL DRAIN MONITOR" 
-                                 class="w-full h-full object-cover transform transition duration-500 hover:scale-110" />
-
+                                 class="w-full h-full object-cover transform transition duration-500 hover:scale-110" 
+                                 alt="FUEL">
                             <div id="menu-fuel" onclick="event.stopPropagation()" class="hidden md:group-hover:flex absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex-col justify-center items-center space-y-2">
                                 <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbz1bMuKjwUm7hG6z2nRfc5kTYVAaRkjS6Lj-6wZueOme3OgqKctYPQxYegZJD4G4h8_/exec" target="_blank" class="w-full text-center py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-500 transition font-semibold shadow-md text-sm border border-blue-400">
                                     <i class="fa-solid fa-file-contract mr-2"></i> REPORT FORM
                                 </a>
                                 <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbxM3fGeCoxjC7bhZxb2jJZu3hnkpWRRhRqBI4mR8CeWAwtUNe8mEksMxKStD5ZuYPfzPg/exec" target="_blank" class="w-full text-center py-2 px-4 bg-purple-600 text-white rounded hover:bg-purple-500 transition font-semibold shadow-md text-sm border border-purple-400">
                                     <i class="fa-solid fa-chart-line mr-2"></i> SUMMARY BOARD
-                                </a>
-                                <a href="https://docs.google.com/spreadsheets/d/1dERSv5F9Vz-bQv-010ResmCJ7-kI8zggnG3aqFXZ_1o/edit?usp=sharing" target="_blank" class="w-full text-center py-2 px-4 bg-green-600 text-white rounded hover:bg-green-500 transition font-semibold shadow-md text-sm border border-green-400">
-                                    <i class="fa-brands fa-google mr-2"></i> GOOGLE SHEET DATA
                                 </a>
                                 <a href="https://docs.google.com/spreadsheets/d/1ct0ydAJXArnnMRaFuYK5H5kbKYhGO7NABT5dHkY1rJg/edit?gid=0#gid=0" target="_blank" class="w-full text-center py-2 px-4 bg-gray-600 text-white rounded hover:bg-gray-500 transition font-semibold shadow-md text-sm border border-gray-400">
                                     <i class="fa-solid fa-database mr-2"></i> TODAY's back-up
@@ -284,26 +298,15 @@
                                 </a>
                             </div>
                         </div>
-                        <header class="p-6">
-                            <h3 class="text-xl font-bold mb-2">FUEL DRAIN MONITOR</h3>
-                            <p class="text-sm text-gray-400 italic mb-2 md:hidden"><i class="fa-solid fa-hand-pointer mr-1"></i> Tap the photo to see options</p>
-                            <p class="text-sm text-gray-400 italic mb-2 hidden md:block"><i class="fa-solid fa-mouse-pointer mr-1"></i> Hover to see options</p>
-                        </header>
+                        <div class="p-6"><h3 class="font-bold text-lg">FUEL DRAIN MONITOR</h3></div>
                     </article>
 
                     <!-- 5. ENG OIL SERVICING -->
                     <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition relative group">
-                        <div onclick="toggleProjectMenu('menu-oil')" 
-                             onkeypress="if(event.key==='Enter') toggleProjectMenu('menu-oil')"
-                             class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative" 
-                             tabindex="0"
-                             aria-label="Click to open menu for ENG OIL SERVICING">
-                             
+                        <div onclick="toggleProjectMenu('menu-oil')" class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative">
                             <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770139005/oil_hhq1wf.png" 
-                                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1581092921461-eab62e97a783?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';"
-                                 alt="ENG OIL SERVICING" 
-                                 class="w-full h-full object-cover transform transition duration-500 hover:scale-110" />
-
+                                 class="w-full h-full object-cover transform transition duration-500 hover:scale-110" 
+                                 alt="OIL">
                             <div id="menu-oil" onclick="event.stopPropagation()" class="hidden md:group-hover:flex absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex-col justify-center items-center space-y-2">
                                 <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbweXIls6u4khtDxFAZr3rA7jGIBkp1qQmeB5iy8accP0eyhmAOzpaoVlAqBxoME3faL/exec" target="_blank" class="w-full text-center py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-500 transition font-semibold shadow-md text-sm border border-blue-400">
                                     <i class="fa-solid fa-file-contract mr-2"></i> REPORT FORM
@@ -313,26 +316,15 @@
                                 </a>
                             </div>
                         </div>
-                        <header class="p-6">
-                            <h3 class="text-xl font-bold mb-2">ENG OIL SERVICING</h3>
-                            <p class="text-sm text-gray-400 italic mb-2 md:hidden"><i class="fa-solid fa-hand-pointer mr-1"></i> Tap the photo to see options</p>
-                            <p class="text-sm text-gray-400 italic mb-2 hidden md:block"><i class="fa-solid fa-mouse-pointer mr-1"></i> Hover to see options</p>
-                        </header>
+                        <div class="p-6"><h3 class="font-bold text-lg">ENG OIL SERVICING</h3></div>
                     </article>
 
                     <!-- 6. PNEUMATIC STARTER -->
                     <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition relative group">
-                        <div onclick="toggleProjectMenu('menu-starter')" 
-                             onkeypress="if(event.key==='Enter') toggleProjectMenu('menu-starter')"
-                             class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative" 
-                             tabindex="0"
-                             aria-label="Click to open menu for PNEUMATIC STARTER">
-                             
+                        <div onclick="toggleProjectMenu('menu-starter')" class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative">
                             <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770131568/Starter_rql29z.png" 
-                                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1581092921461-eab62e97a783?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';"
-                                 alt="PNEUMATIC STARTER" 
-                                 class="w-full h-full object-cover transform transition duration-500 hover:scale-110" />
-
+                                 class="w-full h-full object-cover transform transition duration-500 hover:scale-110" 
+                                 alt="STARTER">
                             <div id="menu-starter" onclick="event.stopPropagation()" class="hidden md:group-hover:flex absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex-col justify-center items-center space-y-2">
                                 <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbzr_vQawaSi0MXTSQQ_rqSY0p0dEU9OLoZOL6kG9Io/dev" target="_blank" class="w-full text-center py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-500 transition font-semibold shadow-md text-sm border border-blue-400">
                                     <i class="fa-solid fa-file-contract mr-2"></i> REPORT FORM
@@ -342,26 +334,15 @@
                                 </a>
                             </div>
                         </div>
-                        <header class="p-6">
-                            <h3 class="text-xl font-bold mb-2">PNEUMATIC STARTER</h3>
-                            <p class="text-sm text-gray-400 italic mb-2 md:hidden"><i class="fa-solid fa-hand-pointer mr-1"></i> Tap the photo to see options</p>
-                            <p class="text-sm text-gray-400 italic mb-2 hidden md:block"><i class="fa-solid fa-mouse-pointer mr-1"></i> Hover to see options</p>
-                        </header>
+                        <div class="p-6"><h3 class="font-bold text-lg">PNEUMATIC STARTER</h3></div>
                     </article>
 
                     <!-- 7. ENG SPINNER CONE -->
                     <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition relative group">
-                        <div onclick="toggleProjectMenu('menu-spinner')" 
-                             onkeypress="if(event.key==='Enter') toggleProjectMenu('menu-spinner')"
-                             class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative" 
-                             tabindex="0"
-                             aria-label="Click to open menu for ENG SPINNER CONE">
-                             
+                        <div onclick="toggleProjectMenu('menu-spinner')" class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative">
                             <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770133170/Screenshot_2569-02-03_at_23.38.50_xyxagd.png" 
-                                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1542461927-a0e445377858?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';"
-                                 alt="ENG SPINNER CONE" 
-                                 class="w-full h-full object-cover transform transition duration-500 hover:scale-110" />
-
+                                 class="w-full h-full object-cover transform transition duration-500 hover:scale-110" 
+                                 alt="SPINNER">
                             <div id="menu-spinner" onclick="event.stopPropagation()" class="hidden md:group-hover:flex absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex-col justify-center items-center space-y-2">
                                 <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbxzBqHE0vcoXpWV4NI1ba3H9pTS4IRzvxiuuVG-qEoE/dev" target="_blank" class="w-full text-center py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-500 transition font-semibold shadow-md text-sm border border-blue-400">
                                     <i class="fa-solid fa-file-contract mr-2"></i> REPORT FORM
@@ -374,56 +355,174 @@
                                 </a>
                             </div>
                         </div>
-                        <header class="p-6">
-                            <h3 class="text-xl font-bold mb-2">ENG SPINNER CONE</h3>
-                            <p class="text-sm text-gray-400 italic mb-2 md:hidden"><i class="fa-solid fa-hand-pointer mr-1"></i> Tap the photo to see options</p>
-                            <p class="text-sm text-gray-400 italic mb-2 hidden md:block"><i class="fa-solid fa-mouse-pointer mr-1"></i> Hover to see options</p>
-                        </header>
+                        <div class="p-6"><h3 class="font-bold text-lg">ENG SPINNER CONE</h3></div>
                     </article>
-                    
+
                 </div>
             </div>
         </section>
 
-        <div id="footer" class="bg-gray-200 py-6 text-center text-sm text-gray-500">
-            <ul class="copyright space-x-2">
-                <li class="inline">&copy; jack & sonic. All rights not really reserved.</li>
-                <li class="inline">| Design: sonic</li>
-            </ul>
-        </div>
-
+        <footer class="bg-gray-200 py-6 text-center text-xs text-gray-500">
+            &copy; jack & sonic. | Powered by MOC Tech
+        </footer>
     </div>
 
-    <!-- SCRIPT -->
     <script>
+        // --- 1. ระบบควบคุมเมนูมือถือ (UI) ---
         const btn = document.getElementById('mobile-menu-btn');
         const sidebar = document.getElementById('header');
+        btn.addEventListener('click', () => sidebar.classList.toggle('-translate-x-full'));
+        function closeMobileMenu() { if (window.innerWidth < 768) sidebar.classList.add('-translate-x-full'); }
         
-        btn.addEventListener('click', () => {
-            sidebar.classList.toggle('-translate-x-full');
-        });
-
-        function closeMobileMenu() {
-            if (window.innerWidth < 768) {
-                sidebar.classList.add('-translate-x-full');
-            }
-        }
-
+        // ฟังก์ชัน Toggle สำหรับโปรเจกต์ (ปรับปรุงให้รองรับ ID ทุกตัว)
         function toggleProjectMenu(menuId) {
-            if (window.innerWidth >= 768) {
-                return;
-            }
-
+            if (window.innerWidth >= 768) return; // บน Desktop ไม่ต้องทำอะไร (ใช้ Hover)
+            
             const menu = document.getElementById(menuId);
-            if (menu.classList.contains('hidden')) {
-                menu.classList.remove('hidden');
-                menu.classList.add('flex');
-            } else {
-                menu.classList.add('hidden');
-                menu.classList.remove('flex');
+            if (!menu) return;
+            
+            // ปิดเมนูอื่นๆ ทั้งหมดก่อน
+            const allMenus = document.querySelectorAll('[id^="menu-"]');
+            allMenus.forEach(m => {
+                if (m.id !== menuId) {
+                    m.classList.add('hidden');
+                    m.classList.remove('flex');
+                }
+            });
+
+            // Toggle ตัวที่เลือก
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('flex');
+        }
+
+        // --- 2. ระบบ DASHBOARD OTP (Auto-Refresh Logic) ---
+        const OPT_DATA_URL = 'https://script.google.com/macros/s/AKfycbzUXDItR3eFn_16B68oz953r_F1PgoQ4kUuyfivYEG0Gb1RGRvSyVd8nKqv9flIgx4x/exec';
+        
+        let otpChart = null;
+
+        async function fetchOTPData() {
+            const trendEl = document.getElementById('otp-trend');
+            const valueEl = document.getElementById('otp-value');
+            
+            if (trendEl) {
+                trendEl.textContent = 'SYNCING...';
+                trendEl.classList.replace('text-green-400', 'text-yellow-400');
+            }
+            
+            try {
+                const response = await fetch(OPT_DATA_URL);
+                if (!response.ok) throw new Error('Network error');
+                
+                const data = await response.json();
+
+                if (Array.isArray(data) && data.length > 0) {
+                    const labels = data.map(d => d.date);
+                    const processValue = (val) => {
+                        let n = parseFloat(val);
+                        if (isNaN(n)) return 0;
+                        return (n > 0 && n <= 1.0) ? (n * 100) : n;
+                    };
+
+                    const valuesB = data.map(d => processValue(d.valueB || d.value));
+                    const valuesC = data.map(d => processValue(d.valueC || 0));
+
+                    updateChart(labels, valuesB, valuesC);
+                    
+                    if (valueEl) {
+                        const latestOTP15 = valuesB[valuesB.length - 1];
+                        valueEl.textContent = latestOTP15.toFixed(2) + '%';
+                    }
+                    
+                    if (trendEl) {
+                        trendEl.textContent = 'DUAL ONLINE';
+                        trendEl.classList.replace('text-yellow-400', 'text-green-400');
+                    }
+                }
+            } catch (err) {
+                console.error('Fetch error:', err);
+                if (trendEl) {
+                    trendEl.textContent = 'RETRYING...';
+                    trendEl.classList.replace('text-green-400', 'text-red-400');
+                    trendEl.classList.replace('text-yellow-400', 'text-red-400');
+                }
             }
         }
+
+        function updateChart(labels, valuesB, valuesC) {
+            const canvas = document.getElementById('otpChart');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+
+            if (otpChart) {
+                otpChart.data.labels = labels;
+                otpChart.data.datasets[0].data = valuesB;
+                otpChart.data.datasets[1].data = valuesC;
+                otpChart.update();
+            } else {
+                otpChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'OTP15 (%)',
+                                data: valuesB,
+                                borderColor: '#60a5fa',
+                                backgroundColor: 'rgba(96, 165, 250, 0.1)',
+                                borderWidth: 2,
+                                pointRadius: 0,
+                                pointHoverRadius: 4,
+                                fill: true,
+                                tension: 0.4
+                            },
+                            {
+                                label: 'ENG DLY (%)',
+                                data: valuesC,
+                                borderColor: '#f87171',
+                                backgroundColor: 'rgba(248, 113, 113, 0.1)',
+                                borderWidth: 2,
+                                pointRadius: 0,
+                                pointHoverRadius: 4,
+                                fill: true,
+                                tension: 0.4
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        interaction: { mode: 'index', intersect: false },
+                        animation: { duration: 1000 },
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: 'rgba(0,0,0,0.8)',
+                                titleFont: { size: 10 },
+                                bodyFont: { size: 10 },
+                                callbacks: {
+                                    label: (ctx) => `${ctx.dataset.label.split(' ')[0]}: ${ctx.parsed.y.toFixed(2)}%`
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                grid: { display: false },
+                                ticks: { color: '#9ca3af', font: { size: 8 }, maxRotation: 0 }
+                            },
+                            y: {
+                                beginAtZero: true,
+                                grid: { color: 'rgba(75, 85, 99, 0.2)', borderDash: [2, 4] },
+                                ticks: { display: false }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        window.addEventListener('load', fetchOTPData);
+        setInterval(fetchOTPData, 30000);
+
     </script>
 </body>
 </html>
-
