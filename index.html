@@ -66,7 +66,6 @@
                         </a>
                     </li>
                     
-                    <!-- เมนูเสริม -->
                     <li>
                         <a href="https://docs.google.com/spreadsheets/d/1feAD2dXpGe6V_55qVL0AdpghzPQ2_mnlSE5H21xNkL8/edit?gid=1352464537#gid=1352464537" target="_blank" onclick="closeMobileMenu()" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
                             <span class="text-sm uppercase tracking-wide group-hover:underline">HANDOVER SHEET</span>
@@ -158,13 +157,13 @@
 
         <!-- Projects Section -->
         <section id="projects" class="pt-8 pb-20 bg-gray-100">
-            <div class="container mx-auto px-6 max-w-5xl">
+            <div class="container mx-auto px-6 max-w-7xl"> <!-- ปรับจาก max-w-5xl เป็น max-w-7xl เพื่อให้หน้ากว้างขึ้น -->
                 <header class="mb-10 border-b pb-4">
                     <h2 class="text-3xl font-bold text-gray-800"><i class="fa-solid fa-shuttle-space mr-2 text-gray-400"></i> Projects</h2>
                 </header>
 
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Grid System: 1 คอลัมน์บนมือถือ, 2 คอลัมน์บนแท็บเล็ต, 3 คอลัมน์บนหน้าจอใหญ่ -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     
                     <!-- 1. DELAY CAPTURE & EDSR -->
                     <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition relative group">
@@ -179,7 +178,6 @@
                                  alt="DELAY CAPTURE & EDSR DRAFT" 
                                  class="w-full h-full object-cover transform transition duration-500 hover:scale-110" />
 
-                            <!-- Added md:group-hover:flex here -->
                             <div id="menu-delay" onclick="event.stopPropagation()" class="hidden md:group-hover:flex absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex-col justify-center items-center space-y-2">
                                 <a href="https://docs.google.com/spreadsheets/d/15hzmr796muPK4Qg24eo1PDX9r8MGYwcEa_wWEOaTYsI/edit?pli=1&gid=381084786#gid=381084786" target="_blank" class="w-full text-center py-2 px-4 bg-green-600 text-white rounded hover:bg-green-500 transition font-semibold shadow-md text-sm border border-green-400">
                                     <i class="fa-brands fa-google mr-2"></i> GOOGLE SHEET DATA
@@ -208,7 +206,6 @@
                                  alt="36HRS & WEEKLY" 
                                  class="w-full h-full object-cover transform transition duration-500 hover:scale-110" />
 
-                            <!-- Added md:group-hover:flex here -->
                             <div id="menu-36hrs" onclick="event.stopPropagation()" class="hidden md:group-hover:flex absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex-col justify-center items-center space-y-2">
                                 <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbwtfXs0ElPqbXRe47Q44D9YER3op9Mj_ToAyPtgi-To_6pVrAJtId-2BpVMsWGRNeYg/exec" target="_blank" class="w-full text-center py-2 px-4 bg-orange-600 text-white rounded hover:bg-orange-500 transition font-semibold shadow-md text-sm border border-orange-400">
                                     <i class="fa-solid fa-calendar-days mr-2"></i> PLANNER + GANTT
@@ -234,7 +231,6 @@
                                  alt="COCKPIT WINDOWS" 
                                  class="w-full h-full object-cover transform transition duration-500 hover:scale-110" />
 
-                            <!-- Added md:group-hover:flex here -->
                             <div id="menu-cockpit" onclick="event.stopPropagation()" class="hidden md:group-hover:flex absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex-col justify-center items-center space-y-2">
                                 <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbzANRaZP38ZfMW-u285DYCOfbzZW6446bk4JoiVNSYCkPc3c5XTDXWvKgXRQ4XuesMd/exec" target="_blank" class="w-full text-center py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-500 transition font-semibold shadow-md text-sm border border-blue-400">
                                     <i class="fa-solid fa-file-contract mr-2"></i> REPORT FORM
@@ -270,28 +266,22 @@
                                  alt="FUEL DRAIN MONITOR" 
                                  class="w-full h-full object-cover transform transition duration-500 hover:scale-110" />
 
-                            <!-- Added md:group-hover:flex here -->
                             <div id="menu-fuel" onclick="event.stopPropagation()" class="hidden md:group-hover:flex absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex-col justify-center items-center space-y-2">
                                 <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbz1bMuKjwUm7hG6z2nRfc5kTYVAaRkjS6Lj-6wZueOme3OgqKctYPQxYegZJD4G4h8_/exec" target="_blank" class="w-full text-center py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-500 transition font-semibold shadow-md text-sm border border-blue-400">
                                     <i class="fa-solid fa-file-contract mr-2"></i> REPORT FORM
                                 </a>
-                                
                                 <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbxM3fGeCoxjC7bhZxb2jJZu3hnkpWRRhRqBI4mR8CeWAwtUNe8mEksMxKStD5ZuYPfzPg/exec" target="_blank" class="w-full text-center py-2 px-4 bg-purple-600 text-white rounded hover:bg-purple-500 transition font-semibold shadow-md text-sm border border-purple-400">
                                     <i class="fa-solid fa-chart-line mr-2"></i> SUMMARY BOARD
                                 </a>
-                                
                                 <a href="https://docs.google.com/spreadsheets/d/1dERSv5F9Vz-bQv-010ResmCJ7-kI8zggnG3aqFXZ_1o/edit?usp=sharing" target="_blank" class="w-full text-center py-2 px-4 bg-green-600 text-white rounded hover:bg-green-500 transition font-semibold shadow-md text-sm border border-green-400">
                                     <i class="fa-brands fa-google mr-2"></i> GOOGLE SHEET DATA
                                 </a>
-                                
                                 <a href="https://docs.google.com/spreadsheets/d/1ct0ydAJXArnnMRaFuYK5H5kbKYhGO7NABT5dHkY1rJg/edit?gid=0#gid=0" target="_blank" class="w-full text-center py-2 px-4 bg-gray-600 text-white rounded hover:bg-gray-500 transition font-semibold shadow-md text-sm border border-gray-400">
                                     <i class="fa-solid fa-database mr-2"></i> TODAY's back-up
                                 </a>
-                                
                                 <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbwUcSU5dHqMmb8MBv8z0z2tzjRHcgII1V9DFV6tGAsc8e6Pu8Ylb7RdR-JHrLkJzuKrIA/exec" target="_blank" class="w-full text-center py-2 px-4 bg-cyan-600 text-white rounded hover:bg-cyan-500 transition font-semibold shadow-md text-sm border border-cyan-400">
                                     <i class="fa-solid fa-plane-arrival mr-2"></i> KUL Bay Planner
                                 </a>
-
                             </div>
                         </div>
                         <header class="p-6">
@@ -301,29 +291,26 @@
                         </header>
                     </article>
 
-                    <!-- 5.5 ENG OIL SERVICING -->
+                    <!-- 5. ENG OIL SERVICING -->
                     <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition relative group">
-                        <div onclick="toggleProjectMenu('menu-starter')" 
-                             onkeypress="if(event.key==='Enter') toggleProjectMenu('menu-starter')"
+                        <div onclick="toggleProjectMenu('menu-oil')" 
+                             onkeypress="if(event.key==='Enter') toggleProjectMenu('menu-oil')"
                              class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative" 
                              tabindex="0"
-                             aria-label="Click to open menu for PNEUMATIC STARTER">
+                             aria-label="Click to open menu for ENG OIL SERVICING">
                              
                             <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770139005/oil_hhq1wf.png" 
                                  onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1581092921461-eab62e97a783?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';"
-                                 alt="PNEUMATIC STARTER" 
+                                 alt="ENG OIL SERVICING" 
                                  class="w-full h-full object-cover transform transition duration-500 hover:scale-110" />
 
-                            <!-- Added md:group-hover:flex here -->
-                            <div id="menu-starter" onclick="event.stopPropagation()" class="hidden md:group-hover:flex absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex-col justify-center items-center space-y-2">
+                            <div id="menu-oil" onclick="event.stopPropagation()" class="hidden md:group-hover:flex absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex-col justify-center items-center space-y-2">
                                 <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbweXIls6u4khtDxFAZr3rA7jGIBkp1qQmeB5iy8accP0eyhmAOzpaoVlAqBxoME3faL/exec" target="_blank" class="w-full text-center py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-500 transition font-semibold shadow-md text-sm border border-blue-400">
                                     <i class="fa-solid fa-file-contract mr-2"></i> REPORT FORM
                                 </a>
-                                
                                 <a href="https://docs.google.com/spreadsheets/d/1FMlo_qZ-Aon1iSTPSThb3fEEuGJewM8s3NoIP8eXCL8/edit?gid=0#gid=0" target="_blank" class="w-full text-center py-2 px-4 bg-green-600 text-white rounded hover:bg-green-500 transition font-semibold shadow-md text-sm border border-green-400">
                                     <i class="fa-brands fa-google mr-2"></i> GOOGLE SHEET DATA
                                 </a>
-                                
                             </div>
                         </div>
                         <header class="p-6">
@@ -333,10 +320,7 @@
                         </header>
                     </article>
 
-
-
-                    
-                    <!-- 5. PNEUMATIC STARTER -->
+                    <!-- 6. PNEUMATIC STARTER -->
                     <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition relative group">
                         <div onclick="toggleProjectMenu('menu-starter')" 
                              onkeypress="if(event.key==='Enter') toggleProjectMenu('menu-starter')"
@@ -349,16 +333,13 @@
                                  alt="PNEUMATIC STARTER" 
                                  class="w-full h-full object-cover transform transition duration-500 hover:scale-110" />
 
-                            <!-- Added md:group-hover:flex here -->
                             <div id="menu-starter" onclick="event.stopPropagation()" class="hidden md:group-hover:flex absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex-col justify-center items-center space-y-2">
                                 <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbzr_vQawaSi0MXTSQQ_rqSY0p0dEU9OLoZOL6kG9Io/dev" target="_blank" class="w-full text-center py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-500 transition font-semibold shadow-md text-sm border border-blue-400">
                                     <i class="fa-solid fa-file-contract mr-2"></i> REPORT FORM
                                 </a>
-                                
                                 <a href="https://docs.google.com/spreadsheets/d/1buS6egAcQKYReOYJ_pCIj8FhXNmevkor5ZMJoYe3N5g/edit?usp=sharing" target="_blank" class="w-full text-center py-2 px-4 bg-green-600 text-white rounded hover:bg-green-500 transition font-semibold shadow-md text-sm border border-green-400">
                                     <i class="fa-brands fa-google mr-2"></i> GOOGLE SHEET DATA
                                 </a>
-                                
                             </div>
                         </div>
                         <header class="p-6">
@@ -368,7 +349,7 @@
                         </header>
                     </article>
 
-                    <!-- 6. ENG SPINNER CONE -->
+                    <!-- 7. ENG SPINNER CONE -->
                     <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition relative group">
                         <div onclick="toggleProjectMenu('menu-spinner')" 
                              onkeypress="if(event.key==='Enter') toggleProjectMenu('menu-spinner')"
@@ -381,20 +362,16 @@
                                  alt="ENG SPINNER CONE" 
                                  class="w-full h-full object-cover transform transition duration-500 hover:scale-110" />
 
-                            <!-- Added md:group-hover:flex here -->
                             <div id="menu-spinner" onclick="event.stopPropagation()" class="hidden md:group-hover:flex absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex-col justify-center items-center space-y-2">
                                 <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbxzBqHE0vcoXpWV4NI1ba3H9pTS4IRzvxiuuVG-qEoE/dev" target="_blank" class="w-full text-center py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-500 transition font-semibold shadow-md text-sm border border-blue-400">
                                     <i class="fa-solid fa-file-contract mr-2"></i> REPORT FORM
                                 </a>
-                                
                                 <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbx3XdGe19vjxDN91kZ3I2owOJWmR_XFzt4uLH3djGC0zU4Ru5iZVxYq0vFPJtE0daQt8w/exec" target="_blank" class="w-full text-center py-2 px-4 bg-teal-600 text-white rounded hover:bg-teal-500 transition font-semibold shadow-md text-sm border border-teal-400">
                                     <i class="fa-solid fa-eye mr-2"></i> VIEW REPORT
                                 </a>
-                                
                                 <a href="https://docs.google.com/spreadsheets/d/1FYK35P9TaySA-4A8F5t04m3kTTaCeBIwJgDa874JKFg/edit?usp=sharing" target="_blank" class="w-full text-center py-2 px-4 bg-green-600 text-white rounded hover:bg-green-500 transition font-semibold shadow-md text-sm border border-green-400">
                                     <i class="fa-brands fa-google mr-2"></i> MAIN GG SHEET
                                 </a>
-                                
                             </div>
                         </div>
                         <header class="p-6">
@@ -433,8 +410,6 @@
         }
 
         function toggleProjectMenu(menuId) {
-            // Check if screen width is md (768px) or larger
-            // If it is Desktop, we DO NOT toggle on click (CSS Hover handles it)
             if (window.innerWidth >= 768) {
                 return;
             }
@@ -442,7 +417,7 @@
             const menu = document.getElementById(menuId);
             if (menu.classList.contains('hidden')) {
                 menu.classList.remove('hidden');
-                menu.classList.add('flex'); // Add flex to ensure it shows properly
+                menu.classList.add('flex');
             } else {
                 menu.classList.add('hidden');
                 menu.classList.remove('flex');
@@ -451,4 +426,3 @@
     </script>
 </body>
 </html>
-
