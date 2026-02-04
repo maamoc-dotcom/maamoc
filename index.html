@@ -52,7 +52,7 @@
 </head>
 <body class="font-sans text-gray-600 bg-white overflow-hidden h-screen">
 
-    <!-- ================= LOGIN SCREEN (DEFAULT VISIBLE) ================= -->
+    <!-- ================= LOGIN SCREEN (VISIBLE BY DEFAULT) ================= -->
     <div id="login-screen" class="fixed inset-0 z-[100] login-bg flex items-center justify-center">
         <div class="absolute inset-0 bg-black bg-opacity-80"></div>
         
@@ -86,7 +86,7 @@
         </div>
     </div>
 
-    <!-- ================= APP CONTENT (INITIALLY HIDDEN) ================= -->
+    <!-- ================= APP CONTENT (HIDDEN BY DEFAULT) ================= -->
     <div id="app-content" class="hidden flex-col md:flex-row h-screen w-full overflow-hidden">
         
         <!-- MOBILE MENU BUTTON -->
@@ -218,14 +218,35 @@
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-                            <!-- Card 1 -->
-                            <div class="dashboard-card p-5 rounded-2xl text-white">
-                                <div class="flex items-center justify-between mb-3">
-                                    <div class="bg-blue-500 bg-opacity-20 p-2 rounded-lg"><i class="fa-solid fa-plane-up text-blue-400"></i></div>
-                                    <span class="text-[10px] font-mono text-blue-300">LIVE</span>
+                            
+                            <!-- Card 1: DDML REPORT (UPDATED) -->
+                            <div class="dashboard-card p-5 rounded-2xl text-white relative overflow-hidden group">
+                                <div class="absolute top-0 right-0 p-2 opacity-50"><i class="fa-solid fa-file-invoice text-4xl text-gray-500"></i></div>
+                                
+                                <div class="flex items-center justify-between mb-2 relative z-10">
+                                    <div class="bg-blue-600 bg-opacity-40 p-1.5 rounded-lg"><i class="fa-solid fa-clipboard-list text-blue-200 text-sm"></i></div>
+                                    <span id="ddml-date" class="text-[10px] font-mono text-blue-300 border border-blue-500/30 px-2 py-0.5 rounded bg-blue-900/40">Syncing...</span>
                                 </div>
-                                <div class="text-3xl font-bold">12</div>
-                                <div class="text-[11px] text-gray-400 uppercase mt-1">Active Projects</div>
+                                
+                                <div class="relative z-10">
+                                    <div class="text-[10px] text-gray-400 uppercase tracking-widest mb-1">Total DDML</div>
+                                    <div id="ddml-total" class="text-4xl font-bold text-white leading-none">--</div>
+                                </div>
+
+                                <div class="mt-4 pt-3 border-t border-gray-600/50 grid grid-cols-3 gap-2 text-center relative z-10">
+                                    <div>
+                                        <div class="text-[9px] text-gray-400 uppercase">CAT</div>
+                                        <div id="ddml-cat" class="text-lg font-bold text-yellow-400">-</div>
+                                    </div>
+                                    <div class="border-l border-gray-600/50">
+                                        <div class="text-[9px] text-gray-400 uppercase">AMD</div>
+                                        <div id="ddml-amd" class="text-lg font-bold text-green-400">-</div>
+                                    </div>
+                                    <div class="border-l border-gray-600/50">
+                                        <div class="text-[9px] text-gray-400 uppercase">STR/FC</div>
+                                        <div id="ddml-str" class="text-lg font-bold text-red-400">-</div>
+                                    </div>
+                                </div>
                             </div>
 
                             <!-- Card 2 (Graph) -->
@@ -389,16 +410,15 @@
 
         // ================================================================
         // [1] ส่วนตั้งค่า FIREBASE (คุณต้องแก้ไขตรงนี้)
-        // ไปที่ https://console.firebase.google.com/ สร้างโปรเจกต์ > Add Web App > Copy Config
         // ================================================================
         const firebaseConfig = {
             apiKey: "AIzaSyBoHj4s99iMQLKKT8ZZHD4uTugLXlQRxWg",
-  authDomain: "maa-moc.firebaseapp.com",
-  projectId: "maa-moc",
-  storageBucket: "maa-moc.firebasestorage.app",
-  messagingSenderId: "1025979944090",
-  appId: "1:1025979944090:web:4e4408870e740fa34ba323",
-  measurementId: "G-77MC6DQX0T"
+            authDomain: "maa-moc.firebaseapp.com",
+            projectId: "maa-moc",
+            storageBucket: "maa-moc.firebasestorage.app",
+            messagingSenderId: "1025979944090",
+            appId: "1:1025979944090:web:4e4408870e740fa34ba323",
+            measurementId: "G-77MC6DQX0T"
         };
 
         // Initialize Firebase
@@ -408,12 +428,9 @@
             app = initializeApp(firebaseConfig);
             auth = getAuth(app);
             provider = new GoogleAuthProvider();
-            // Force account selection prompt
             provider.setCustomParameters({ prompt: 'select_account' }); 
         } catch (e) {
             console.error("Firebase Init Error:", e);
-            document.getElementById('error-msg').innerText = "System Configuration Error (Check Console)";
-            document.getElementById('login-error').classList.remove('hidden');
         }
 
         // DOM Elements
@@ -446,33 +463,32 @@
             }
         });
 
-        // [3] VALIDATION LOGIC (AIRASIA ONLY)
+        // [3] VALIDATION LOGIC
         function validateUser(user) {
             if (user.email.endsWith('@airasia.com')) {
-                // Success
                 showApp(user);
             } else {
-                // Fail - Wrong Domain
                 signOut(auth);
                 showLoginError("Access Denied: Only @airasia.com accounts are allowed.");
             }
         }
 
         function showApp(user) {
-            // Update Sidebar User Info
             userName.innerText = user.displayName || "User";
             userEmail.innerText = user.email;
             if(user.photoURL) userPhoto.src = user.photoURL;
 
-            // Transition UI
             loginScreen.classList.add('hidden');
             appContent.classList.remove('hidden');
             appContent.classList.add('flex');
             
-            // Trigger Chart Load (if not already running)
             if(!window.chartInterval) {
                 fetchOTPData();
-                window.chartInterval = setInterval(fetchOTPData, 60000);
+                fetchDDMLData(); // Call new DDML function
+                window.chartInterval = setInterval(() => {
+                    fetchOTPData();
+                    fetchDDMLData();
+                }, 60000);
             }
         }
 
@@ -483,13 +499,13 @@
             errorMsg.innerText = message;
         }
 
-        // [4] AUTH STATE OBSERVER (PERSISTENCE)
+        // [4] AUTH STATE OBSERVER (SECURE MODE RESTORED)
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 if (user.email.endsWith('@airasia.com')) {
                     showApp(user);
                 } else {
-                    signOut(auth); // Kick out if domain mismatch in session
+                    signOut(auth);
                 }
             } else {
                 // Not logged in
@@ -508,7 +524,7 @@
             });
         });
 
-        // --- DASHBOARD JS (Keep original logic but scoped to window) ---
+        // --- DASHBOARD JS ---
         
         // Mobile Menu
         const btn = document.getElementById('mobile-menu-btn');
@@ -536,6 +552,52 @@
 
             menu.classList.toggle('hidden');
             menu.classList.toggle('flex');
+        }
+
+        // --- NEW: FETCH DDML DATA FROM SHEET ---
+        async function fetchDDMLData() {
+            // Sheet: 1D9ed8aGAIWbf_MmfN_Lm4b2s9ZkBETnaQ6u06gobil0
+            // Range: A2:E2 (Date, CAT, AMD, STR, Total)
+            const SHEET_ID = '1D9ed8aGAIWbf_MmfN_Lm4b2s9ZkBETnaQ6u06gobil0';
+            const SHEET_NAME = 'ชีต1';
+            const RANGE = 'A2:E2';
+            const URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}&range=${RANGE}`;
+
+            try {
+                const res = await fetch(URL);
+                const text = await res.text();
+                
+                // Parse GViz JSON response (stripping the wrapper)
+                // Default response format: /*O_o*/\ngoogle.visualization.Query.setResponse({...});
+                const jsonText = text.substring(47).slice(0, -2);
+                const json = JSON.parse(jsonText);
+                
+                // Check if data exists
+                if (json.table && json.table.rows.length > 0) {
+                    const row = json.table.rows[0].c;
+                    
+                    // Format Date (Col A)
+                    const dateVal = row[0] ? (row[0].f || row[0].v) : 'N/A';
+                    // CAT (Col B)
+                    const catVal = row[1] ? (row[1].f || row[1].v) : '0';
+                    // AMD (Col C)
+                    const amdVal = row[2] ? (row[2].f || row[2].v) : '0';
+                    // STR/FC/FH (Col D)
+                    const strVal = row[3] ? (row[3].f || row[3].v) : '0';
+                    // TOTAL DDML (Col E)
+                    const totalVal = row[4] ? (row[4].f || row[4].v) : '0';
+
+                    // Update UI
+                    document.getElementById('ddml-date').textContent = dateVal;
+                    document.getElementById('ddml-total').textContent = totalVal;
+                    document.getElementById('ddml-cat').textContent = catVal;
+                    document.getElementById('ddml-amd').textContent = amdVal;
+                    document.getElementById('ddml-str').textContent = strVal;
+                }
+            } catch (error) {
+                console.error("Error fetching DDML:", error);
+                document.getElementById('ddml-date').textContent = "Offline";
+            }
         }
 
         // Chart Logic
@@ -661,6 +723,10 @@
                 });
             }
         }
+        
+        // Initial fetch call
+        fetchOTPData();
+        fetchDDMLData();
     </script>
 </body>
 </html>
