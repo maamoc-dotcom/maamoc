@@ -631,6 +631,11 @@
                 if (Array.isArray(validData) && validData.length > 0) {
                     const labels = validData.map(d => d.date);
                     const processValue = (val) => {
+                        // Fix for small percentage values showing as x100 (e.g., 0.88% becoming 88%)
+                        if (typeof val === 'string' && val.includes('%')) {
+                            return parseFloat(val);
+                        }
+                        
                         let n = parseFloat(val);
                         if (isNaN(n)) return 0;
                         return (n > 0 && n <= 1.0) ? (n * 100) : n;
@@ -725,7 +730,7 @@
                             y: {
                                 beginAtZero: true,
                                 grid: { color: 'rgba(75, 85, 99, 0.2)', borderDash: [2, 4] },
-                                ticks: { display: false }
+                                ticks: { color: '#9ca3af', font: { size: 8 } } // Added ticks here
                             }
                         }
                     }
