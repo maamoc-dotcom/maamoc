@@ -175,12 +175,6 @@
                             </a>
                         </li>
                         <li>
-                            <a href="https://docs.google.com/spreadsheets/d/1jbs6zWsTG0zDChbgdWTWRr0oAncYi6pHkqQRFLNT4oA/edit?gid=1673954076#gid=1673954076" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
-                                <span class="text-sm uppercase tracking-wide group-hover:underline">MOC ROSTER YEAR 2026</span>
-                                <i class="fa-solid fa-crosshairs text-lg w-6 text-center"></i>
-                            </a>
-                        </li>
-                        <li>
                             <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbzWpwTbW9jYYO-knwIqrg4Hb5bgnlx5eJwenYRyOwUWxCtMslgtzzsgGgfdsw2RQzHg/exec" target="_blank" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
                                 <span class="text-sm uppercase tracking-wide group-hover:underline text-[11px]">ELH OLD VERSION</span>
                                 <i class="fa-solid fa-clock-rotate-left text-lg w-6 text-center"></i>
@@ -208,95 +202,98 @@
         <!-- MAIN CONTENT SCROLLABLE AREA -->
         <div id="main" class="flex-1 w-full md:ml-64 transition-all duration-300 overflow-y-auto h-full">
 
-            <!-- Banner & Dashboard Section -->
-            <section id="top" class="relative w-full">
-                <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770126320/banner_sq0hej.jpg" 
-                     alt="Banner" 
-                     class="w-full h-auto block min-h-[500px] object-cover">
+            <!-- Banner & Dashboard Section (FIXED FOR MOBILE) -->
+            <section id="top" class="relative w-full min-h-[500px] flex items-center">
+                <!-- Background Image Absolute -->
+                <div class="absolute inset-0 z-0">
+                    <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770126320/banner_sq0hej.jpg" 
+                         alt="Banner" 
+                         class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black bg-opacity-75"></div>
+                </div>
 
-                <div class="absolute inset-0 bg-black bg-opacity-75 flex items-center justify-center pt-20 pb-10 md:pt-0 md:pb-0">
-                    <div class="container mx-auto px-6 max-w-6xl">
-                        <div class="text-center mb-8">
-                            <h2 class="text-2xl md:text-4xl font-bold text-white drop-shadow-lg uppercase tracking-wider">
-                                MOC <span class="text-blue-400">ENGINEERING</span> DASHBOARD
-                            </h2>
-                            <div class="h-1 w-24 bg-blue-500 mx-auto mt-4 rounded-full"></div>
+                <!-- Content Relative (Allows expansion) -->
+                <div class="relative z-10 container mx-auto px-6 py-20 md:py-10">
+                    <div class="text-center mb-8">
+                        <h2 class="text-2xl md:text-4xl font-bold text-white drop-shadow-lg uppercase tracking-wider">
+                            MOC <span class="text-blue-400">ENGINEERING</span> DASHBOARD
+                        </h2>
+                        <div class="h-1 w-24 bg-blue-500 mx-auto mt-4 rounded-full"></div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                        
+                        <!-- Card 1: DDML REPORT -->
+                        <div class="dashboard-card p-5 rounded-2xl text-white relative overflow-hidden group">
+                            <div class="absolute top-0 right-0 p-2 opacity-50"><i class="fa-solid fa-file-invoice text-4xl text-gray-500"></i></div>
+                            
+                            <div class="flex items-center justify-between mb-2 relative z-10">
+                                <div class="bg-blue-600 bg-opacity-40 p-1.5 rounded-lg"><i class="fa-solid fa-clipboard-list text-blue-200 text-sm"></i></div>
+                                <span id="ddml-date" class="text-[10px] font-mono text-blue-300 border border-blue-500/30 px-2 py-0.5 rounded bg-blue-900/40">Syncing...</span>
+                            </div>
+                            
+                            <div class="relative z-10">
+                                <div class="text-[10px] text-gray-400 uppercase tracking-widest mb-1">Total DDML</div>
+                                <div id="ddml-total" class="text-4xl font-bold text-white leading-none">--</div>
+                            </div>
+
+                            <div class="mt-4 pt-3 border-t border-gray-600/50 grid grid-cols-3 gap-2 text-center relative z-10">
+                                <div>
+                                    <div class="text-[9px] text-gray-400 uppercase">CAT</div>
+                                    <div id="ddml-cat" class="text-lg font-bold text-yellow-400">-</div>
+                                </div>
+                                <div class="border-l border-gray-600/50">
+                                    <div class="text-[9px] text-gray-400 uppercase">AMD</div>
+                                    <div id="ddml-amd" class="text-lg font-bold text-green-400">-</div>
+                                </div>
+                                <div class="border-l border-gray-600/50">
+                                    <div class="text-[9px] text-gray-400 uppercase">STR/FC</div>
+                                    <div id="ddml-str" class="text-lg font-bold text-red-400">-</div>
+                                </div>
+                            </div>
+                            <div class="mt-2 text-[8px] text-gray-500 text-center relative z-10">
+                                Refer from MAA AIRCRAFT STATUS EMAIL
+                            </div>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-                            
-                            <!-- Card 1: DDML REPORT (UPDATED) -->
-                            <div class="dashboard-card p-5 rounded-2xl text-white relative overflow-hidden group">
-                                <div class="absolute top-0 right-0 p-2 opacity-50"><i class="fa-solid fa-file-invoice text-4xl text-gray-500"></i></div>
-                                
-                                <div class="flex items-center justify-between mb-2 relative z-10">
-                                    <div class="bg-blue-600 bg-opacity-40 p-1.5 rounded-lg"><i class="fa-solid fa-clipboard-list text-blue-200 text-sm"></i></div>
-                                    <span id="ddml-date" class="text-[10px] font-mono text-blue-300 border border-blue-500/30 px-2 py-0.5 rounded bg-blue-900/40">Syncing...</span>
-                                </div>
-                                
-                                <div class="relative z-10">
-                                    <div class="text-[10px] text-gray-400 uppercase tracking-widest mb-1">Total DDML</div>
-                                    <div id="ddml-total" class="text-4xl font-bold text-white leading-none">--</div>
-                                </div>
-
-                                <div class="mt-4 pt-3 border-t border-gray-600/50 grid grid-cols-3 gap-2 text-center relative z-10">
-                                    <div>
-                                        <div class="text-[9px] text-gray-400 uppercase">CAT</div>
-                                        <div id="ddml-cat" class="text-lg font-bold text-yellow-400">-</div>
-                                    </div>
-                                    <div class="border-l border-gray-600/50">
-                                        <div class="text-[9px] text-gray-400 uppercase">AMD</div>
-                                        <div id="ddml-amd" class="text-lg font-bold text-green-400">-</div>
-                                    </div>
-                                    <div class="border-l border-gray-600/50">
-                                        <div class="text-[9px] text-gray-400 uppercase">STR/FC</div>
-                                        <div id="ddml-str" class="text-lg font-bold text-red-400">-</div>
-                                    </div>
-                                </div>
-                                <div class="mt-2 text-[8px] text-gray-500 text-center relative z-10">
-                                    Refer from MAA AIRCRAFT STATUS EMAIL
-                                </div>
+                        <!-- Card 2 (Graph) -->
+                        <div class="dashboard-card p-5 rounded-2xl text-white col-span-1 min-h-[240px] flex flex-col">
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="bg-green-500 bg-opacity-20 p-2 rounded-lg"><i class="fa-solid fa-chart-line text-green-400"></i></div>
+                                <span id="otp-trend" class="text-[9px] font-mono text-blue-300 px-1 border border-blue-500 rounded uppercase tracking-tighter">CONNECTING...</span>
                             </div>
-
-                            <!-- Card 2 (Graph) -->
-                            <div class="dashboard-card p-5 rounded-2xl text-white col-span-1 min-h-[240px] flex flex-col">
-                                <div class="flex items-center justify-between mb-2">
-                                    <div class="bg-green-500 bg-opacity-20 p-2 rounded-lg"><i class="fa-solid fa-chart-line text-green-400"></i></div>
-                                    <span id="otp-trend" class="text-[9px] font-mono text-blue-300 px-1 border border-blue-500 rounded uppercase tracking-tighter">CONNECTING...</span>
-                                </div>
-                                <div class="flex-1 min-h-[140px] relative">
-                                    <canvas id="otpChart"></canvas>
-                                </div>
-                                <div class="mt-2 flex items-center justify-between text-[10px]">
-                                    <div class="flex items-center space-x-2">
-                                        <span class="w-2 h-2 rounded-full bg-blue-400"></span>
-                                        <span class="text-gray-400 uppercase">OTP15</span>
-                                        <span class="w-2 h-2 rounded-full bg-red-400 ml-2"></span>
-                                        <span class="text-gray-400 uppercase">ENG DLY</span>
-                                    </div>
-                                    <div id="otp-value" class="text-lg font-bold text-blue-400 leading-none">--.--%</div>
-                                </div>
+                            <div class="flex-1 min-h-[140px] relative">
+                                <canvas id="otpChart"></canvas>
                             </div>
-
-                            <!-- Card 3 -->
-                            <div class="dashboard-card p-5 rounded-2xl text-white">
-                                <div class="flex items-center justify-between mb-3">
-                                    <div class="bg-yellow-500 bg-opacity-20 p-2 rounded-lg"><i class="fa-solid fa-list-check text-yellow-400"></i></div>
-                                    <span class="text-[10px] font-mono text-yellow-300">DUE TODAY</span>
+                            <div class="mt-2 flex items-center justify-between text-[10px]">
+                                <div class="flex items-center space-x-2">
+                                    <span class="w-2 h-2 rounded-full bg-blue-400"></span>
+                                    <span class="text-gray-400 uppercase">OTP15</span>
+                                    <span class="w-2 h-2 rounded-full bg-red-400 ml-2"></span>
+                                    <span class="text-gray-400 uppercase">ENG DLY</span>
                                 </div>
-                                <div class="text-3xl font-bold">08</div>
-                                <div class="text-[11px] text-gray-400 uppercase mt-1">Pending Reports</div>
+                                <div id="otp-value" class="text-lg font-bold text-blue-400 leading-none">--.--%</div>
                             </div>
+                        </div>
 
-                            <!-- Card 4 -->
-                            <div class="dashboard-card p-5 rounded-2xl text-white">
-                                <div class="flex items-center justify-between mb-3">
-                                    <div class="bg-red-500 bg-opacity-20 p-2 rounded-lg"><i class="fa-solid fa-triangle-exclamation text-red-400"></i></div>
-                                    <span class="text-[10px] font-mono text-red-300">ALERT</span>
-                                </div>
-                                <div class="text-3xl font-bold">02</div>
-                                <div class="text-[11px] text-gray-400 uppercase mt-1">Critical Delays</div>
+                        <!-- Card 3 -->
+                        <div class="dashboard-card p-5 rounded-2xl text-white">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="bg-yellow-500 bg-opacity-20 p-2 rounded-lg"><i class="fa-solid fa-list-check text-yellow-400"></i></div>
+                                <span class="text-[10px] font-mono text-yellow-300">DUE TODAY</span>
                             </div>
+                            <div class="text-3xl font-bold">08</div>
+                            <div class="text-[11px] text-gray-400 uppercase mt-1">Pending Reports</div>
+                        </div>
+
+                        <!-- Card 4 -->
+                        <div class="dashboard-card p-5 rounded-2xl text-white">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="bg-red-500 bg-opacity-20 p-2 rounded-lg"><i class="fa-solid fa-triangle-exclamation text-red-400"></i></div>
+                                <span class="text-[10px] font-mono text-red-300">ALERT</span>
+                            </div>
+                            <div class="text-3xl font-bold">02</div>
+                            <div class="text-[11px] text-gray-400 uppercase mt-1">Critical Delays</div>
                         </div>
                     </div>
                 </div>
@@ -318,7 +315,6 @@
                                 <div id="menu-delay" onclick="event.stopPropagation()" class="hidden md:group-hover:flex absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex-col justify-center items-center space-y-2">
                                     <a href="https://docs.google.com/spreadsheets/d/15hzmr796muPK4Qg24eo1PDX9r8MGYwcEa_wWEOaTYsI/edit?pli=1&gid=1575409481#gid=1575409481" target="_blank" class="w-full text-center py-2 px-4 bg-green-600 text-white rounded hover:bg-green-500 transition font-semibold shadow-md text-sm border border-green-400"><i class="fa-brands fa-google mr-2"></i> GOOGLE SHEET DATA</a>
                                     <a href="https://docs.google.com/spreadsheets/d/1-aHRMHSciihQUT8CnDdZWIQo4_KlSUAZs3fcoYyDbNs/edit?gid=1650993066#gid=1650993066" target="_blank" class="w-full text-center py-2 px-4 bg-purple-600 text-white rounded hover:bg-purple-500 transition font-semibold shadow-md text-sm border border-purple-400"><i class="fa-solid fa-file-excel mr-2"></i> SHEET (MOCF/03 REV02)</a>
-                                    <a href="https://drive.google.com/file/d/1wcVMkCYR9xSXM9DaDJDYv9GZU_nrBNoQ/view?usp=sharing" class="w-full text-center py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-500 transition font-semibold shadow-md text-sm border border-blue-400"><i class="fa-solid fa-clapperboard mr-2">‌</i>"></i> TUTORIAL VDO</a>
                                 </div>
                             </div>
                             <div class="p-6"><h3 class="font-bold text-lg">DELAY CAPTURE & EDSR DRAFT</h3></div>
@@ -381,7 +377,7 @@
                             <div onclick="toggleProjectMenu('menu-starter')" class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative">
                                 <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770131568/Starter_rql29z.png" class="w-full h-full object-cover transform transition duration-500 hover:scale-110" alt="STARTER">
                                 <div id="menu-starter" onclick="event.stopPropagation()" class="hidden md:group-hover:flex absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex-col justify-center items-center space-y-2">
-                                    <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbxB33Fwh9gdmOniqlOsmCbjGRl4WYxW5963GMvudMfrt1ZHyeN-hqPFec1BeRH8vAgd/exec" target="_blank" class="w-full text-center py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-500 transition font-semibold shadow-md text-sm border border-blue-400"><i class="fa-solid fa-file-contract mr-2"></i> REPORT FORM</a>
+                                    <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbzr_vQawaSi0MXTSQQ_rqSY0p0dEU9OLoZOL6kG9Io/dev" target="_blank" class="w-full text-center py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-500 transition font-semibold shadow-md text-sm border border-blue-400"><i class="fa-solid fa-file-contract mr-2"></i> REPORT FORM</a>
                                     <a href="https://docs.google.com/spreadsheets/d/1VxuFhBMkuXdi1N_JncPG0do8P2Hn4mxbr1PdWkQMPC0/edit?gid=1042130743#gid=1042130743" target="_blank" class="w-full text-center py-2 px-4 bg-green-600 text-white rounded hover:bg-green-500 transition font-semibold shadow-md text-sm border border-green-400"><i class="fa-brands fa-google mr-2"></i> GOOGLE SHEET DATA</a>
                                     <a href="https://lookerstudio.google.com/u/0/reporting/0a50c273-b14c-49cf-84c8-551d0f2cb4c3/page/dwbcF" target="_blank" class="w-full text-center py-2 px-4 bg-purple-600 text-white rounded hover:bg-purple-500 transition font-semibold shadow-md text-sm border border-purple-400"><i class="fa-solid fa-chart-line mr-2"></i> SUMMARY BOARD</a>
                                 </div>
@@ -400,18 +396,6 @@
                                 </div>
                             </div>
                             <div class="p-6"><h3 class="font-bold text-lg">ENG SPINNER CONE</h3></div>
-                        </article>
-
-                        <!-- 8. OIL CONSUMPTION MONITORING -->
-                        <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition relative group">
-                            <div onclick="toggleProjectMenu('menu-spinner')" class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative">
-                                <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770262716/HIOIL_vgmzn8.png" class="w-full h-full object-cover transform transition duration-500 hover:scale-110" alt="SPINNER">
-                                <div id="menu-spinner" onclick="event.stopPropagation()" class="hidden md:group-hover:flex absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex-col justify-center items-center space-y-2">
-                                    <a href="https://lookerstudio.google.com/u/0/reporting/b4e0321f-4cab-48f8-ba96-57ccc3fd29d9/page/tEnnC" target="_blank" class="w-full text-center py-2 px-4 bg-teal-600 text-white rounded hover:bg-teal-500 transition font-semibold shadow-md text-sm border border-teal-400"><i class="fa-solid fa-eye mr-2"></i> VIEW DASHBOARD</a>
-                                    <a href="#" target="_blank" class="w-full text-center py-2 px-4 bg-green-600 text-white rounded hover:bg-green-500 transition font-semibold shadow-md text-sm border border-green-400"><i class="fa-brands fa-google mr-2"></i> MAIN GG SHEET</a>
-                                </div>
-                            </div>
-                            <div class="p-6"><h3 class="font-bold text-lg">OIL CONSUMPTION MONITORING</h3></div>
                         </article>
 
                     </div>
@@ -776,9 +760,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
