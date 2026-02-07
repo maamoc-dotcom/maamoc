@@ -234,21 +234,31 @@
                             
                             <div class="relative z-10">
                                 <div class="text-[10px] text-gray-400 uppercase tracking-widest mb-1">Total DDML</div>
-                                <div id="ddml-total" class="text-4xl font-bold text-white leading-none">--</div>
+                                <div class="flex items-end">
+                                    <div id="ddml-total" class="text-4xl font-bold text-white leading-none">--</div>
+                                    <!-- ส่วนแสดงผล E5 (Total Trend) -->
+                                    <div id="ddml-trend" class="ml-3 mb-1 text-sm font-bold flex items-center"></div>
+                                </div>
                             </div>
 
                             <div class="mt-4 pt-3 border-t border-gray-600/50 grid grid-cols-3 gap-2 text-center relative z-10">
                                 <div>
                                     <div class="text-[9px] text-gray-400 uppercase">CAT</div>
                                     <div id="ddml-cat" class="text-lg font-bold text-yellow-400">-</div>
+                                    <!-- ส่วนแสดงผล B5 (CAT Trend) -->
+                                    <div id="ddml-cat-trend" class="text-[10px] h-4 flex items-center justify-center font-bold"></div>
                                 </div>
                                 <div class="border-l border-gray-600/50">
                                     <div class="text-[9px] text-gray-400 uppercase">AMD</div>
                                     <div id="ddml-amd" class="text-lg font-bold text-green-400">-</div>
+                                    <!-- ส่วนแสดงผล C5 (AMD Trend) -->
+                                    <div id="ddml-amd-trend" class="text-[10px] h-4 flex items-center justify-center font-bold"></div>
                                 </div>
                                 <div class="border-l border-gray-600/50">
                                     <div class="text-[9px] text-gray-400 uppercase">STR/FC</div>
                                     <div id="ddml-str" class="text-lg font-bold text-red-400">-</div>
+                                    <!-- ส่วนแสดงผล D5 (STR Trend) -->
+                                    <div id="ddml-str-trend" class="text-[10px] h-4 flex items-center justify-center font-bold"></div>
                                 </div>
                             </div>
                             <div class="mt-2 text-[8px] text-gray-500 text-center relative z-10">
@@ -506,7 +516,7 @@
             errorMsg.innerText = message;
         }
 
-        // [4] AUTH STATE OBSERVER (SECURE MODE RESTORED)
+        // [4] AUTH STATE OBSERVER (SECURE MODE)
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 if (user.email.endsWith('@airasia.com')) {
@@ -564,42 +574,86 @@
         // --- NEW: FETCH DDML DATA FROM SHEET ---
         async function fetchDDMLData() {
             // Sheet: 1D9ed8aGAIWbf_MmfN_Lm4b2s9ZkBETnaQ6u06gobil0
-            // Range: A2:E2 (Date, CAT, AMD, STR, Total)
+            // Range: A2:E5 (Date, CAT, AMD, STR, Total) ครอบคลุมถึง Row 5 เพื่อเอาข้อมูล Summary Row
             const SHEET_ID = '1D9ed8aGAIWbf_MmfN_Lm4b2s9ZkBETnaQ6u06gobil0';
             const SHEET_NAME = 'ชีต1';
-            const RANGE = 'A2:E2';
+            const RANGE = 'A2:E5'; 
             const URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}&range=${RANGE}`;
 
             try {
                 const res = await fetch(URL);
                 const text = await res.text();
                 
-                // Parse GViz JSON response (stripping the wrapper)
-                // Default response format: /*O_o*/\ngoogle.visualization.Query.setResponse({...});
+                // Parse GViz JSON response
                 const jsonText = text.substring(47).slice(0, -2);
                 const json = JSON.parse(jsonText);
                 
                 // Check if data exists
                 if (json.table && json.table.rows.length > 0) {
-                    const row = json.table.rows[0].c;
-                    
-                    // Format Date (Col A)
-                    const dateVal = row[0] ? (row[0].f || row[0].v) : 'N/A';
-                    // CAT (Col B)
-                    const catVal = row[1] ? (row[1].f || row[1].v) : '0';
-                    // AMD (Col C)
-                    const amdVal = row[2] ? (row[2].f || row[2].v) : '0';
-                    // STR/FC/FH (Col D)
-                    const strVal = row[3] ? (row[3].f || row[3].v) : '0';
-                    // TOTAL DDML (Col E)
-                    const totalVal = row[4] ? (row[4].f || row[4].v) : '0';
+                    // --- Row 2 Data (Main Data) ---
+                    const mainRow = json.table.rows[0].c;
+                    const dateVal = mainRow[0] ? (mainRow[0].f || mainRow[0].v) : 'N/A';
+                    const catVal = mainRow[1] ? (mainRow[1].f || mainRow[1].v) : '0';
+                    const amdVal = mainRow[2] ? (mainRow[2].f || mainRow[2].v) : '0';
+                    const strVal = mainRow[3] ? (mainRow[3].f || mainRow[3].v) : '0';
+                    const totalVal = mainRow[4] ? (mainRow[4].f || mainRow[4].v) : '0';
 
-                    // Update UI
+                    // Update Main UI
                     document.getElementById('ddml-date').textContent = dateVal;
                     document.getElementById('ddml-total').textContent = totalVal;
                     document.getElementById('ddml-cat').textContent = catVal;
                     document.getElementById('ddml-amd').textContent = amdVal;
                     document.getElementById('ddml-str').textContent = strVal;
+
+                    // --- Summary Row Data (Trend Data) ---
+                    // ค้นหาแถวที่มีคำว่า "summary" ในคอลัมน์แรก (Column A)
+                    let trendRow = null;
+                    
+                    for(let i = 1; i < json.table.rows.length; i++) {
+                        const r = json.table.rows[i].c;
+                        if (r && r[0] && r[0].v && String(r[0].v).toLowerCase().trim() === 'summary') {
+                            trendRow = r;
+                            break;
+                        }
+                    }
+
+                    // Fallback
+                    if (!trendRow && json.table.rows.length > 1) {
+                         trendRow = json.table.rows[json.table.rows.length - 1].c;
+                    }
+
+                    // Helper function to generate Trend HTML
+                    const generateTrendHTML = (cellData) => {
+                        if (cellData && cellData.v !== null) {
+                            const val = parseFloat(cellData.v);
+                            const absVal = Math.abs(val); // ใช้ค่าสัมบูรณ์ ตัดเครื่องหมายลบออก
+
+                            if (val > 0) {
+                                // ยอดลดลง (ค่าบวก) -> ดี -> สีเขียว ลูกศรลง
+                                return `<i class="fa-solid fa-arrow-down text-green-400 mr-1" style="font-size: 8px;"></i> <span class="text-green-400">${absVal}</span>`;
+                            } else if (val < 0) {
+                                // ยอดเพิ่มขึ้น (ค่าลบ) -> ไม่ดี -> สีแดง ลูกศรขึ้น
+                                return `<i class="fa-solid fa-arrow-up text-red-400 mr-1" style="font-size: 8px;"></i> <span class="text-red-400">${absVal}</span>`;
+                            } else {
+                                return `<span class="text-gray-500">-</span>`;
+                            }
+                        }
+                        return '';
+                    };
+
+                    if (trendRow) {
+                        // Total DDML (Column E, Index 4) -> E5
+                        document.getElementById('ddml-trend').innerHTML = generateTrendHTML(trendRow[4]);
+                        
+                        // CAT (Column B, Index 1) -> B5
+                        document.getElementById('ddml-cat-trend').innerHTML = generateTrendHTML(trendRow[1]);
+                        
+                        // AMD (Column C, Index 2) -> C5
+                        document.getElementById('ddml-amd-trend').innerHTML = generateTrendHTML(trendRow[2]);
+                        
+                        // STR/FC (Column D, Index 3) -> D5
+                        document.getElementById('ddml-str-trend').innerHTML = generateTrendHTML(trendRow[3]);
+                    }
                 }
             } catch (error) {
                 console.error("Error fetching DDML:", error);
@@ -761,5 +815,3 @@
     </script>
 </body>
 </html>
-
-
