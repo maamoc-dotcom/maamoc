@@ -303,7 +303,7 @@
                             </div>
                         </div>
 
-                        <!-- Card 3: RED EYE FLIGHT (UPDATED WITH ERROR HANDLING) -->
+                        <!-- Card 3: RED EYE FLIGHT (UPDATED WITH 4 COLUMNS) -->
                         <div class="dashboard-card p-5 rounded-2xl text-white h-[240px] flex flex-col">
                             <div class="flex items-center justify-between mb-3 shrink-0">
                                 <div class="bg-purple-500 bg-opacity-20 p-2 rounded-lg flex items-center gap-2">
@@ -312,11 +312,12 @@
                                 <span class="text-[10px] font-mono text-purple-300 uppercase tracking-widest text-right">RED EYE FLIGHT<br><span class="text-[9px] text-gray-400">04:00 - 09:00</span></span>
                             </div>
                             
-                            <!-- Header Row -->
-                            <div class="grid grid-cols-3 gap-1 mb-2 text-[9px] font-bold text-gray-400 border-b border-gray-600 pb-1 shrink-0">
+                            <!-- Header Row (Updated to 4 cols: REG, FLT, FROM, STA) -->
+                            <div class="grid grid-cols-4 gap-1 mb-2 text-[9px] font-bold text-gray-400 border-b border-gray-600 pb-1 shrink-0">
                                 <div class="text-center">REG</div>
                                 <div class="text-center">FLT</div>
-                                <div class="text-center">STA</div>
+                                <div class="text-center">FROM</div> <!-- New Column C -->
+                                <div class="text-center">STA</div>  <!-- Shifted to Column D -->
                             </div>
 
                             <!-- Scrollable List -->
@@ -731,19 +732,21 @@
                         const r = row.c;
                         if (!r) return;
 
-                        // ดึงข้อมูลแต่ละคอลัมน์ (A=0, B=1, C=2)
+                        // ดึงข้อมูลแต่ละคอลัมน์ (A=0, B=1, C=2, D=3)
                         const reg = r[0] ? (r[0].f || r[0].v || '') : '';
                         const flt = r[1] ? (r[1].f || r[1].v || '') : '';
-                        let sta = r[2] ? (r[2].f || r[2].v || '') : '';
+                        const from = r[2] ? (r[2].f || r[2].v || '') : ''; // New Column C
+                        let sta = r[3] ? (r[3].f || r[3].v || '') : '';   // Old C moved to D
 
                         // กรองหัวตารางออก (ถ้าแถวแรกเป็น header เช่น "Reg", "Flight")
                         if (reg.toLowerCase().includes('reg') || reg.toLowerCase().includes('ทะเบียน')) return;
                         if (reg === '' && flt === '') return; // ข้ามแถวว่าง
 
                         html += `
-                            <div class="grid grid-cols-3 gap-1 py-1.5 border-b border-gray-700/50 hover:bg-white/5 transition px-1">
+                            <div class="grid grid-cols-4 gap-1 py-1.5 border-b border-gray-700/50 hover:bg-white/5 transition px-1">
                                 <div class="text-center text-[10px] font-mono text-purple-300">${reg}</div>
                                 <div class="text-center text-[10px] text-gray-300">${flt}</div>
+                                <div class="text-center text-[10px] text-gray-400 truncate">${from}</div>
                                 <div class="text-center text-[10px] font-bold text-white">${sta}</div>
                             </div>
                         `;
