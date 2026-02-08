@@ -694,11 +694,11 @@
 
         // --- NEW: FETCH RED EYE DATA ---
         async function fetchRedEyeData() {
-            // Sheet ID: 1kfnHUZFvqgUynq0b6iOd_H32tjX0ku98S-nKKZC-CyE
-            // GID: 2028284617
+            // Sheet ID: 1CEGBX67w-EucpDNWsZBcpEs5G3ZmmqICp8oLdlzKo9c
+            // GID: 0
             // Columns: A (Reg), B (Flt), C (STA)
-            const SHEET_ID = '1kfnHUZFvqgUynq0b6iOd_H32tjX0ku98S-nKKZC-CyE';
-            const GID = '2028284617';
+            const SHEET_ID = '1CEGBX67w-EucpDNWsZBcpEs5G3ZmmqICp8oLdlzKo9c';
+            const GID = '0'; // Default GID for Sheet1 is usually 0
             // Added headers=1 to handle header row properly and tq to be safe
             const URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}&headers=1`;
             const listContainer = document.getElementById('redeye-list');
