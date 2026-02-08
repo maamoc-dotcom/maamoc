@@ -101,6 +101,29 @@
         </div>
     </div>
 
+    <!-- ================= EXPORT MODAL (HIDDEN BY DEFAULT) ================= -->
+    <div id="export-modal" class="hidden fixed inset-0 z-[200] flex items-center justify-center bg-black bg-opacity-80 backdrop-blur-sm">
+        <div class="bg-gray-800 rounded-lg w-11/12 max-w-2xl border border-gray-600 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="flex justify-between items-center p-4 border-b border-gray-700 bg-gray-900">
+                <h3 class="text-white font-bold text-lg"><i class="fa-solid fa-file-export mr-2 text-purple-400"></i> Export Data (Plain Text)</h3>
+                <button onclick="closeExportModal()" class="text-gray-400 hover:text-white transition">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+            <div class="p-0 flex-1 overflow-hidden relative">
+                <textarea id="export-textarea" class="w-full h-64 md:h-96 bg-gray-900 text-green-400 font-mono text-xs p-4 border-none resize-none focus:ring-0 outline-none leading-relaxed" readonly></textarea>
+            </div>
+            <div class="p-4 border-t border-gray-700 bg-gray-900 flex justify-end space-x-3">
+                <button onclick="copyExportData()" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded text-sm font-semibold transition flex items-center">
+                    <i class="fa-regular fa-copy mr-2"></i> Copy to Clipboard
+                </button>
+                <button onclick="closeExportModal()" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded text-sm font-semibold transition">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- ================= APP CONTENT (HIDDEN BY DEFAULT) ================= -->
     <div id="app-content" class="hidden flex-col md:flex-row h-screen w-full overflow-hidden">
         
@@ -303,9 +326,14 @@
                             </div>
                         </div>
 
-                        <!-- Card 3: RED EYE FLIGHT (UPDATED WITH 4 COLUMNS) -->
-                        <div class="dashboard-card p-5 rounded-2xl text-white h-[240px] flex flex-col">
-                            <div class="flex items-center justify-between mb-3 shrink-0">
+                        <!-- Card 3: RED EYE FLIGHT (UPDATED) -->
+                        <div class="dashboard-card p-5 rounded-2xl text-white h-[240px] flex flex-col relative group">
+                            <!-- EXPORT BUTTON -->
+                            <button onclick="exportRedEyeData()" class="absolute top-2 right-2 text-gray-400 hover:text-white transition opacity-0 group-hover:opacity-100 p-1" title="Export Data">
+                                <i class="fa-solid fa-file-export text-xs"></i>
+                            </button>
+
+                            <div class="flex items-center justify-between mb-3 shrink-0 mr-4">
                                 <div class="bg-purple-500 bg-opacity-20 p-2 rounded-lg flex items-center gap-2">
                                     <i class="fa-solid fa-moon text-purple-400"></i>
                                 </div>
@@ -316,8 +344,8 @@
                             <div class="grid grid-cols-4 gap-1 mb-2 text-[9px] font-bold text-gray-400 border-b border-gray-600 pb-1 shrink-0">
                                 <div class="text-center">REG</div>
                                 <div class="text-center">FLT</div>
-                                <div class="text-center">FROM</div> <!-- New Column C -->
-                                <div class="text-center">STA</div>  <!-- Shifted to Column D -->
+                                <div class="text-center">FROM</div> 
+                                <div class="text-center">STA</div>  
                             </div>
 
                             <!-- Scrollable List -->
@@ -480,8 +508,7 @@
             auth = getAuth(app);
             provider = new GoogleAuthProvider();
             provider.setCustomParameters({ prompt: 'select_account' }); 
-            // ADDED: Scope for reading sheets to help with private files if needed
-            provider.addScope('https://www.googleapis.com/auth/spreadsheets.readonly');
+            // REMOVED: Scope that caused the verification warning
         } catch (e) {
             console.error("Firebase Init Error:", e);
         }
@@ -510,11 +537,7 @@
                 const result = await signInWithPopup(auth, provider);
                 const user = result.user;
                 
-                // ADDED: Capture Access Token
-                const credential = GoogleAuthProvider.credentialFromResult(result);
-                if (credential && credential.accessToken) {
-                    window.googleAccessToken = credential.accessToken;
-                }
+                // REMOVED: Token capture logic as we removed the scope
 
                 validateUser(user);
             } catch (error) {
@@ -616,6 +639,50 @@
             menu.classList.toggle('flex');
         }
 
+        // --- EXPORT FUNCTIONALITY ---
+        window.closeExportModal = function() {
+            document.getElementById('export-modal').classList.add('hidden');
+        };
+
+        window.exportRedEyeData = function() {
+            const listContainer = document.getElementById('redeye-list');
+            const rows = listContainer.querySelectorAll('.grid');
+            let text = "RED EYE FLIGHT REPORT (04:00 - 09:00)\n";
+            text += "--------------------------------------------------\n";
+            text += "REG     | FLT     | FROM    | STA  \n";
+            text += "--------------------------------------------------\n";
+
+            rows.forEach(row => {
+                const cols = row.querySelectorAll('div');
+                if (cols.length === 4) {
+                    const reg = cols[0].innerText.padEnd(8);
+                    const flt = cols[1].innerText.padEnd(8);
+                    const from = cols[2].innerText.padEnd(8);
+                    const sta = cols[3].innerText;
+                    text += `${reg}| ${flt}| ${from}| ${sta}\n`;
+                }
+            });
+            text += "--------------------------------------------------\n";
+            text += "Generated by MAA Engineering Link Hub";
+
+            const textarea = document.getElementById('export-textarea');
+            textarea.value = text;
+            document.getElementById('export-modal').classList.remove('hidden');
+        };
+
+        window.copyExportData = function() {
+            const textarea = document.getElementById('export-textarea');
+            textarea.select();
+            document.execCommand('copy');
+            
+            const btn = document.querySelector('#export-modal button i.fa-copy').parentElement;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-check mr-2"></i> Copied!';
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+            }, 2000);
+        };
+
         // --- FETCH DDML DATA FROM SHEET ---
         async function fetchDDMLData() {
             const SHEET_ID = '1D9ed8aGAIWbf_MmfN_Lm4b2s9ZkBETnaQ6u06gobil0';
@@ -705,13 +772,8 @@
             const listContainer = document.getElementById('redeye-list');
 
             try {
-                // ADDED: Try to use Google Access Token if available (for private sheets)
-                const headers = {};
-                if (window.googleAccessToken) {
-                    headers['Authorization'] = `Bearer ${window.googleAccessToken}`;
-                }
-
-                const res = await fetch(URL, { headers: Object.keys(headers).length > 0 ? headers : undefined });
+                // REVERTED: Simple fetch (requires Public Sheet)
+                const res = await fetch(URL);
                 
                 if (!res.ok) {
                     throw new Error(`HTTP Status: ${res.status}`);
@@ -764,13 +826,15 @@
                 listContainer.innerHTML = `
                     <div class="flex flex-col items-center justify-center h-full text-center">
                         <div class="text-red-400 text-xs mb-2">
-                            <i class="fa-solid fa-lock mb-1"></i><br>Access Denied / Load Failed
+                            <i class="fa-solid fa-lock mb-1"></i><br>Load Failed
                         </div>
                         <a href="https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit?gid=${GID}" target="_blank" 
                            class="text-[9px] bg-gray-700 hover:bg-gray-600 text-white py-1 px-2 rounded border border-gray-500">
                            <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> Open Sheet
                         </a>
-                        <button onclick="location.reload()" class="mt-2 text-[9px] text-gray-400 underline hover:text-white">Refresh App</button>
+                        <div class="mt-2 text-[8px] text-gray-500">
+                            *Must be "Anyone with link"
+                        </div>
                     </div>
                 `;
             }
