@@ -38,6 +38,21 @@
             background: rgba(31, 41, 55, 0.8);
         }
 
+        /* Custom Scrollbar for Red Eye Card */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1); 
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(96, 165, 250, 0.5); 
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(96, 165, 250, 0.8); 
+        }
+
         /* Loading Spinner */
         .loader {
             border: 4px solid #f3f3f3;
@@ -242,7 +257,6 @@
                                 <div class="text-[10px] text-gray-400 uppercase tracking-widest mb-1">Total DDML</div>
                                 <div class="flex items-end">
                                     <div id="ddml-total" class="text-4xl font-bold text-white leading-none">--</div>
-                                    <!-- ส่วนแสดงผล E5 (Total Trend) -->
                                     <div id="ddml-trend" class="ml-3 mb-1 text-sm font-bold flex items-center"></div>
                                 </div>
                             </div>
@@ -251,19 +265,16 @@
                                 <div>
                                     <div class="text-[9px] text-gray-400 uppercase">CAT</div>
                                     <div id="ddml-cat" class="text-lg font-bold text-yellow-400">-</div>
-                                    <!-- ส่วนแสดงผล B5 (CAT Trend) -->
                                     <div id="ddml-cat-trend" class="text-[10px] h-4 flex items-center justify-center font-bold"></div>
                                 </div>
                                 <div class="border-l border-gray-600/50">
                                     <div class="text-[9px] text-gray-400 uppercase">AMD</div>
                                     <div id="ddml-amd" class="text-lg font-bold text-green-400">-</div>
-                                    <!-- ส่วนแสดงผล C5 (AMD Trend) -->
                                     <div id="ddml-amd-trend" class="text-[10px] h-4 flex items-center justify-center font-bold"></div>
                                 </div>
                                 <div class="border-l border-gray-600/50">
                                     <div class="text-[9px] text-gray-400 uppercase">STR/FC</div>
                                     <div id="ddml-str" class="text-lg font-bold text-red-400">-</div>
-                                    <!-- ส่วนแสดงผล D5 (STR Trend) -->
                                     <div id="ddml-str-trend" class="text-[10px] h-4 flex items-center justify-center font-bold"></div>
                                 </div>
                             </div>
@@ -292,14 +303,30 @@
                             </div>
                         </div>
 
-                        <!-- Card 3 -->
-                        <div class="dashboard-card p-5 rounded-2xl text-white">
-                            <div class="flex items-center justify-between mb-3">
-                                <div class="bg-yellow-500 bg-opacity-20 p-2 rounded-lg"><i class="fa-solid fa-list-check text-yellow-400"></i></div>
-                                <span class="text-[10px] font-mono text-yellow-300">DUE TODAY</span>
+                        <!-- Card 3: RED EYE FLIGHT (UPDATED WITH ERROR HANDLING) -->
+                        <div class="dashboard-card p-5 rounded-2xl text-white h-[240px] flex flex-col">
+                            <div class="flex items-center justify-between mb-3 shrink-0">
+                                <div class="bg-purple-500 bg-opacity-20 p-2 rounded-lg flex items-center gap-2">
+                                    <i class="fa-solid fa-moon text-purple-400"></i>
+                                </div>
+                                <span class="text-[10px] font-mono text-purple-300 uppercase tracking-widest text-right">RED EYE FLIGHT<br><span class="text-[9px] text-gray-400">04:00 - 09:00</span></span>
                             </div>
-                            <div class="text-3xl font-bold">08</div>
-                            <div class="text-[11px] text-gray-400 uppercase mt-1">Pending Reports</div>
+                            
+                            <!-- Header Row -->
+                            <div class="grid grid-cols-3 gap-1 mb-2 text-[9px] font-bold text-gray-400 border-b border-gray-600 pb-1 shrink-0">
+                                <div class="text-center">REG</div>
+                                <div class="text-center">FLT</div>
+                                <div class="text-center">STA</div>
+                            </div>
+
+                            <!-- Scrollable List -->
+                            <div id="redeye-list" class="flex-1 overflow-y-auto custom-scrollbar relative">
+                                <!-- Loading State -->
+                                <div class="absolute inset-0 flex flex-col items-center justify-center text-gray-400">
+                                    <div class="loader w-4 h-4 mb-2 border-2 border-purple-400 border-t-transparent"></div>
+                                    <span class="text-[10px]">Loading...</span>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Card 4 -->
@@ -452,6 +479,8 @@
             auth = getAuth(app);
             provider = new GoogleAuthProvider();
             provider.setCustomParameters({ prompt: 'select_account' }); 
+            // ADDED: Scope for reading sheets to help with private files if needed
+            provider.addScope('https://www.googleapis.com/auth/spreadsheets.readonly');
         } catch (e) {
             console.error("Firebase Init Error:", e);
         }
@@ -479,6 +508,13 @@
             try {
                 const result = await signInWithPopup(auth, provider);
                 const user = result.user;
+                
+                // ADDED: Capture Access Token
+                const credential = GoogleAuthProvider.credentialFromResult(result);
+                if (credential && credential.accessToken) {
+                    window.googleAccessToken = credential.accessToken;
+                }
+
                 validateUser(user);
             } catch (error) {
                 console.error(error);
@@ -507,10 +543,12 @@
             
             if(!window.chartInterval) {
                 fetchOTPData();
-                fetchDDMLData(); // Call new DDML function
+                fetchDDMLData();
+                fetchRedEyeData();
                 window.chartInterval = setInterval(() => {
                     fetchOTPData();
                     fetchDDMLData();
+                    fetchRedEyeData();
                 }, 60000);
             }
         }
@@ -577,10 +615,8 @@
             menu.classList.toggle('flex');
         }
 
-        // --- NEW: FETCH DDML DATA FROM SHEET ---
+        // --- FETCH DDML DATA FROM SHEET ---
         async function fetchDDMLData() {
-            // Sheet: 1D9ed8aGAIWbf_MmfN_Lm4b2s9ZkBETnaQ6u06gobil0
-            // Range: A2:E5 (Date, CAT, AMD, STR, Total) ครอบคลุมถึง Row 5 เพื่อเอาข้อมูล Summary Row
             const SHEET_ID = '1D9ed8aGAIWbf_MmfN_Lm4b2s9ZkBETnaQ6u06gobil0';
             const SHEET_NAME = 'ชีต1';
             const RANGE = 'A2:E5'; 
@@ -612,7 +648,6 @@
                     document.getElementById('ddml-str').textContent = strVal;
 
                     // --- Summary Row Data (Trend Data) ---
-                    // ค้นหาแถวที่มีคำว่า "summary" ในคอลัมน์แรก (Column A)
                     let trendRow = null;
                     
                     for(let i = 1; i < json.table.rows.length; i++) {
@@ -628,17 +663,14 @@
                          trendRow = json.table.rows[json.table.rows.length - 1].c;
                     }
 
-                    // Helper function to generate Trend HTML
                     const generateTrendHTML = (cellData) => {
                         if (cellData && cellData.v !== null) {
                             const val = parseFloat(cellData.v);
-                            const absVal = Math.abs(val); // ใช้ค่าสัมบูรณ์ ตัดเครื่องหมายลบออก
+                            const absVal = Math.abs(val);
 
                             if (val > 0) {
-                                // ยอดลดลง (ค่าบวก) -> ดี -> สีเขียว ลูกศรลง
                                 return `<i class="fa-solid fa-arrow-down text-green-400 mr-1" style="font-size: 8px;"></i> <span class="text-green-400">${absVal}</span>`;
                             } else if (val < 0) {
-                                // ยอดเพิ่มขึ้น (ค่าลบ) -> ไม่ดี -> สีแดง ลูกศรขึ้น
                                 return `<i class="fa-solid fa-arrow-up text-red-400 mr-1" style="font-size: 8px;"></i> <span class="text-red-400">${absVal}</span>`;
                             } else {
                                 return `<span class="text-gray-500">-</span>`;
@@ -648,22 +680,96 @@
                     };
 
                     if (trendRow) {
-                        // Total DDML (Column E, Index 4) -> E5
                         document.getElementById('ddml-trend').innerHTML = generateTrendHTML(trendRow[4]);
-                        
-                        // CAT (Column B, Index 1) -> B5
                         document.getElementById('ddml-cat-trend').innerHTML = generateTrendHTML(trendRow[1]);
-                        
-                        // AMD (Column C, Index 2) -> C5
                         document.getElementById('ddml-amd-trend').innerHTML = generateTrendHTML(trendRow[2]);
-                        
-                        // STR/FC (Column D, Index 3) -> D5
                         document.getElementById('ddml-str-trend').innerHTML = generateTrendHTML(trendRow[3]);
                     }
                 }
             } catch (error) {
                 console.error("Error fetching DDML:", error);
                 document.getElementById('ddml-date').textContent = "Offline";
+            }
+        }
+
+        // --- NEW: FETCH RED EYE DATA ---
+        async function fetchRedEyeData() {
+            // Sheet ID: 1kfnHUZFvqgUynq0b6iOd_H32tjX0ku98S-nKKZC-CyE
+            // GID: 2028284617
+            // Columns: A (Reg), B (Flt), C (STA)
+            const SHEET_ID = '1kfnHUZFvqgUynq0b6iOd_H32tjX0ku98S-nKKZC-CyE';
+            const GID = '2028284617';
+            // Added headers=1 to handle header row properly and tq to be safe
+            const URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}&headers=1`;
+            const listContainer = document.getElementById('redeye-list');
+
+            try {
+                // ADDED: Try to use Google Access Token if available (for private sheets)
+                const headers = {};
+                if (window.googleAccessToken) {
+                    headers['Authorization'] = `Bearer ${window.googleAccessToken}`;
+                }
+
+                const res = await fetch(URL, { headers: Object.keys(headers).length > 0 ? headers : undefined });
+                
+                if (!res.ok) {
+                    throw new Error(`HTTP Status: ${res.status}`);
+                }
+
+                const text = await res.text();
+                
+                // Parse GViz JSON response (Remove /*O_o*/ prefix)
+                const jsonText = text.substring(47).slice(0, -2);
+                const json = JSON.parse(jsonText);
+                
+                let html = '';
+                
+                // ตรวจสอบว่ามีข้อมูลหรือไม่
+                if (json.table && json.table.rows.length > 0) {
+                    // Loop ผ่านแต่ละแถว
+                    json.table.rows.forEach(row => {
+                        const r = row.c;
+                        if (!r) return;
+
+                        // ดึงข้อมูลแต่ละคอลัมน์ (A=0, B=1, C=2)
+                        const reg = r[0] ? (r[0].f || r[0].v || '') : '';
+                        const flt = r[1] ? (r[1].f || r[1].v || '') : '';
+                        let sta = r[2] ? (r[2].f || r[2].v || '') : '';
+
+                        // กรองหัวตารางออก (ถ้าแถวแรกเป็น header เช่น "Reg", "Flight")
+                        if (reg.toLowerCase().includes('reg') || reg.toLowerCase().includes('ทะเบียน')) return;
+                        if (reg === '' && flt === '') return; // ข้ามแถวว่าง
+
+                        html += `
+                            <div class="grid grid-cols-3 gap-1 py-1.5 border-b border-gray-700/50 hover:bg-white/5 transition px-1">
+                                <div class="text-center text-[10px] font-mono text-purple-300">${reg}</div>
+                                <div class="text-center text-[10px] text-gray-300">${flt}</div>
+                                <div class="text-center text-[10px] font-bold text-white">${sta}</div>
+                            </div>
+                        `;
+                    });
+                } else {
+                    html = '<div class="text-center text-xs text-gray-500 py-4">No Data</div>';
+                }
+
+                listContainer.innerHTML = html;
+
+            } catch (error) {
+                console.error("Error fetching Red Eye Data:", error);
+                
+                // Improved Error UI with Link to Sheet
+                listContainer.innerHTML = `
+                    <div class="flex flex-col items-center justify-center h-full text-center">
+                        <div class="text-red-400 text-xs mb-2">
+                            <i class="fa-solid fa-lock mb-1"></i><br>Access Denied / Load Failed
+                        </div>
+                        <a href="https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit?gid=${GID}" target="_blank" 
+                           class="text-[9px] bg-gray-700 hover:bg-gray-600 text-white py-1 px-2 rounded border border-gray-500">
+                           <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> Open Sheet
+                        </a>
+                        <button onclick="location.reload()" class="mt-2 text-[9px] text-gray-400 underline hover:text-white">Refresh App</button>
+                    </div>
+                `;
             }
         }
 
@@ -705,16 +811,13 @@
                         return (n > 0 && n <= 1.0) ? (n * 100) : n;
                     };
 
-                    // Special processing for ENG DLY (valueC) - NEVER multiply if it looks like a display value (e.g. 0.88)
+                    // Special processing for ENG DLY (valueC)
                     const processEngDly = (val) => {
                         if (typeof val === 'string' && val.includes('%')) {
                             return parseFloat(val);
                         }
                         let n = parseFloat(val);
                         if (isNaN(n)) return 0;
-                        // BUG FIX: 0.88 is likely 0.88%, NOT 88%
-                        // Only multiply if it's extremely small (like 0.0088)
-                        // If it's > 0.05, assume it's the raw percentage number already
                         return (n > 0 && n <= 0.05) ? (n * 100) : n; 
                     };
 
@@ -818,9 +921,7 @@
         // Initial fetch call
         fetchOTPData();
         fetchDDMLData();
+        fetchRedEyeData();
     </script>
 </body>
 </html>
-
-
-
