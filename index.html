@@ -188,12 +188,27 @@
                                 <i class="fa-solid fa-file-circle-check text-lg w-6 text-center"></i>
                             </a>
                         </li>
+                        
+                        <!-- ELEVADE DROPDOWN MENU -->
                         <li>
-                            <a href="https://elevade.io" target="_blank" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
+                            <div onclick="document.getElementById('elevade-submenu').classList.toggle('hidden'); this.querySelector('.fa-chevron-down').classList.toggle('rotate-180')" class="cursor-pointer group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition select-none">
+                                <i class="fa-solid fa-chevron-down text-[10px] mr-1 opacity-50 group-hover:opacity-100 transition-transform duration-300"></i>
                                 <span class="text-sm uppercase tracking-wide group-hover:underline">ELEVADE</span>
                                 <i class="fa-solid fa-arrow-up-right-dots text-lg w-6 text-center"></i>
-                            </a>
+                            </div>
+                            <!-- Submenu -->
+                            <ul id="elevade-submenu" class="hidden mt-1 space-y-1 border-r border-gray-600 pr-3 mr-2 bg-black bg-opacity-20 py-2 rounded-l-lg animate-slide-up">
+                                <li><a href="https://elevade.io" target="_blank" class="block text-[11px] text-gray-400 hover:text-blue-300 text-right py-1 hover:pl-2 transition-all">HOME PAGE</a></li>
+                                <li><a href="https://airasia.elevade.io/fleet/dasr/dashboard" target="_blank" class="block text-[11px] text-gray-400 hover:text-blue-300 text-right py-1 hover:pl-2 transition-all">DASR Overview</a></li>
+                                <li><a href="https://airasia.elevade.io/fleet/dasr/aircraft-list" target="_blank" class="block text-[11px] text-gray-400 hover:text-blue-300 text-right py-1 hover:pl-2 transition-all">Aircraft List</a></li>
+                                <li><a href="https://airasia.elevade.io/fleet/dasr/aircraft-status" target="_blank" class="block text-[11px] text-gray-400 hover:text-blue-300 text-right py-1 hover:pl-2 transition-all">MAA Maintenance Status</a></li>
+                                <li><a href="https://airasia.elevade.io/fleet/dasr/aircraft-report" target="_blank" class="block text-[11px] text-gray-400 hover:text-blue-300 text-right py-1 hover:pl-2 transition-all">MAA DDML Reports</a></li>
+                                <li><a href="https://airasia.elevade.io/fleet/dasr/aircraft-report-closed" target="_blank" class="block text-[11px] text-gray-400 hover:text-blue-300 text-right py-1 hover:pl-2 transition-all">Closed Aircraft Reports</a></li>
+                                <li><a href="https://airasia.elevade.io/fleet/dasr/scheduled-task" target="_blank" class="block text-[11px] text-gray-400 hover:text-blue-300 text-right py-1 hover:pl-2 transition-all">Scheduled Task</a></li>
+                                <li><a href="https://airasia.elevade.io/fleet/dasr/assignment-draft" target="_blank" class="block text-[11px] text-gray-400 hover:text-blue-300 text-right py-1 hover:pl-2 transition-all">Assignment Drafts</a></li>
+                            </ul>
                         </li>
+
                         <li>
                             <a href="https://w3.airbus.com/H380/world/airbusworld/forms/airbus.fcc" target="_blank" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
                                 <span class="text-sm uppercase tracking-wide group-hover:underline">AIRBUS WORLD</span>
@@ -934,7 +949,12 @@
             }
             
             try {
-                const response = await fetch(OPT_DATA_URL);
+                // Fix: Added cache buster and credentials omit to solve CORS/Load Failed errors
+                const response = await fetch(`${OPT_DATA_URL}?t=${Date.now()}`, {
+                    redirect: 'follow',
+                    credentials: 'omit' // Crucial for public scripts to avoid CORS issues with logged-in users
+                });
+
                 if (!response.ok) throw new Error('Network error');
                 
                 const data = await response.json();
