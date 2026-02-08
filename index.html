@@ -282,16 +282,15 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
                         
-                        <!-- Card 1: DDML REPORT -->
-                        <div class="dashboard-card p-5 rounded-2xl text-white relative overflow-hidden group">
-                            <div class="absolute top-0 right-0 p-2 opacity-50"><i class="fa-solid fa-file-invoice text-4xl text-gray-500"></i></div>
-                            
-                            <div class="flex items-center justify-between mb-2 relative z-10">
-                                <div class="bg-blue-600 bg-opacity-40 p-1.5 rounded-lg"><i class="fa-solid fa-clipboard-list text-blue-200 text-sm"></i></div>
-                                <span id="ddml-date" class="text-[10px] font-mono text-blue-300 border border-blue-500/30 px-2 py-0.5 rounded bg-blue-900/40">Syncing...</span>
-                            </div>
-                            
+                        <!-- Card 1: DDML REPORT (Fixed Height) -->
+                        <div class="dashboard-card p-5 rounded-2xl text-white relative overflow-hidden group h-[260px] flex flex-col justify-between">
+                            <!-- Top Part -->
                             <div class="relative z-10">
+                                <div class="absolute top-0 right-0 opacity-50 -mt-2 -mr-2"><i class="fa-solid fa-file-invoice text-4xl text-gray-500"></i></div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="bg-blue-600 bg-opacity-40 p-1.5 rounded-lg"><i class="fa-solid fa-clipboard-list text-blue-200 text-sm"></i></div>
+                                    <span id="ddml-date" class="text-[10px] font-mono text-blue-300 border border-blue-500/30 px-2 py-0.5 rounded bg-blue-900/40">Syncing...</span>
+                                </div>
                                 <div class="text-[10px] text-gray-400 uppercase tracking-widest mb-1">Total DDML</div>
                                 <div class="flex items-end">
                                     <div id="ddml-total" class="text-4xl font-bold text-white leading-none">--</div>
@@ -299,30 +298,33 @@
                                 </div>
                             </div>
 
-                            <div class="mt-4 pt-3 border-t border-gray-600/50 grid grid-cols-3 gap-2 text-center relative z-10">
-                                <div>
-                                    <div class="text-[9px] text-gray-400 uppercase">CAT</div>
-                                    <div id="ddml-cat" class="text-lg font-bold text-yellow-400">-</div>
-                                    <div id="ddml-cat-trend" class="text-[10px] h-4 flex items-center justify-center font-bold"></div>
+                            <!-- Bottom Part -->
+                            <div>
+                                <div class="pt-3 border-t border-gray-600/50 grid grid-cols-3 gap-2 text-center relative z-10">
+                                    <div>
+                                        <div class="text-[9px] text-gray-400 uppercase">CAT</div>
+                                        <div id="ddml-cat" class="text-lg font-bold text-yellow-400">-</div>
+                                        <div id="ddml-cat-trend" class="text-[10px] h-4 flex items-center justify-center font-bold"></div>
+                                    </div>
+                                    <div class="border-l border-gray-600/50">
+                                        <div class="text-[9px] text-gray-400 uppercase">AMD</div>
+                                        <div id="ddml-amd" class="text-lg font-bold text-green-400">-</div>
+                                        <div id="ddml-amd-trend" class="text-[10px] h-4 flex items-center justify-center font-bold"></div>
+                                    </div>
+                                    <div class="border-l border-gray-600/50">
+                                        <div class="text-[9px] text-gray-400 uppercase">STR/FC</div>
+                                        <div id="ddml-str" class="text-lg font-bold text-red-400">-</div>
+                                        <div id="ddml-str-trend" class="text-[10px] h-4 flex items-center justify-center font-bold"></div>
+                                    </div>
                                 </div>
-                                <div class="border-l border-gray-600/50">
-                                    <div class="text-[9px] text-gray-400 uppercase">AMD</div>
-                                    <div id="ddml-amd" class="text-lg font-bold text-green-400">-</div>
-                                    <div id="ddml-amd-trend" class="text-[10px] h-4 flex items-center justify-center font-bold"></div>
+                                <div class="mt-2 text-[8px] text-gray-500 text-center relative z-10">
+                                    Refer from MAA AIRCRAFT STATUS EMAIL
                                 </div>
-                                <div class="border-l border-gray-600/50">
-                                    <div class="text-[9px] text-gray-400 uppercase">STR/FC</div>
-                                    <div id="ddml-str" class="text-lg font-bold text-red-400">-</div>
-                                    <div id="ddml-str-trend" class="text-[10px] h-4 flex items-center justify-center font-bold"></div>
-                                </div>
-                            </div>
-                            <div class="mt-2 text-[8px] text-gray-500 text-center relative z-10">
-                                Refer from MAA AIRCRAFT STATUS EMAIL
                             </div>
                         </div>
 
-                        <!-- Card 2 (Graph) -->
-                        <div class="dashboard-card p-5 rounded-2xl text-white col-span-1 min-h-[240px] flex flex-col">
+                        <!-- Card 2 (Graph) (Fixed Height) -->
+                        <div class="dashboard-card p-5 rounded-2xl text-white col-span-1 h-[260px] flex flex-col">
                             <div class="flex items-center justify-between mb-2">
                                 <div class="bg-green-500 bg-opacity-20 p-2 rounded-lg"><i class="fa-solid fa-chart-line text-green-400"></i></div>
                                 <span id="otp-trend" class="text-[9px] font-mono text-blue-300 px-1 border border-blue-500 rounded uppercase tracking-tighter">CONNECTING...</span>
@@ -341,8 +343,8 @@
                             </div>
                         </div>
 
-                        <!-- Card 3: RED EYE FLIGHT (UPDATED) -->
-                        <div class="dashboard-card p-5 rounded-2xl text-white h-[240px] flex flex-col relative group">
+                        <!-- Card 3: RED EYE FLIGHT (Fixed Height) -->
+                        <div class="dashboard-card p-5 rounded-2xl text-white h-[260px] flex flex-col relative group">
                             <!-- EXPORT BUTTON -->
                             <button onclick="exportRedEyeData()" class="absolute top-2 right-2 text-gray-400 hover:text-white transition opacity-0 group-hover:opacity-100 p-1" title="Export Data">
                                 <i class="fa-solid fa-file-export text-xs"></i>
@@ -373,8 +375,8 @@
                             </div>
                         </div>
 
-                        <!-- Card 4: 36 HRS CHK DUE (NEW) -->
-                        <div class="dashboard-card p-5 rounded-2xl text-white h-[240px] flex flex-col relative group">
+                        <!-- Card 4: 36 HRS CHK DUE (Fixed Height) -->
+                        <div class="dashboard-card p-5 rounded-2xl text-white h-[260px] flex flex-col relative group">
                             <!-- EXPORT BUTTON -->
                             <button onclick="export36HrsData()" class="absolute top-2 right-2 text-gray-400 hover:text-white transition opacity-0 group-hover:opacity-100 p-1" title="Export Data">
                                 <i class="fa-solid fa-file-export text-xs"></i>
@@ -1093,5 +1095,3 @@
     </script>
 </body>
 </html>
-
-
