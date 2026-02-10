@@ -38,20 +38,11 @@
             background: rgba(31, 41, 55, 0.8);
         }
 
-        /* Custom Scrollbar for Red Eye Card */
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.1); 
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: rgba(96, 165, 250, 0.5); 
-            border-radius: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: rgba(96, 165, 250, 0.8); 
-        }
+        /* Custom Scrollbar */
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.1); }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(96, 165, 250, 0.5); border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(96, 165, 250, 0.8); }
 
         /* Loading Spinner */
         .loader {
@@ -67,81 +58,56 @@
 </head>
 <body class="font-sans text-gray-600 bg-white overflow-hidden h-screen">
 
-    <!-- ================= LOGIN SCREEN (VISIBLE BY DEFAULT) ================= -->
     <div id="login-screen" class="fixed inset-0 z-[100] login-bg flex items-center justify-center">
         <div class="absolute inset-0 bg-black bg-opacity-80"></div>
-        
         <div class="relative z-10 bg-gray-900 bg-opacity-90 p-8 rounded-2xl shadow-2xl max-w-md w-full border border-gray-700 text-center backdrop-blur-md">
             <div class="mb-6 flex justify-center">
-                <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770126241/logomaa_wwii3a.png" 
-                     alt="MAA Logo" 
-                     class="w-24 h-24 rounded-full border-4 border-gray-600 shadow-lg object-cover">
+                <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770126241/logomaa_wwii3a.png" alt="MAA Logo" class="w-24 h-24 rounded-full border-4 border-gray-600 shadow-lg object-cover">
             </div>
-            
             <h1 class="text-2xl font-bold text-white mb-1">MAA ENGINEERING</h1>
             <p class="text-gray-400 text-sm mb-8 tracking-widest uppercase">Secured Access Portal</p>
-
             <div id="login-error" class="hidden bg-red-500 bg-opacity-20 border border-red-500 text-red-200 p-3 rounded mb-4 text-xs text-left">
                 <i class="fa-solid fa-circle-exclamation mr-1"></i> <span id="error-msg">Error</span>
             </div>
-
             <button id="google-login-btn" class="w-full bg-white text-gray-800 font-bold py-3 px-4 rounded-lg flex items-center justify-center hover:bg-gray-100 transition shadow-lg group">
                 <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-6 h-6 mr-3" alt="Google">
                 Sign in with Google
             </button>
-            
             <div id="loading-indicator" class="hidden flex justify-center items-center py-3">
                 <div class="loader mr-2"></div>
                 <span class="text-white text-sm">Verifying Credentials...</span>
             </div>
-
-            <p class="mt-6 text-xs text-gray-500">
-                Restricted access for <span class="text-gray-300">@airasia.com</span> only.
-            </p>
+            <p class="mt-6 text-xs text-gray-500">Restricted access for <span class="text-gray-300">@airasia.com</span> only.</p>
         </div>
     </div>
 
-    <!-- ================= EXPORT MODAL (HIDDEN BY DEFAULT) ================= -->
     <div id="export-modal" class="hidden fixed inset-0 z-[200] flex items-center justify-center bg-black bg-opacity-80 backdrop-blur-sm">
         <div class="bg-gray-800 rounded-lg w-11/12 max-w-2xl border border-gray-600 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
             <div class="flex justify-between items-center p-4 border-b border-gray-700 bg-gray-900">
                 <h3 class="text-white font-bold text-lg"><i class="fa-solid fa-file-export mr-2 text-purple-400"></i> Export Data (Plain Text)</h3>
-                <button onclick="closeExportModal()" class="text-gray-400 hover:text-white transition">
-                    <i class="fa-solid fa-xmark text-xl"></i>
-                </button>
+                <button onclick="closeExportModal()" class="text-gray-400 hover:text-white transition"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
             <div class="p-0 flex-1 overflow-hidden relative">
                 <textarea id="export-textarea" class="w-full h-64 md:h-96 bg-gray-900 text-green-400 font-mono text-xs p-4 border-none resize-none focus:ring-0 outline-none leading-relaxed" readonly></textarea>
             </div>
             <div class="p-4 border-t border-gray-700 bg-gray-900 flex justify-end space-x-3">
-                <button onclick="copyExportData()" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded text-sm font-semibold transition flex items-center">
-                    <i class="fa-regular fa-copy mr-2"></i> Copy to Clipboard
-                </button>
-                <button onclick="closeExportModal()" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded text-sm font-semibold transition">
-                    Close
-                </button>
+                <button onclick="copyExportData()" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded text-sm font-semibold transition flex items-center"><i class="fa-regular fa-copy mr-2"></i> Copy to Clipboard</button>
+                <button onclick="closeExportModal()" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded text-sm font-semibold transition">Close</button>
             </div>
         </div>
     </div>
 
-    <!-- ================= APP CONTENT (HIDDEN BY DEFAULT) ================= -->
     <div id="app-content" class="hidden flex-col md:flex-row h-screen w-full overflow-hidden">
         
-        <!-- MOBILE MENU BUTTON -->
         <button id="mobile-menu-btn" class="fixed top-4 left-4 z-[60] text-white bg-gray-800 bg-opacity-80 p-3 rounded-md md:hidden hover:bg-gray-700 transition shadow-lg border border-gray-600">
             <i class="fa-solid fa-bars text-xl"></i>
         </button>
 
-        <!-- SIDEBAR -->
         <div id="header" class="fixed inset-y-0 left-0 w-64 h-screen sidebar-bg text-white shadow-2xl z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col">
             <div class="dark-overlay w-full h-full flex flex-col">
-                
-                <!-- Sidebar Header -->
                 <div class="p-6 text-right flex flex-col items-end">
                     <div class="mb-4">
-                        <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770126241/logomaa_wwii3a.png" 
-                             alt="MAA Logo" 
-                             class="w-16 h-16 rounded-full border-2 border-gray-500 ml-auto object-cover">
+                        <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770126241/logomaa_wwii3a.png" alt="MAA Logo" class="w-16 h-16 rounded-full border-2 border-gray-500 ml-auto object-cover">
                     </div>
                     <h1 class="text-xl font-bold leading-tight">MAA</h1>
                     <h1 class="text-xl font-bold leading-tight text-gray-300">ENGINEERING</h1>
@@ -149,60 +115,22 @@
                     <p class="text-[10px] text-green-400 mt-2 font-mono"><i class="fa-solid fa-signal"></i> Live System</p>
                 </div>
 
-                <!-- Nav Links -->
                 <nav class="flex-1 overflow-y-auto px-6 py-2">
                     <ul class="space-y-4 text-right">
-                        <li>
-                            <a href="#projects" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
-                                <span class="text-sm uppercase tracking-wide group-hover:underline">Projects</span>
-                                <i class="fa-solid fa-shuttle-space text-lg w-6 text-center"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://docs.google.com/spreadsheets/d/1feAD2dXpGe6V_55qVL0AdpghzPQ2_mnlSE5H21xNkL8/edit?gid=1352464537#gid=1352464537" target="_blank" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
-                                <span class="text-sm uppercase tracking-wide group-hover:underline text-[11px]">HANDOVER SHEET</span>
-                                <i class="fa-solid fa-file-signature text-lg w-6 text-center"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://docs.google.com/spreadsheets/d/1mN4E5cXsxGxsloWB8NGPsJMU0OIL0ANO1CgnbNSh0gU/edit?gid=1459300150#gid=1459300150" target="_blank" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
-                                <span class="text-sm uppercase tracking-wide group-hover:underline text-[11px]">COMAT SHEET</span>
-                                <i class="fa-solid fa-boxes-packing text-lg w-6 text-center"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://docs.google.com/spreadsheets/d/10LFoNKmrFMcwXQmzfbszxhQu7R8fBZrzGQFgM7tfnNg/edit?gid=1291803062#gid=1291803062" target="_blank" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
-                                <span class="text-sm uppercase tracking-wide group-hover:underline text-[11px]">REQUEST ENS</span>
-                                <i class="fa-solid fa-file-circle-check text-lg w-6 text-center"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://docs.google.com/spreadsheets/d/1v1NaHf5eas1atch8cM_sM0WEjcPuCdFGaw9uXMB0VVk/edit?gid=1145119591#gid=1145119591" target="_blank" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
-                                <span class="text-sm uppercase tracking-wide group-hover:underline text-[11px]">STN MAINT SUPPORT</span>
-                                <i class="fa-solid fa-screwdriver-wrench text-lg w-6 text-center"></i>
-                            </a>
-                        </li>
-                         <li>
-                            <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbxwS_Nf-lcrIMJd-tO9XQPCEk0Gc1fxpwlT7DnA13c_oYmULy_ImwBv8RSTuQfCHaBq/exec" target="_blank" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
-                                <span class="text-sm uppercase tracking-wide group-hover:underline text-[11px]">PRIORITY LIST PREPARATION</span>
-                                <i class="fa-solid fa-file-signature text-lg w-6 text-center"></i>
-                            </a>
-                        </li>
-                          <li>
-                            <a href="https://docs.google.com/spreadsheets/d/1jbs6zWsTG0zDChbgdWTWRr0oAncYi6pHkqQRFLNT4oA/edit?gid=1673954076#gid=1673954076" target="_blank" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
-                                <span class="text-sm uppercase tracking-wide group-hover:underline text-[11px]">MOC ROSTER</span>
-                                <i class="fa-solid fa-file-circle-check text-lg w-6 text-center"></i>
-                            </a>
-                        </li>
+                        <li><a href="#projects" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition"><span class="text-sm uppercase tracking-wide group-hover:underline">Projects</span><i class="fa-solid fa-shuttle-space text-lg w-6 text-center"></i></a></li>
+                        <li><a href="https://docs.google.com/spreadsheets/d/1feAD2dXpGe6V_55qVL0AdpghzPQ2_mnlSE5H21xNkL8/edit?gid=1352464537#gid=1352464537" target="_blank" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition"><span class="text-sm uppercase tracking-wide group-hover:underline text-[11px]">HANDOVER SHEET</span><i class="fa-solid fa-file-signature text-lg w-6 text-center"></i></a></li>
+                        <li><a href="https://docs.google.com/spreadsheets/d/1mN4E5cXsxGxsloWB8NGPsJMU0OIL0ANO1CgnbNSh0gU/edit?gid=1459300150#gid=1459300150" target="_blank" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition"><span class="text-sm uppercase tracking-wide group-hover:underline text-[11px]">COMAT SHEET</span><i class="fa-solid fa-boxes-packing text-lg w-6 text-center"></i></a></li>
+                        <li><a href="https://docs.google.com/spreadsheets/d/10LFoNKmrFMcwXQmzfbszxhQu7R8fBZrzGQFgM7tfnNg/edit?gid=1291803062#gid=1291803062" target="_blank" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition"><span class="text-sm uppercase tracking-wide group-hover:underline text-[11px]">REQUEST ENS</span><i class="fa-solid fa-file-circle-check text-lg w-6 text-center"></i></a></li>
+                        <li><a href="https://docs.google.com/spreadsheets/d/1v1NaHf5eas1atch8cM_sM0WEjcPuCdFGaw9uXMB0VVk/edit?gid=1145119591#gid=1145119591" target="_blank" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition"><span class="text-sm uppercase tracking-wide group-hover:underline text-[11px]">STN MAINT SUPPORT</span><i class="fa-solid fa-screwdriver-wrench text-lg w-6 text-center"></i></a></li>
+                        <li><a href="https://script.google.com/a/macros/airasia.com/s/AKfycbxwS_Nf-lcrIMJd-tO9XQPCEk0Gc1fxpwlT7DnA13c_oYmULy_ImwBv8RSTuQfCHaBq/exec" target="_blank" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition"><span class="text-sm uppercase tracking-wide group-hover:underline text-[11px]">PRIORITY LIST PREPARATION</span><i class="fa-solid fa-file-signature text-lg w-6 text-center"></i></a></li>
+                        <li><a href="https://docs.google.com/spreadsheets/d/1jbs6zWsTG0zDChbgdWTWRr0oAncYi6pHkqQRFLNT4oA/edit?gid=1673954076#gid=1673954076" target="_blank" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition"><span class="text-sm uppercase tracking-wide group-hover:underline text-[11px]">MOC ROSTER</span><i class="fa-solid fa-file-circle-check text-lg w-6 text-center"></i></a></li>
                         
-                        <!-- ELEVADE DROPDOWN MENU -->
                         <li>
                             <div onclick="document.getElementById('elevade-submenu').classList.toggle('hidden'); this.querySelector('.fa-chevron-down').classList.toggle('rotate-180')" class="cursor-pointer group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition select-none">
                                 <i class="fa-solid fa-chevron-down text-[10px] mr-1 opacity-50 group-hover:opacity-100 transition-transform duration-300"></i>
                                 <span class="text-sm uppercase tracking-wide group-hover:underline">ELEVADE</span>
                                 <i class="fa-solid fa-arrow-up-right-dots text-lg w-6 text-center"></i>
                             </div>
-                            <!-- Submenu -->
                             <ul id="elevade-submenu" class="hidden mt-1 space-y-1 border-r border-gray-600 pr-3 mr-2 bg-black bg-opacity-20 py-2 rounded-l-lg animate-slide-up">
                                 <li><a href="https://elevade.io" target="_blank" class="block text-[11px] text-gray-400 hover:text-blue-300 text-right py-1 hover:pl-2 transition-all">HOME PAGE</a></li>
                                 <li><a href="https://airasia.elevade.io/fleet/dasr/dashboard" target="_blank" class="block text-[11px] text-gray-400 hover:text-blue-300 text-right py-1 hover:pl-2 transition-all">DASR Overview</a></li>
@@ -215,40 +143,14 @@
                             </ul>
                         </li>
 
-                        <li>
-                            <a href="https://w3.airbus.com/newairbusworld" target="_blank" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
-                                <span class="text-sm uppercase tracking-wide group-hover:underline">AIRBUS WORLD</span>
-                                <i class="fa-solid fa-earth-europe text-lg w-6 text-center"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://vdiairfase.airasia.com/RDWeb/webclient/" target="_blank" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
-                                <span class="text-sm uppercase tracking-wide group-hover:underline">AIRFASE</span>
-                                <i class="fa-solid fa-jet-fighter text-lg w-6 text-center"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://redwatch.airasia.com/eops#" target="_blank" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
-                                <span class="text-sm uppercase tracking-wide group-hover:underline">RED WATCH</span>
-                                <i class="fa-solid fa-bullseye text-lg w-6 text-center"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://skyaims.airasia.com" target="_blank" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
-                                <span class="text-sm uppercase tracking-wide group-hover:underline">AIMS</span>
-                                <i class="fa-solid fa-crosshairs text-lg w-6 text-center"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbzWpwTbW9jYYO-knwIqrg4Hb5bgnlx5eJwenYRyOwUWxCtMslgtzzsgGgfdsw2RQzHg/exec" target="_blank" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition">
-                                <span class="text-sm uppercase tracking-wide group-hover:underline text-[11px]">ELH OLD VERSION</span>
-                                <i class="fa-solid fa-clock-rotate-left text-lg w-6 text-center"></i>
-                            </a>
-                        </li>
+                        <li><a href="https://w3.airbus.com/newairbusworld" target="_blank" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition"><span class="text-sm uppercase tracking-wide group-hover:underline">AIRBUS WORLD</span><i class="fa-solid fa-earth-europe text-lg w-6 text-center"></i></a></li>
+                        <li><a href="https://vdiairfase.airasia.com/RDWeb/webclient/" target="_blank" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition"><span class="text-sm uppercase tracking-wide group-hover:underline">AIRFASE</span><i class="fa-solid fa-jet-fighter text-lg w-6 text-center"></i></a></li>
+                        <li><a href="https://redwatch.airasia.com/eops#" target="_blank" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition"><span class="text-sm uppercase tracking-wide group-hover:underline">RED WATCH</span><i class="fa-solid fa-bullseye text-lg w-6 text-center"></i></a></li>
+                        <li><a href="https://skyaims.airasia.com" target="_blank" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition"><span class="text-sm uppercase tracking-wide group-hover:underline">AIMS</span><i class="fa-solid fa-crosshairs text-lg w-6 text-center"></i></a></li>
+                        <li><a href="https://script.google.com/a/macros/airasia.com/s/AKfycbzWpwTbW9jYYO-knwIqrg4Hb5bgnlx5eJwenYRyOwUWxCtMslgtzzsgGgfdsw2RQzHg/exec" target="_blank" class="group flex items-center justify-end space-x-3 text-gray-400 hover:text-white transition"><span class="text-sm uppercase tracking-wide group-hover:underline text-[11px]">ELH OLD VERSION</span><i class="fa-solid fa-clock-rotate-left text-lg w-6 text-center"></i></a></li>
                     </ul>
                 </nav>
 
-                <!-- User Profile Section -->
                 <div class="p-4 border-t border-gray-700 bg-black bg-opacity-30">
                     <div class="flex items-center justify-between mb-2">
                         <img id="user-photo" src="" alt="User" class="w-8 h-8 rounded-full border border-gray-500">
@@ -264,20 +166,14 @@
             </div>
         </div>
 
-        <!-- MAIN CONTENT SCROLLABLE AREA -->
         <div id="main" class="flex-1 w-full md:ml-64 transition-all duration-300 overflow-y-auto h-full">
 
-            <!-- Banner & Dashboard Section (FIXED FOR MOBILE) -->
             <section id="top" class="relative w-full min-h-[500px] flex items-center">
-                <!-- Background Image Absolute -->
                 <div class="absolute inset-0 z-0">
-                    <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770126320/banner_sq0hej.jpg" 
-                         alt="Banner" 
-                         class="w-full h-full object-cover">
+                    <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770126320/banner_sq0hej.jpg" alt="Banner" class="w-full h-full object-cover">
                     <div class="absolute inset-0 bg-black bg-opacity-75"></div>
                 </div>
 
-                <!-- Content Relative (Allows expansion) -->
                 <div class="relative z-10 container mx-auto px-6 py-20 md:py-10">
                     <div class="text-center mb-8">
                         <h2 class="text-2xl md:text-4xl font-bold text-white drop-shadow-lg uppercase tracking-wider">
@@ -288,9 +184,7 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
                         
-                        <!-- Card 1: DDML REPORT (Fixed Height) -->
                         <div class="dashboard-card p-5 rounded-2xl text-white relative overflow-hidden group h-[260px] flex flex-col justify-between">
-                            <!-- Top Part -->
                             <div class="relative z-10">
                                 <div class="absolute top-0 right-0 opacity-50 -mt-2 -mr-2"><i class="fa-solid fa-file-invoice text-4xl text-gray-500"></i></div>
                                 <div class="flex items-center justify-between mb-2">
@@ -303,8 +197,6 @@
                                     <div id="ddml-trend" class="ml-3 mb-1 text-sm font-bold flex items-center"></div>
                                 </div>
                             </div>
-
-                            <!-- Bottom Part -->
                             <div>
                                 <div class="pt-3 border-t border-gray-600/50 grid grid-cols-3 gap-2 text-center relative z-10">
                                     <div>
@@ -323,13 +215,10 @@
                                         <div id="ddml-str-trend" class="text-[10px] h-4 flex items-center justify-center font-bold"></div>
                                     </div>
                                 </div>
-                                <div class="mt-2 text-[8px] text-gray-500 text-center relative z-10">
-                                    Refer from MAA AIRCRAFT STATUS EMAIL
-                                </div>
+                                <div class="mt-2 text-[8px] text-gray-500 text-center relative z-10">Refer from MAA AIRCRAFT STATUS EMAIL</div>
                             </div>
                         </div>
 
-                        <!-- Card 2 (Graph) (Fixed Height) -->
                         <div class="dashboard-card p-5 rounded-2xl text-white col-span-1 h-[260px] flex flex-col">
                             <div class="flex items-center justify-between mb-2">
                                 <div class="bg-green-500 bg-opacity-20 p-2 rounded-lg"><i class="fa-solid fa-chart-line text-green-400"></i></div>
@@ -340,40 +229,23 @@
                             </div>
                             <div class="mt-2 flex items-center justify-between text-[10px]">
                                 <div class="flex items-center space-x-2">
-                                    <span class="w-2 h-2 rounded-full bg-blue-400"></span>
-                                    <span class="text-gray-400 uppercase">OTP15</span>
-                                    <span class="w-2 h-2 rounded-full bg-red-400 ml-2"></span>
-                                    <span class="text-gray-400 uppercase">ENG DLY</span>
+                                    <span class="w-2 h-2 rounded-full bg-blue-400"></span><span class="text-gray-400 uppercase">OTP15</span>
+                                    <span class="w-2 h-2 rounded-full bg-red-400 ml-2"></span><span class="text-gray-400 uppercase">ENG DLY</span>
                                 </div>
                                 <div id="otp-value" class="text-lg font-bold text-blue-400 leading-none">--.--%</div>
                             </div>
                         </div>
 
-                        <!-- Card 3: RED EYE FLIGHT (Fixed Height) -->
                         <div class="dashboard-card p-5 rounded-2xl text-white h-[260px] flex flex-col relative group">
-                            <!-- EXPORT BUTTON -->
-                            <button onclick="exportRedEyeData()" class="absolute top-2 right-2 text-gray-400 hover:text-white transition opacity-0 group-hover:opacity-100 p-1" title="Export Data">
-                                <i class="fa-solid fa-file-export text-xs"></i>
-                            </button>
-
+                            <button onclick="exportRedEyeData()" class="absolute top-2 right-2 text-gray-400 hover:text-white transition opacity-0 group-hover:opacity-100 p-1" title="Export Data"><i class="fa-solid fa-file-export text-xs"></i></button>
                             <div class="flex items-center justify-between mb-3 shrink-0 mr-4">
-                                <div class="bg-purple-500 bg-opacity-20 p-2 rounded-lg flex items-center gap-2">
-                                    <i class="fa-solid fa-moon text-purple-400"></i>
-                                </div>
+                                <div class="bg-purple-500 bg-opacity-20 p-2 rounded-lg flex items-center gap-2"><i class="fa-solid fa-moon text-purple-400"></i></div>
                                 <span class="text-[10px] font-mono text-purple-300 uppercase tracking-widest text-right">RED EYE FLIGHT<br><span class="text-[9px] text-gray-400">04:00 - 09:00</span></span>
                             </div>
-                            
-                            <!-- Header Row (Updated to 4 cols: REG, FLT, FROM, STA) -->
                             <div class="grid grid-cols-4 gap-1 mb-2 text-[9px] font-bold text-gray-400 border-b border-gray-600 pb-1 shrink-0">
-                                <div class="text-center">REG</div>
-                                <div class="text-center">FLT</div>
-                                <div class="text-center">FROM</div> 
-                                <div class="text-center">STA</div>  
+                                <div class="text-center">REG</div><div class="text-center">FLT</div><div class="text-center">FROM</div><div class="text-center">STA</div>  
                             </div>
-
-                            <!-- Scrollable List -->
                             <div id="redeye-list" class="flex-1 overflow-y-auto custom-scrollbar relative">
-                                <!-- Loading State -->
                                 <div class="absolute inset-0 flex flex-col items-center justify-center text-gray-400">
                                     <div class="loader w-4 h-4 mb-2 border-2 border-purple-400 border-t-transparent"></div>
                                     <span class="text-[10px]">Loading...</span>
@@ -381,40 +253,63 @@
                             </div>
                         </div>
 
-                        <!-- Card 4: 36 HRS CHK DUE (Fixed Height) -->
                         <div class="dashboard-card p-5 rounded-2xl text-white h-[260px] flex flex-col relative group">
-                            <!-- EXPORT BUTTON -->
-                            <button onclick="export36HrsData()" class="absolute top-2 right-2 text-gray-400 hover:text-white transition opacity-0 group-hover:opacity-100 p-1" title="Export Data">
-                                <i class="fa-solid fa-file-export text-xs"></i>
-                            </button>
-
+                            <button onclick="export36HrsData()" class="absolute top-2 right-2 text-gray-400 hover:text-white transition opacity-0 group-hover:opacity-100 p-1" title="Export Data"><i class="fa-solid fa-file-export text-xs"></i></button>
                             <div class="flex items-center justify-between mb-3 shrink-0 mr-4">
-                                <div class="bg-orange-500 bg-opacity-20 p-2 rounded-lg flex items-center gap-2">
-                                    <i class="fa-solid fa-clock text-orange-400"></i>
-                                </div>
+                                <div class="bg-orange-500 bg-opacity-20 p-2 rounded-lg flex items-center gap-2"><i class="fa-solid fa-clock text-orange-400"></i></div>
                                 <span class="text-[10px] font-mono text-orange-300 uppercase tracking-widest text-right">36 HRS CHK DUE<br><span class="text-[9px] text-gray-400">MONITORING</span></span>
                             </div>
-                            
-                            <!-- Header Row -->
                             <div class="grid grid-cols-3 gap-1 mb-2 text-[9px] font-bold text-gray-400 border-b border-gray-600 pb-1 shrink-0">
                                 <div class="col-span-1 text-left pl-2">REG</div>
                                 <div class="col-span-2 text-right pr-2">REMAINING</div>
                             </div>
-
-                            <!-- Scrollable List -->
                             <div id="36hrs-list" class="flex-1 overflow-y-auto custom-scrollbar relative">
-                                <!-- Loading State -->
                                 <div class="absolute inset-0 flex flex-col items-center justify-center text-gray-400">
                                     <div class="loader w-4 h-4 mb-2 border-2 border-orange-400 border-t-transparent"></div>
                                     <span class="text-[10px]">Loading...</span>
                                 </div>
                             </div>
                         </div>
-                    </div>
+
+                        <div class="col-span-1 md:col-span-2 lg:col-span-4 mt-2">
+                            <div class="dashboard-card rounded-2xl overflow-hidden border border-gray-700/50 shadow-2xl relative group flex flex-col h-[600px]">
+                                <div class="px-5 py-3 border-b border-gray-700/50 flex items-center justify-between bg-gradient-to-r from-gray-800/80 to-transparent backdrop-blur-md">
+                                    <div class="flex items-center gap-3">
+                                        <div class="bg-blue-600/20 p-2 rounded-lg border border-blue-500/20 shadow-[0_0_10px_rgba(59,130,246,0.2)]">
+                                            <i class="fa-solid fa-chart-area text-blue-400 text-sm"></i>
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <h3 class="text-xs font-bold text-white uppercase tracking-widest flex items-center gap-2">
+                                                Oil Consumption Trends
+                                                <span class="px-1.5 py-0.5 rounded text-[8px] bg-green-500/20 text-green-400 border border-green-500/30">LIVE</span>
+                                            </h3>
+                                            <span class="text-[9px] text-gray-400 font-mono">SOURCE: LOOKER STUDIO</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <a href="https://lookerstudio.google.com/reporting/b4e0321f-4cab-48f8-ba96-57ccc3fd29d9/page/tEnnC" target="_blank" class="p-2 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg transition-all" title="Open Full Screen">
+                                            <i class="fa-solid fa-up-right-from-square text-xs"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="relative flex-1 bg-[#1a1d21]">
+                                    <iframe 
+                                        width="100%" 
+                                        height="100%" 
+                                        src="https://lookerstudio.google.com/embed/reporting/b4e0321f-4cab-48f8-ba96-57ccc3fd29d9/page/tEnnC" 
+                                        frameborder="0" 
+                                        style="border:0;" 
+                                        allowfullscreen 
+                                        sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+                                        class="absolute inset-0 w-full h-full opacity-95 hover:opacity-100 transition-opacity"
+                                    ></iframe>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
                 </div>
             </section>
 
-            <!-- Projects Section -->
             <section id="projects" class="pt-8 pb-20 bg-gray-100">
                 <div class="container mx-auto px-6 max-w-7xl">
                     <header class="mb-10 border-b pb-4">
@@ -423,7 +318,6 @@
 
                     <div id="project-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         
-                        <!-- 1. DELAY CAPTURE -->
                         <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition relative group">
                             <div onclick="toggleProjectMenu('menu-delay')" class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative">
                                 <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770579512/28E6D130-563F-4EDD-A48F-75425AFC040A_emdltk.png" class="w-full h-full object-cover transform transition duration-500 hover:scale-110" alt="DELAY">
@@ -436,7 +330,6 @@
                             <div class="p-6"><h3 class="font-bold text-lg">DELAY CAPTURE & EDSR DRAFT</h3></div>
                         </article>
 
-                        <!-- 2. 36HRS -->
                         <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition relative group">
                             <div onclick="toggleProjectMenu('menu-36hrs')" class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative">
                                 <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770579771/AE0A040A-3C08-4A44-A6A1-B5EEAC0EA3CA_z67mvw.png" class="w-full h-full object-cover transform transition duration-500 hover:scale-110" alt="36HRS">
@@ -447,30 +340,26 @@
                             <div class="p-6"><h3 class="font-bold text-lg">36HRS & WEEKLY</h3></div>
                         </article>
 
-                        <!-- 3. High Oil Consumption-->
                         <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition relative group">
-                            <div onclick="toggleProjectMenu('menu-36hrs')" class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative">
-                                <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770609060/Screenshot_2569-02-09_at_11.50.46_vztw2h.png" class="w-full h-full object-cover transform transition duration-500 hover:scale-110" alt="36HRS">
-                                <div id="menu-36hrs" onclick="event.stopPropagation()" class="hidden md:group-hover:flex absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex-col justify-center items-center space-y-2">
+                            <div onclick="toggleProjectMenu('menu-oil-dash')" class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative">
+                                <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770609060/Screenshot_2569-02-09_at_11.50.46_vztw2h.png" class="w-full h-full object-cover transform transition duration-500 hover:scale-110" alt="OIL">
+                                <div id="menu-oil-dash" onclick="event.stopPropagation()" class="hidden md:group-hover:flex absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex-col justify-center items-center space-y-2">
                                     <a href="https://lookerstudio.google.com/u/0/reporting/b4e0321f-4cab-48f8-ba96-57ccc3fd29d9/page/tEnnC" target="_blank" class="w-full text-center py-2 px-4 bg-orange-600 text-white rounded hover:bg-orange-500 transition font-semibold shadow-md text-sm border border-orange-400"><i class="fa-solid fa-calendar-days mr-2"></i> MONITORING DASHBOARD</a>
                                 </div>
                             </div>
                             <div class="p-6"><h3 class="font-bold text-lg">HIGH OIL CONSUMPTION MONITOR</h3></div>
                         </article>
 
-                        <!-- 4. CABIN DRAWING -->
                         <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition relative group">
-                            <div onclick="toggleProjectMenu('menu-36hrs')" class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative">
-                                <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770649252/Screenshot_2569-02-09_at_23.00.30_h0bm9t.png" class="w-full h-full object-cover transform transition duration-500 hover:scale-110" alt="36HRS">
-                                <div id="menu-36hrs" onclick="event.stopPropagation()" class="hidden md:group-hover:flex absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex-col justify-center items-center space-y-2">
+                            <div onclick="toggleProjectMenu('menu-cabin')" class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative">
+                                <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770649252/Screenshot_2569-02-09_at_23.00.30_h0bm9t.png" class="w-full h-full object-cover transform transition duration-500 hover:scale-110" alt="CABIN">
+                                <div id="menu-cabin" onclick="event.stopPropagation()" class="hidden md:group-hover:flex absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex-col justify-center items-center space-y-2">
                                     <a href="https://sites.google.com/airasia.com/a320cabindrawing/" target="_blank" class="w-full text-center py-2 px-4 bg-orange-600 text-white rounded hover:bg-orange-500 transition font-semibold shadow-md text-sm border border-orange-400"><i class="fa-solid fa-calendar-days mr-2"></i> A320 FAM CABIN DRAWING</a>
                                 </div>
                             </div>
                             <div class="p-6"><h3 class="font-bold text-lg">A320 FAM CABIN DRAWING</h3></div>
                         </article>
                         
-                        
-                        <!-- 5. COCKPIT -->
                         <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition relative group">
                             <div onclick="toggleProjectMenu('menu-cockpit')" class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative">
                                 <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770580017/Screenshot_2569-02-09_at_03.46.35_u7deut.png" class="w-full h-full object-cover transform transition duration-500 hover:scale-110" alt="COCKPIT">
@@ -484,7 +373,6 @@
                             <div class="p-6"><h3 class="font-bold text-lg">COCKPIT WINDOWS</h3></div>
                         </article>
 
-                        <!-- 6. FUEL -->
                         <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition relative group">
                             <div onclick="toggleProjectMenu('menu-fuel')" class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative">
                                 <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770535177/ChatGPT_Image_Feb_8_2026_at_03_17_29_PM_tmbe9x.png" class="w-full h-full object-cover transform transition duration-500 hover:scale-110" alt="FUEL">
@@ -499,7 +387,6 @@
                             <div class="p-6"><h3 class="font-bold text-lg">FUEL DRAIN MONITOR</h3></div>
                         </article>
 
-                        <!-- 7. OIL -->
                         <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition relative group">
                             <div onclick="toggleProjectMenu('menu-oil')" class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative">
                                 <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770534640/ChatGPT_Image_Feb_8_2026_at_03_09_18_PM_mchwpu.png" class="w-full h-full object-cover transform transition duration-500 hover:scale-110" alt="OIL">
@@ -511,7 +398,6 @@
                             <div class="p-6"><h3 class="font-bold text-lg">ENG OIL SERVICING</h3></div>
                         </article>
 
-                        <!-- 8. STARTER -->
                         <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition relative group">
                             <div onclick="toggleProjectMenu('menu-starter')" class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative">
                                 <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770586375/starter_b3obnt.png" class="w-full h-full object-cover transform transition duration-500 hover:scale-110" alt="STARTER">
@@ -524,7 +410,6 @@
                             <div class="p-6"><h3 class="font-bold text-lg">PNEUMATIC STARTER</h3></div>
                         </article>
 
-                        <!-- 9. SPINNER -->
                         <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition relative group">
                             <div onclick="toggleProjectMenu('menu-spinner')" class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative">
                                 <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770587097/Screenshot_2569-02-09_at_05.44.39_y4hr6c.png" class="w-full h-full object-cover transform transition duration-500 hover:scale-110" alt="SPINNER">
@@ -547,15 +432,12 @@
         </div>
     </div>
 
-    <!-- MAIN APP SCRIPT WITH FIREBASE INTEGRATION -->
     <script type="module">
         // Import Firebase Functions
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-        // ================================================================
-        // [1] ส่วนตั้งค่า FIREBASE (คุณต้องแก้ไขตรงนี้)
-        // ================================================================
+        
+        // [1] FIREBASE CONFIG
         const firebaseConfig = {
             apiKey: "AIzaSyBoHj4s99iMQLKKT8ZZHD4uTugLXlQRxWg",
             authDomain: "maa-moc.firebaseapp.com",
@@ -568,13 +450,11 @@
 
         // Initialize Firebase
         let app, auth, provider;
-
         try {
             app = initializeApp(firebaseConfig);
             auth = getAuth(app);
             provider = new GoogleAuthProvider();
             provider.setCustomParameters({ prompt: 'select_account' }); 
-            // REMOVED: Scope that caused the verification warning
         } catch (e) {
             console.error("Firebase Init Error:", e);
         }
@@ -602,9 +482,6 @@
             try {
                 const result = await signInWithPopup(auth, provider);
                 const user = result.user;
-                
-                // REMOVED: Token capture logic as we removed the scope
-
                 validateUser(user);
             } catch (error) {
                 console.error(error);
@@ -635,12 +512,12 @@
                 fetchOTPData();
                 fetchDDMLData();
                 fetchRedEyeData();
-                fetch36HrsData(); // NEW: Fetch 36HRS data
+                fetch36HrsData();
                 window.chartInterval = setInterval(() => {
                     fetchOTPData();
                     fetchDDMLData();
                     fetchRedEyeData();
-                    fetch36HrsData(); // NEW: Fetch 36HRS data loop
+                    fetch36HrsData();
                 }, 60000);
             }
         }
@@ -661,7 +538,6 @@
                     signOut(auth);
                 }
             } else {
-                // Not logged in
                 loginScreen.classList.remove('hidden');
                 appContent.classList.add('hidden');
                 appContent.classList.remove('flex');
@@ -685,13 +561,12 @@
         btn.addEventListener('click', () => sidebar.classList.toggle('-translate-x-full'));
         
         window.closeMobileMenu = function() { 
-            if (window.innerWidth < 768) sidebar.classList.add('-translate-x-full'); 
+            if (window.innerWidth < 768) sidebar.classList.add('-translate-x-full');
         }
 
         // Toggle Project Menu
         window.toggleProjectMenu = function(menuId) {
             if (window.innerWidth >= 768) return;
-            
             const menu = document.getElementById(menuId);
             if (!menu) return;
             
@@ -702,7 +577,6 @@
                     m.classList.remove('flex');
                 }
             });
-
             menu.classList.toggle('hidden');
             menu.classList.toggle('flex');
         }
@@ -738,7 +612,6 @@
             document.getElementById('export-modal').classList.remove('hidden');
         };
 
-        // NEW: Export Function for 36 HRS
         window.export36HrsData = function() {
             const listContainer = document.getElementById('36hrs-list');
             const rows = listContainer.querySelectorAll('.grid');
@@ -746,7 +619,6 @@
             text += "----------------------------------------\n";
             text += "REG     | REMAINING TIME \n";
             text += "----------------------------------------\n";
-
             rows.forEach(row => {
                 const cols = row.querySelectorAll('div');
                 if (cols.length >= 2) {
@@ -782,18 +654,13 @@
             const SHEET_NAME = 'ชีต1';
             const RANGE = 'A2:E5'; 
             const URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}&range=${RANGE}`;
-
             try {
                 const res = await fetch(URL);
                 const text = await res.text();
-                
-                // Parse GViz JSON response
                 const jsonText = text.substring(47).slice(0, -2);
                 const json = JSON.parse(jsonText);
                 
-                // Check if data exists
                 if (json.table && json.table.rows.length > 0) {
-                    // --- Row 2 Data (Main Data) ---
                     const mainRow = json.table.rows[0].c;
                     const dateVal = mainRow[0] ? (mainRow[0].f || mainRow[0].v) : 'N/A';
                     const catVal = mainRow[1] ? (mainRow[1].f || mainRow[1].v) : '0';
@@ -801,16 +668,13 @@
                     const strVal = mainRow[3] ? (mainRow[3].f || mainRow[3].v) : '0';
                     const totalVal = mainRow[4] ? (mainRow[4].f || mainRow[4].v) : '0';
 
-                    // Update Main UI
                     document.getElementById('ddml-date').textContent = dateVal;
                     document.getElementById('ddml-total').textContent = totalVal;
                     document.getElementById('ddml-cat').textContent = catVal;
                     document.getElementById('ddml-amd').textContent = amdVal;
                     document.getElementById('ddml-str').textContent = strVal;
 
-                    // --- Summary Row Data (Trend Data) ---
                     let trendRow = null;
-                    
                     for(let i = 1; i < json.table.rows.length; i++) {
                         const r = json.table.rows[i].c;
                         if (r && r[0] && r[0].v && String(r[0].v).toLowerCase().trim() === 'summary') {
@@ -818,8 +682,6 @@
                             break;
                         }
                     }
-
-                    // Fallback
                     if (!trendRow && json.table.rows.length > 1) {
                          trendRow = json.table.rows[json.table.rows.length - 1].c;
                     }
@@ -828,7 +690,6 @@
                         if (cellData && cellData.v !== null) {
                             const val = parseFloat(cellData.v);
                             const absVal = Math.abs(val);
-
                             if (val > 0) {
                                 return `<i class="fa-solid fa-arrow-down text-green-400 mr-1" style="font-size: 8px;"></i> <span class="text-green-400">${absVal}</span>`;
                             } else if (val < 0) {
@@ -855,12 +716,10 @@
 
         // --- FETCH RED EYE DATA ---
         async function fetchRedEyeData() {
-            // Sheet ID: 1CEGBX67w-EucpDNWsZBcpEs5G3ZmmqICp8oLdlzKo9c
             const SHEET_ID = '1CEGBX67w-EucpDNWsZBcpEs5G3ZmmqICp8oLdlzKo9c';
             const GID = '0';
             const URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}&headers=1`;
             const listContainer = document.getElementById('redeye-list');
-
             try {
                 const res = await fetch(URL);
                 if (!res.ok) { throw new Error(`HTTP Status: ${res.status}`); }
@@ -868,7 +727,6 @@
                 const jsonText = text.substring(47).slice(0, -2);
                 const json = JSON.parse(jsonText);
                 let html = '';
-                
                 if (json.table && json.table.rows.length > 0) {
                     json.table.rows.forEach(row => {
                         const r = row.c;
@@ -906,15 +764,10 @@
             }
         }
 
-        // --- NEW: FETCH 36HRS DATA ---
+        // --- FETCH 36HRS DATA ---
         async function fetch36HrsData() {
-            // Sheet ID: 1X7VKdTDbFLcMRlfKIUvrTOi9dxSuvFsaA7qrixtEJ4I
-            // Sheet Name: MAAA (Using sheet name parameter)
-            // Column A: REG
-            // Column B: Remaining Time
             const SHEET_ID = '1X7VKdTDbFLcMRlfKIUvrTOi9dxSuvFsaA7qrixtEJ4I';
             const SHEET_NAME = 'MAAA';
-            // Use sheet name to be specific
             const URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}&headers=1`;
             const listContainer = document.getElementById('36hrs-list');
 
@@ -925,22 +778,16 @@
                 const jsonText = text.substring(47).slice(0, -2);
                 const json = JSON.parse(jsonText);
                 let html = '';
-                
                 if (json.table && json.table.rows.length > 0) {
                     json.table.rows.forEach(row => {
                         const r = row.c;
                         if (!r) return;
-                        
-                        // A=0, B=1
                         const reg = r[0] ? (r[0].f || r[0].v || '') : '';
                         const remaining = r[1] ? (r[1].f || r[1].v || '') : '';
 
-                        // Skip headers and empty rows
                         if (reg.toLowerCase().includes('reg') || reg.toLowerCase().includes('ทะเบียน')) return;
                         if (reg === '' && remaining === '') return;
 
-                        // Check for negative value to maybe style it (optional, just simple display for now)
-                        // If it contains '-', maybe make it red?
                         const textColorClass = remaining.includes('-') ? 'text-red-400' : 'text-orange-100';
 
                         html += `
@@ -980,50 +827,36 @@
             }
             
             try {
-                // Fix: Added cache buster and credentials omit to solve CORS/Load Failed errors
                 const response = await fetch(`${OPT_DATA_URL}?t=${Date.now()}`, {
                     redirect: 'follow',
-                    credentials: 'omit' // Crucial for public scripts to avoid CORS issues with logged-in users
+                    credentials: 'omit'
                 });
-
                 if (!response.ok) throw new Error('Network error');
                 
                 const data = await response.json();
-
-                // FILTER: Only include data points where the main value (OTP15/valueB) is significantly greater than 0
                 const validData = data.filter(d => {
                     const val = parseFloat(d.valueB || d.value);
-                    return !isNaN(val) && val > 0.001; // Strict filter for non-zero values
+                    return !isNaN(val) && val > 0.001; 
                 });
 
                 if (Array.isArray(validData) && validData.length > 0) {
                     const labels = validData.map(d => d.date);
-                    
-                    // Special processing for OTP (valueB) - needs to handle fractions
                     const processOTP = (val) => {
-                        if (typeof val === 'string' && val.includes('%')) {
-                            return parseFloat(val);
-                        }
+                        if (typeof val === 'string' && val.includes('%')) { return parseFloat(val); }
                         let n = parseFloat(val);
                         if (isNaN(n)) return 0;
                         return (n > 0 && n <= 1.0) ? (n * 100) : n;
                     };
-
-                    // Special processing for ENG DLY (valueC)
                     const processEngDly = (val) => {
-                        if (typeof val === 'string' && val.includes('%')) {
-                            return parseFloat(val);
-                        }
+                        if (typeof val === 'string' && val.includes('%')) { return parseFloat(val); }
                         let n = parseFloat(val);
                         if (isNaN(n)) return 0;
                         return (n > 0 && n <= 0.05) ? (n * 100) : n; 
                     };
-
                     const valuesB = validData.map(d => processOTP(d.valueB || d.value));
                     const valuesC = validData.map(d => processEngDly(d.valueC || 0));
 
                     updateChart(labels, valuesB, valuesC);
-                    
                     if (valueEl) {
                         const latestOTP15 = valuesB[valuesB.length - 1];
                         valueEl.textContent = latestOTP15.toFixed(2) + '%';
@@ -1108,7 +941,7 @@
                             y: {
                                 beginAtZero: true,
                                 grid: { color: 'rgba(75, 85, 99, 0.2)', borderDash: [2, 4] },
-                                ticks: { color: '#9ca3af', font: { size: 8 } } // Added ticks here
+                                ticks: { color: '#9ca3af', font: { size: 8 } } 
                             }
                         }
                     }
@@ -1116,7 +949,6 @@
             }
         }
         
-        // Initial fetch call
         fetchOTPData();
         fetchDDMLData();
         fetchRedEyeData();
@@ -1124,15 +956,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
