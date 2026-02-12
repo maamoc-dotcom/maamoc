@@ -271,6 +271,63 @@
                             </div>
                         </div>
 
+                        <!-- Dash 5: Cockpit Window Monitoring -->
+                        <div class="dashboard-card p-5 rounded-2xl text-white h-[260px] flex flex-col relative group border-t-4 border-t-blue-500">
+                            <div class="flex items-center justify-between mb-2 shrink-0">
+                                <div class="bg-blue-500 bg-opacity-20 p-2 rounded-lg flex items-center gap-2"><i class="fa-solid fa-plane-up text-blue-400"></i></div>
+                                <span class="text-[10px] font-mono text-blue-300 uppercase tracking-widest text-right">COCKPIT WINDOW<br><span class="text-[9px] text-gray-400">MONITORING</span></span>
+                            </div>
+                            
+                            <div class="flex-1 flex flex-col justify-center space-y-2 relative">
+                                <div id="cockpit-loading" class="absolute inset-0 flex flex-col items-center justify-center bg-gray-800 bg-opacity-90 z-10 rounded-lg">
+                                    <div class="loader w-4 h-4 mb-2 border-2 border-blue-400 border-t-transparent"></div>
+                                    <span class="text-[10px] text-gray-400">Loading...</span>
+                                </div>
+
+                                <div class="flex justify-between items-center border-b border-gray-600/50 pb-1">
+                                    <span class="text-xs text-gray-400 font-bold uppercase">Under Monitoring</span>
+                                    <span id="cw-total" class="text-xl font-bold text-white">--</span>
+                                </div>
+                                <div class="flex justify-between items-center border-b border-gray-600/50 pb-1">
+                                    <span class="text-[10px] text-gray-400 uppercase">Normal</span>
+                                    <span id="cw-normal" class="text-sm font-bold text-green-400">--</span>
+                                </div>
+                                <div class="flex justify-between items-center border-b border-gray-600/50 pb-1">
+                                    <span class="text-[10px] text-gray-400 uppercase">Observation</span>
+                                    <span id="cw-obs" class="text-sm font-bold text-yellow-400">--</span>
+                                </div>
+                                <div class="flex justify-between items-center border-b border-gray-600/50 pb-1">
+                                    <span class="text-[10px] text-gray-400 uppercase">Critical</span>
+                                    <span id="cw-crit" class="text-sm font-bold text-red-400">--</span>
+                                </div>
+                            </div>
+
+                            <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbxvislr4mcYrl6og6M-InSr4xpuSpgTBCD7sGgkwLlmui9TJCLBnM-2vL9ER_njUMm5/exec" target="_blank" class="mt-3 w-full bg-green-600 hover:bg-green-500 text-white text-[10px] font-bold py-2 rounded text-center transition shadow-lg border border-green-500/50 uppercase tracking-wider block">
+                                CLICK FOR MORE INFORMATION
+                            </a>
+                        </div>
+
+                        <!-- Dash 6 -->
+                        <div class="dashboard-card p-5 rounded-2xl text-white h-[260px] flex flex-col justify-center items-center relative group border-dashed border-gray-600">
+                            <i class="fa-solid fa-layer-group text-3xl text-gray-500 mb-3 opacity-50"></i>
+                            <div class="text-xl font-bold text-gray-400 tracking-widest uppercase">Dash 6</div>
+                            <div class="text-[10px] text-gray-500 mt-2 font-mono">RESERVED SPACE</div>
+                        </div>
+
+                        <!-- Dash 7 -->
+                        <div class="dashboard-card p-5 rounded-2xl text-white h-[260px] flex flex-col justify-center items-center relative group border-dashed border-gray-600">
+                            <i class="fa-solid fa-layer-group text-3xl text-gray-500 mb-3 opacity-50"></i>
+                            <div class="text-xl font-bold text-gray-400 tracking-widest uppercase">Dash 7</div>
+                            <div class="text-[10px] text-gray-500 mt-2 font-mono">RESERVED SPACE</div>
+                        </div>
+
+                        <!-- Dash 8 -->
+                        <div class="dashboard-card p-5 rounded-2xl text-white h-[260px] flex flex-col justify-center items-center relative group border-dashed border-gray-600">
+                            <i class="fa-solid fa-layer-group text-3xl text-gray-500 mb-3 opacity-50"></i>
+                            <div class="text-xl font-bold text-gray-400 tracking-widest uppercase">Dash 8</div>
+                            <div class="text-[10px] text-gray-500 mt-2 font-mono">RESERVED SPACE</div>
+                        </div>
+
                         <div class="col-span-1 md:col-span-2 lg:col-span-4 mt-2">
                             <div class="dashboard-card rounded-2xl overflow-hidden border border-gray-700/50 shadow-2xl relative group flex flex-col h-[600px]">
                                 <div class="px-5 py-3 border-b border-gray-700/50 flex items-center justify-between bg-gradient-to-r from-gray-800/80 to-transparent backdrop-blur-md">
@@ -513,11 +570,13 @@
                 fetchDDMLData();
                 fetchRedEyeData();
                 fetch36HrsData();
+                fetchCockpitWindowData();
                 window.chartInterval = setInterval(() => {
                     fetchOTPData();
                     fetchDDMLData();
                     fetchRedEyeData();
                     fetch36HrsData();
+                    fetchCockpitWindowData();
                 }, 60000);
             }
         }
@@ -949,10 +1008,49 @@
             }
         }
         
+        // --- FETCH COCKPIT WINDOW DATA ---
+        async function fetchCockpitWindowData() {
+            const SHEET_ID = '1cEYRPEKytVAeVLgbGJXpCkQaXDsWBkSSUf3BXTeFKfg';
+            const SHEET_NAME = 'ชีต1';
+            const RANGE = 'A2:C2'; 
+            const URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}&range=${RANGE}`;
+            
+            const loadingEl = document.getElementById('cockpit-loading');
+            
+            try {
+                if(loadingEl) loadingEl.classList.remove('hidden');
+                
+                const res = await fetch(URL);
+                if (!res.ok) { throw new Error(`HTTP Status: ${res.status}`); }
+                const text = await res.text();
+                const jsonText = text.substring(47).slice(0, -2);
+                const json = JSON.parse(jsonText);
+                
+                if (json.table && json.table.rows.length > 0) {
+                    const row = json.table.rows[0].c;
+                    const normalVal = row[0] && row[0].v !== null ? parseInt(row[0].v) : 0;
+                    const obsVal = row[1] && row[1].v !== null ? parseInt(row[1].v) : 0;
+                    const critVal = row[2] && row[2].v !== null ? parseInt(row[2].v) : 0;
+                    const totalVal = normalVal + obsVal + critVal;
+
+                    document.getElementById('cw-normal').textContent = normalVal;
+                    document.getElementById('cw-obs').textContent = obsVal;
+                    document.getElementById('cw-crit').textContent = critVal;
+                    document.getElementById('cw-total').textContent = totalVal;
+                }
+            } catch (error) {
+                console.error("Error fetching Cockpit Window Data:", error);
+                document.getElementById('cw-total').textContent = "Err";
+            } finally {
+                if(loadingEl) loadingEl.classList.add('hidden');
+            }
+        }
+
         fetchOTPData();
         fetchDDMLData();
         fetchRedEyeData();
         fetch36HrsData();
+        fetchCockpitWindowData();
     </script>
 </body>
 </html>
