@@ -39,22 +39,33 @@
             background: rgba(31, 41, 55, 0.8);
         }
 
-        /* Fullscreen Styles */
+        /* Fullscreen Styles - Adjusted to respect Sidebar */
         .card-fullscreen {
             position: fixed !important;
             top: 0 !important;
             left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
             width: 100vw !important;
             height: 100vh !important;
-            z-index: 9999 !important; /* Top of everything */
+            z-index: 49 !important; /* High, but below Sidebar (z-50) */
             margin: 0 !important;
             border-radius: 0 !important;
-            background: rgba(17, 24, 39, 0.98) !important; /* Dark solid background */
+            background: rgba(17, 24, 39, 0.98) !important; /* Solid dark bg */
             backdrop-filter: none !important;
             transform: none !important;
             padding: 20px !important;
             display: flex;
             flex-direction: column;
+            overflow-y: auto !important;
+        }
+
+        /* Desktop Adjustment: Offset by sidebar width (16rem/64 tailwind units) */
+        @media (min-width: 768px) {
+            .card-fullscreen {
+                left: 16rem !important; /* 64 * 0.25rem = 16rem */
+                width: calc(100vw - 16rem) !important;
+            }
         }
 
         /* Custom Scrollbar */
@@ -603,10 +614,14 @@
                 validateUser(user);
             } catch (error) {
                 console.error("Popup Login Error:", error);
+                
+                // Check if it's the specific Safari/Mobile issue
                 if (error.code === 'auth/popup-closed-by-user' || error.code === 'auth/popup-blocked' || error.code === 'auth/cancelled-popup-request') {
                     loadingSubtext.innerText = "Enabling Safari compatibility mode...";
+                    // Fallback to Redirect
                     try {
                         await signInWithRedirect(auth, provider);
+                        // The page will redirect, so no code below this line will run immediately
                     } catch (redirectError) {
                         console.error("Redirect Login Error:", redirectError);
                         showLoginError(redirectError.message);
@@ -617,6 +632,8 @@
             }
         });
 
+        // [3] CHECK REDIRECT RESULT (For Safari/Mobile return)
+        // This runs when the page loads after a redirect login
         if(auth) {
             getRedirectResult(auth)
                 .then((result) => {
@@ -630,6 +647,7 @@
                 });
         }
 
+        // [4] VALIDATION LOGIC
         function validateUser(user) {
             if (user.email.endsWith('@airasia.com')) {
                 showApp(user);
@@ -649,18 +667,21 @@
             appContent.classList.add('flex');
             
             if(!window.chartInterval) {
-                refreshAllData();
-                window.chartInterval = setInterval(refreshAllData, 60000);
+                fetchOTPData();
+                fetchDDMLData();
+                fetchRedEyeData();
+                fetch36HrsData();
+                fetchCockpitWindowData();
+                fetchNewDDMLReport(); // ADDED THIS
+                window.chartInterval = setInterval(() => {
+                    fetchOTPData();
+                    fetchDDMLData();
+                    fetchRedEyeData();
+                    fetch36HrsData();
+                    fetchCockpitWindowData();
+                    fetchNewDDMLReport(); // ADDED THIS
+                }, 60000);
             }
-        }
-
-        function refreshAllData() {
-            fetchOTPData();
-            fetchDDMLData();
-            fetchRedEyeData();
-            fetch36HrsData();
-            fetchCockpitWindowData();
-            fetchNewDDMLReport();
         }
 
         function showLoginError(message) {
@@ -670,6 +691,7 @@
             errorMsg.innerText = message;
         }
 
+        // [5] AUTH STATE OBSERVER
         if(auth) {
             onAuthStateChanged(auth, (user) => {
                 if (user) {
@@ -686,6 +708,7 @@
             });
         }
 
+        // [6] LOGOUT FUNCTION
         logoutBtn.addEventListener('click', () => {
             if(auth) {
                 signOut(auth).then(() => {
@@ -725,6 +748,7 @@
             if (window.innerWidth < 768) sidebar.classList.add('-translate-x-full');
         }
 
+        // Toggle Project Menu
         window.toggleProjectMenu = function(menuId) {
             if (window.innerWidth >= 768) return;
             const menu = document.getElementById(menuId);
