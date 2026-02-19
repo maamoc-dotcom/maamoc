@@ -58,6 +58,7 @@
 </head>
 <body class="font-sans text-gray-600 bg-white overflow-hidden h-screen">
 
+    <!-- Login Screen -->
     <div id="login-screen" class="fixed inset-0 z-[100] login-bg flex items-center justify-center">
         <div class="absolute inset-0 bg-black bg-opacity-80"></div>
         <div class="relative z-10 bg-gray-900 bg-opacity-90 p-8 rounded-2xl shadow-2xl max-w-md w-full border border-gray-700 text-center backdrop-blur-md">
@@ -66,21 +67,28 @@
             </div>
             <h1 class="text-2xl font-bold text-white mb-1">MAA ENGINEERING</h1>
             <p class="text-gray-400 text-sm mb-8 tracking-widest uppercase">Secured Access Portal</p>
+            
             <div id="login-error" class="hidden bg-red-500 bg-opacity-20 border border-red-500 text-red-200 p-3 rounded mb-4 text-xs text-left">
                 <i class="fa-solid fa-circle-exclamation mr-1"></i> <span id="error-msg">Error</span>
             </div>
+            
             <button id="google-login-btn" class="w-full bg-white text-gray-800 font-bold py-3 px-4 rounded-lg flex items-center justify-center hover:bg-gray-100 transition shadow-lg group">
                 <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-6 h-6 mr-3" alt="Google">
                 Sign in with Google
             </button>
-            <div id="loading-indicator" class="hidden flex justify-center items-center py-3">
-                <div class="loader mr-2"></div>
-                <span class="text-white text-sm">Verifying Credentials...</span>
+            
+            <div id="loading-indicator" class="hidden flex justify-center items-center py-3 flex-col">
+                <div class="flex items-center mb-2">
+                    <div class="loader mr-2"></div>
+                    <span class="text-white text-sm">Logging in...</span>
+                </div>
+                <span id="loading-subtext" class="text-xs text-gray-400">Please wait</span>
             </div>
             <p class="mt-6 text-xs text-gray-500">Restricted access for <span class="text-gray-300">@airasia.com</span> only.</p>
         </div>
     </div>
 
+    <!-- Export Modal -->
     <div id="export-modal" class="hidden fixed inset-0 z-[200] flex items-center justify-center bg-black bg-opacity-80 backdrop-blur-sm">
         <div class="bg-gray-800 rounded-lg w-11/12 max-w-2xl border border-gray-600 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
             <div class="flex justify-between items-center p-4 border-b border-gray-700 bg-gray-900">
@@ -97,12 +105,14 @@
         </div>
     </div>
 
+    <!-- Main App Content -->
     <div id="app-content" class="hidden flex-col md:flex-row h-screen w-full overflow-hidden">
         
         <button id="mobile-menu-btn" class="fixed top-4 left-4 z-[60] text-white bg-gray-800 bg-opacity-80 p-3 rounded-md md:hidden hover:bg-gray-700 transition shadow-lg border border-gray-600">
             <i class="fa-solid fa-bars text-xl"></i>
         </button>
 
+        <!-- Sidebar -->
         <div id="header" class="fixed inset-y-0 left-0 w-64 h-screen sidebar-bg text-white shadow-2xl z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col">
             <div class="dark-overlay w-full h-full flex flex-col">
                 <div class="p-6 text-right flex flex-col items-end">
@@ -185,6 +195,7 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
                         
+                        <!-- Dash 1: DDML -->
                         <div class="dashboard-card p-5 rounded-2xl text-white relative overflow-hidden group h-[260px] flex flex-col justify-between">
                             <div class="relative z-10">
                                 <div class="absolute top-0 right-0 opacity-50 -mt-2 -mr-2"><i class="fa-solid fa-file-invoice text-4xl text-gray-500"></i></div>
@@ -220,6 +231,7 @@
                             </div>
                         </div>
 
+                        <!-- Dash 2: OTP Chart -->
                         <div class="dashboard-card p-5 rounded-2xl text-white col-span-1 h-[260px] flex flex-col">
                             <div class="flex items-center justify-between mb-2">
                                 <div class="bg-green-500 bg-opacity-20 p-2 rounded-lg"><i class="fa-solid fa-chart-line text-green-400"></i></div>
@@ -237,6 +249,7 @@
                             </div>
                         </div>
 
+                        <!-- Dash 3: Red Eye -->
                         <div class="dashboard-card p-5 rounded-2xl text-white h-[260px] flex flex-col relative group">
                             <button onclick="exportRedEyeData()" class="absolute top-2 right-2 text-gray-400 hover:text-white transition opacity-0 group-hover:opacity-100 p-1" title="Export Data"><i class="fa-solid fa-file-export text-xs"></i></button>
                             <div class="flex items-center justify-between mb-3 shrink-0 mr-4">
@@ -254,6 +267,7 @@
                             </div>
                         </div>
 
+                        <!-- Dash 4: 36 Hrs -->
                         <div class="dashboard-card p-5 rounded-2xl text-white h-[260px] flex flex-col relative group">
                             <button onclick="export36HrsData()" class="absolute top-2 right-2 text-gray-400 hover:text-white transition opacity-0 group-hover:opacity-100 p-1" title="Export Data"><i class="fa-solid fa-file-export text-xs"></i></button>
                             <div class="flex items-center justify-between mb-3 shrink-0 mr-4">
@@ -447,7 +461,7 @@
 
                         <article class="bg-white rounded-lg shadow-md hover:shadow-xl transition relative group">
                             <div onclick="toggleProjectMenu('menu-oil')" class="cursor-pointer block h-64 overflow-hidden rounded-t-lg outline-none relative">
-                                <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770534640/ChatGPT_Image_Feb_8_2026_at_03_09_18_PM_mchwpu.png" class="w-full h-full object-cover transform transition duration-500 hover:scale-110" alt="OIL">
+                                <img src="https://res.cloudinary.com/dzgov6mcu/image/upload/v1770534640/ChatGPT_Image_Feb_8_2026_at_03.09_18_PM_mchwpu.png" class="w-full h-full object-cover transform transition duration-500 hover:scale-110" alt="OIL">
                                 <div id="menu-oil" onclick="event.stopPropagation()" class="hidden md:group-hover:flex absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-85 px-6 animate-slide-up flex-col justify-center items-center space-y-2">
                                     <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbweXIls6u4khtDxFAZr3rA7jGIBkp1qQmeB5iy8accP0eyhmAOzpaoVlAqBxoME3faL/exec" target="_blank" class="w-full text-center py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-500 transition font-semibold shadow-md text-sm border border-blue-400"><i class="fa-solid fa-file-contract mr-2"></i> REPORT FORM</a>
                                     <a href="https://docs.google.com/spreadsheets/d/1FMlo_qZ-Aon1iSTPSThb3fEEuGJewM8s3NoIP8eXCL8/edit?gid=0#gid=0" target="_blank" class="w-full text-center py-2 px-4 bg-green-600 text-white rounded hover:bg-green-500 transition font-semibold shadow-md text-sm border border-green-400"><i class="fa-brands fa-google mr-2"></i> GOOGLE SHEET DATA</a>
@@ -491,9 +505,9 @@
     </div>
 
     <script type="module">
-        // Import Firebase Functions
+        // Import Firebase Functions including Redirect
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getAuth, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         
         // [1] FIREBASE CONFIG
         const firebaseConfig = {
@@ -523,6 +537,7 @@
         const loginBtn = document.getElementById('google-login-btn');
         const logoutBtn = document.getElementById('logout-btn');
         const loadingIndicator = document.getElementById('loading-indicator');
+        const loadingSubtext = document.getElementById('loading-subtext');
         const errorDiv = document.getElementById('login-error');
         const errorMsg = document.getElementById('error-msg');
         
@@ -531,23 +546,54 @@
         const userName = document.getElementById('user-name');
         const userEmail = document.getElementById('user-email');
 
-        // [2] LOGIN FUNCTION
+        // [2] LOGIN FUNCTION with Safari Fallback
         loginBtn.addEventListener('click', async () => {
             errorDiv.classList.add('hidden');
             loginBtn.classList.add('hidden');
             loadingIndicator.classList.remove('hidden');
+            loadingSubtext.innerText = "Connecting to Google...";
 
             try {
+                // Try Popup First
                 const result = await signInWithPopup(auth, provider);
                 const user = result.user;
                 validateUser(user);
             } catch (error) {
-                console.error(error);
-                showLoginError(error.message);
+                console.error("Popup Login Error:", error);
+                
+                // Check if it's the specific Safari/Mobile issue
+                if (error.code === 'auth/popup-closed-by-user' || error.code === 'auth/popup-blocked' || error.code === 'auth/cancelled-popup-request') {
+                    loadingSubtext.innerText = "Enabling Safari compatibility mode...";
+                    // Fallback to Redirect
+                    try {
+                        await signInWithRedirect(auth, provider);
+                        // The page will redirect, so no code below this line will run immediately
+                    } catch (redirectError) {
+                        console.error("Redirect Login Error:", redirectError);
+                        showLoginError(redirectError.message);
+                    }
+                } else {
+                    showLoginError(error.message);
+                }
             }
         });
 
-        // [3] VALIDATION LOGIC
+        // [3] CHECK REDIRECT RESULT (For Safari/Mobile return)
+        // This runs when the page loads after a redirect login
+        if(auth) {
+            getRedirectResult(auth)
+                .then((result) => {
+                    if (result) {
+                        const user = result.user;
+                        validateUser(user);
+                    }
+                }).catch((error) => {
+                    console.error("Redirect Result Error:", error);
+                    showLoginError(error.message);
+                });
+        }
+
+        // [4] VALIDATION LOGIC
         function validateUser(user) {
             if (user.email.endsWith('@airasia.com')) {
                 showApp(user);
@@ -589,31 +635,38 @@
             errorMsg.innerText = message;
         }
 
-        // [4] AUTH STATE OBSERVER (SECURE MODE)
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                if (user.email.endsWith('@airasia.com')) {
-                    showApp(user);
+        // [5] AUTH STATE OBSERVER
+        if(auth) {
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    if (user.email.endsWith('@airasia.com')) {
+                        showApp(user);
+                    } else {
+                        signOut(auth);
+                    }
                 } else {
-                    signOut(auth);
+                    loginScreen.classList.remove('hidden');
+                    appContent.classList.add('hidden');
+                    appContent.classList.remove('flex');
                 }
+            });
+        }
+
+        // [6] LOGOUT FUNCTION
+        logoutBtn.addEventListener('click', () => {
+            if(auth) {
+                signOut(auth).then(() => {
+                    location.reload();
+                }).catch((error) => {
+                    console.error('Logout Error:', error);
+                    location.reload();
+                });
             } else {
-                loginScreen.classList.remove('hidden');
-                appContent.classList.add('hidden');
-                appContent.classList.remove('flex');
+                location.reload();
             }
         });
 
-        // [5] LOGOUT FUNCTION
-        logoutBtn.addEventListener('click', () => {
-            signOut(auth).then(() => {
-                location.reload();
-            }).catch((error) => {
-                console.error('Logout Error:', error);
-            });
-        });
-
-        // --- DASHBOARD JS ---
+        // --- DASHBOARD JS (Same as before) ---
         
         // Mobile Menu
         const btn = document.getElementById('mobile-menu-btn');
@@ -1055,4 +1108,3 @@
     </script>
 </body>
 </html>
-
