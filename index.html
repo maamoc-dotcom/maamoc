@@ -1310,11 +1310,75 @@
                     data: {
                         labels: labels,
                         datasets: [
-                            { label: 'OTP15', data: valuesB, borderColor: '#60a5fa', tension: 0.4, fill: true, backgroundColor: 'rgba(96, 165, 250, 0.1)', pointRadius: 0 },
-                            { label: 'ENG DLY', data: valuesC, borderColor: '#f87171', tension: 0.4, fill: true, backgroundColor: 'rgba(248, 113, 113, 0.1)', pointRadius: 0 }
+                            { 
+                                label: 'OTP15', 
+                                data: valuesB, 
+                                borderColor: '#60a5fa', 
+                                tension: 0.4, 
+                                fill: true, 
+                                backgroundColor: 'rgba(96, 165, 250, 0.1)', 
+                                pointRadius: 3,
+                                pointHoverRadius: 6,
+                                pointBackgroundColor: '#60a5fa',
+                                pointBorderColor: '#1f2937',
+                                pointBorderWidth: 2
+                            },
+                            { 
+                                label: 'ENG DLY', 
+                                data: valuesC, 
+                                borderColor: '#f87171', 
+                                tension: 0.4, 
+                                fill: true, 
+                                backgroundColor: 'rgba(248, 113, 113, 0.1)', 
+                                pointRadius: 3,
+                                pointHoverRadius: 6,
+                                pointBackgroundColor: '#f87171',
+                                pointBorderColor: '#1f2937',
+                                pointBorderWidth: 2
+                            }
                         ]
                     },
-                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { size: 8 } }, y: { ticks: { size: 8 } } } }
+                    options: { 
+                        responsive: true, 
+                        maintainAspectRatio: false, 
+                        interaction: {
+                            mode: 'index',
+                            intersect: false,
+                        },
+                        plugins: { 
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: 'rgba(17, 24, 39, 0.95)',
+                                titleColor: '#9ca3af',
+                                titleFont: { size: 10 },
+                                bodyFont: { size: 11, weight: 'bold' },
+                                padding: 10,
+                                cornerRadius: 6,
+                                displayColors: true,
+                                borderColor: 'rgba(75, 85, 99, 0.5)',
+                                borderWidth: 1,
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) { label += ': '; }
+                                        if (context.parsed.y !== null) { label += context.parsed.y.toFixed(2) + '%'; }
+                                        return label;
+                                    }
+                                }
+                            }
+                        }, 
+                        scales: { 
+                            x: { 
+                                ticks: { color: '#9ca3af', font: { size: 8 }, maxRotation: 0 },
+                                grid: { display: false, drawBorder: false }
+                            }, 
+                            y: { 
+                                ticks: { color: '#9ca3af', font: { size: 8 } },
+                                grid: { color: 'rgba(75, 85, 99, 0.2)', borderDash: [3, 3], drawBorder: false },
+                                beginAtZero: true
+                            } 
+                        } 
+                    }
                 });
             }
         }
