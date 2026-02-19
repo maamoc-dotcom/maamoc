@@ -225,40 +225,54 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-8 gap-4 md:gap-6">
                         
-                        <!-- Dash 1 -->
-                        <div class="dashboard-card p-5 rounded-2xl text-white relative overflow-hidden group h-[260px] flex flex-col justify-between lg:col-span-2">
-                            <button onclick="toggleCardFullscreen(this)" class="absolute top-2 right-2 text-gray-500 hover:text-white transition z-20"><i class="fa-solid fa-expand text-xs"></i></button>
-                            <div class="relative z-10">
-                                <div class="absolute top-0 right-0 opacity-50 -mt-2 -mr-2"><i class="fa-solid fa-file-invoice text-4xl text-gray-500"></i></div>
-                                <div class="flex items-center justify-between mb-2">
+                        <!-- Dash 1: DDML TODAY & WIP LOWER HALF -->
+                        <div class="dashboard-card p-4 rounded-2xl text-white relative overflow-hidden group h-[260px] flex flex-col lg:col-span-2">
+                            <!-- Top Half -->
+                            <div class="flex-1 flex flex-col relative z-10">
+                                <button onclick="toggleCardFullscreen(this)" class="absolute top-0 right-0 text-gray-500 hover:text-white transition z-20"><i class="fa-solid fa-expand text-xs"></i></button>
+                                <div class="flex items-center gap-2 mb-2 pr-6">
                                     <div class="bg-blue-600 bg-opacity-40 p-1.5 rounded-lg"><i class="fa-solid fa-clipboard-list text-blue-200 text-sm"></i></div>
-                                    <span id="ddml-date" class="text-[10px] font-mono text-blue-300 border border-blue-500/30 px-2 py-0.5 rounded bg-blue-900/40">Syncing...</span>
+                                    <span class="text-[11px] font-bold text-gray-200 uppercase tracking-widest">DDML TODAY</span>
+                                    <span id="ddml-time-badge" class="ml-auto text-[9px] font-mono text-blue-300 border border-blue-500/30 px-1.5 py-0.5 rounded bg-blue-900/40">--:--</span>
                                 </div>
-                                <div class="text-[10px] text-gray-400 uppercase tracking-widest mb-1">Total DDML</div>
-                                <div class="flex items-end">
-                                    <div id="ddml-total" class="text-4xl font-bold text-white leading-none">--</div>
-                                    <div id="ddml-trend" class="ml-3 mb-1 text-sm font-bold flex items-center"></div>
+                                
+                                <div class="flex items-end mb-2">
+                                    <div id="ddml-total" class="text-4xl font-bold text-white leading-none mr-2">--</div>
+                                    <div class="text-[9px] text-gray-400 mb-1 tracking-widest">TOTAL</div>
+                                </div>
+
+                                <div class="grid grid-cols-3 gap-1 text-center bg-gray-800/50 rounded-lg p-2 border border-gray-700/50 mt-auto">
+                                    <div>
+                                        <div class="text-[8px] text-gray-400 uppercase tracking-wider mb-0.5">CAT</div>
+                                        <div class="flex items-center justify-center space-x-1">
+                                            <span id="ddml-cat" class="text-base font-bold text-yellow-400 leading-none">-</span>
+                                            <span id="ddml-cat-diff" class="text-[9px] flex items-center gap-0.5"></span>
+                                        </div>
+                                    </div>
+                                    <div class="border-l border-gray-600/50">
+                                        <div class="text-[8px] text-gray-400 uppercase tracking-wider mb-0.5">AMD</div>
+                                        <div class="flex items-center justify-center space-x-1">
+                                            <span id="ddml-amd" class="text-base font-bold text-green-400 leading-none">-</span>
+                                            <span id="ddml-amd-diff" class="text-[9px] flex items-center gap-0.5"></span>
+                                        </div>
+                                    </div>
+                                    <div class="border-l border-gray-600/50">
+                                        <div class="text-[8px] text-gray-400 uppercase tracking-wider mb-0.5">STR/FC</div>
+                                        <div class="flex items-center justify-center space-x-1">
+                                            <span id="ddml-str" class="text-base font-bold text-red-400 leading-none">-</span>
+                                            <span id="ddml-str-diff" class="text-[9px] flex items-center gap-0.5"></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div>
-                                <div class="pt-3 border-t border-gray-600/50 grid grid-cols-3 gap-2 text-center relative z-10">
-                                    <div>
-                                        <div class="text-[9px] text-gray-400 uppercase">CAT</div>
-                                        <div id="ddml-cat" class="text-lg font-bold text-yellow-400">-</div>
-                                        <div id="ddml-cat-trend" class="text-[10px] h-4 flex items-center justify-center font-bold"></div>
-                                    </div>
-                                    <div class="border-l border-gray-600/50">
-                                        <div class="text-[9px] text-gray-400 uppercase">AMD</div>
-                                        <div id="ddml-amd" class="text-lg font-bold text-green-400">-</div>
-                                        <div id="ddml-amd-trend" class="text-[10px] h-4 flex items-center justify-center font-bold"></div>
-                                    </div>
-                                    <div class="border-l border-gray-600/50">
-                                        <div class="text-[9px] text-gray-400 uppercase">STR/FC</div>
-                                        <div id="ddml-str" class="text-lg font-bold text-red-400">-</div>
-                                        <div id="ddml-str-trend" class="text-[10px] h-4 flex items-center justify-center font-bold"></div>
-                                    </div>
-                                </div>
-                                <div class="mt-2 text-[8px] text-gray-500 text-center relative z-10">Refer from MAA AIRCRAFT STATUS EMAIL</div>
+                            
+                            <!-- Divider -->
+                            <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-600 to-transparent my-3 relative z-10"></div>
+
+                            <!-- Bottom Half (Placeholder for future) -->
+                            <div class="flex-1 flex flex-col justify-center items-center relative z-10 opacity-40">
+                                <i class="fa-solid fa-hammer text-xl mb-2 text-gray-400"></i>
+                                <span class="text-[10px] text-gray-400 uppercase tracking-widest">LOWER HALF (WIP)</span>
                             </div>
                         </div>
 
@@ -833,65 +847,89 @@
         async function fetchDDMLData() {
             const SHEET_ID = '1D9ed8aGAIWbf_MmfN_Lm4b2s9ZkBETnaQ6u06gobil0';
             const SHEET_NAME = 'ชีต1';
-            const RANGE = 'A2:E5'; 
-            const URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}&range=${RANGE}`;
+            // Extend range to catch diff rows usually at 8 and 9, headers=0 ensures predictable indices
+            const RANGE = 'A1:E10'; 
+            const URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}&range=${RANGE}&headers=0`;
             try {
-                const res = await fetch(URL);
+                const res = await fetch(URL, { credentials: 'omit' });
                 const text = await res.text();
-                const jsonText = text.substring(47).slice(0, -2);
+                
+                let jsonText = '';
+                const jsonMatch = text.match(/google\.visualization\.Query\.setResponse\((.*)\);/);
+                if (jsonMatch && jsonMatch[1]) {
+                    jsonText = jsonMatch[1];
+                } else if (text.startsWith("/*O_o*/")) {
+                    jsonText = text.substring(47).slice(0, -2);
+                } else {
+                    jsonText = text;
+                }
+                
                 const json = JSON.parse(jsonText);
                 
-                if (json.table && json.table.rows.length > 0) {
-                    const mainRow = json.table.rows[0].c;
-                    const dateVal = mainRow[0] ? (mainRow[0].f || mainRow[0].v) : 'N/A';
-                    const catVal = mainRow[1] ? (mainRow[1].f || mainRow[1].v) : '0';
-                    const amdVal = mainRow[2] ? (mainRow[2].f || mainRow[2].v) : '0';
-                    const strVal = mainRow[3] ? (mainRow[3].f || mainRow[3].v) : '0';
-                    const totalVal = mainRow[4] ? (mainRow[4].f || mainRow[4].v) : '0';
-
-                    document.getElementById('ddml-date').textContent = dateVal;
-                    document.getElementById('ddml-total').textContent = totalVal;
-                    document.getElementById('ddml-cat').textContent = catVal;
-                    document.getElementById('ddml-amd').textContent = amdVal;
-                    document.getElementById('ddml-str').textContent = strVal;
-
-                    let trendRow = null;
-                    for(let i = 1; i < json.table.rows.length; i++) {
-                        const r = json.table.rows[i].c;
-                        if (r && r[0] && r[0].v && String(r[0].v).toLowerCase().trim() === 'summary') {
-                            trendRow = r;
-                            break;
-                        }
-                    }
-                    if (!trendRow && json.table.rows.length > 1) {
-                         trendRow = json.table.rows[json.table.rows.length - 1].c;
+                if (json.table && json.table.rows.length >= 9) {
+                    const rows = json.table.rows;
+                    
+                    let row1000 = null;
+                    let row2200 = null;
+                    
+                    // Identify latest 1000 and 2200 rows by searching string in column A
+                    for(let i=0; i<rows.length; i++) {
+                        if(!rows[i] || !rows[i].c || !rows[i].c[0]) continue;
+                        const aVal = String(rows[i].c[0].v || rows[i].c[0].f || '');
+                        if(aVal.includes('1000')) row1000 = rows[i];
+                        if(aVal.includes('2200')) row2200 = rows[i];
                     }
 
-                    const generateTrendHTML = (cellData) => {
-                        if (cellData && cellData.v !== null) {
-                            const val = parseFloat(cellData.v);
-                            const absVal = Math.abs(val);
-                            if (val > 0) {
-                                return `<i class="fa-solid fa-arrow-down text-green-400 mr-1" style="font-size: 8px;"></i> <span class="text-green-400">${absVal}</span>`;
-                            } else if (val < 0) {
-                                return `<i class="fa-solid fa-arrow-up text-red-400 mr-1" style="font-size: 8px;"></i> <span class="text-red-400">${absVal}</span>`;
-                            } else {
-                                return `<span class="text-gray-500">-</span>`;
-                            }
+                    // Diff rows are fixed at index 7 (row 8) and index 8 (row 9)
+                    const diff2200Row = rows[7];
+                    const diff1000Row = rows[8];
+
+                    let activeDataRow = row2200;
+                    let activeDiffRow = diff2200Row;
+                    let timeLabel = "22:00";
+
+                    // Check fallback condition if 2200 has 0 in CAT, AMD, STR
+                    if (row2200 && row2200.c) {
+                        const bVal = row2200.c[1] ? parseFloat(row2200.c[1].v) : 0;
+                        const cVal = row2200.c[2] ? parseFloat(row2200.c[2].v) : 0;
+                        const dVal = row2200.c[3] ? parseFloat(row2200.c[3].v) : 0;
+                        
+                        if (bVal === 0 && cVal === 0 && dVal === 0) {
+                            activeDataRow = row1000;
+                            activeDiffRow = diff1000Row;
+                            timeLabel = "10:00";
                         }
-                        return '';
+                    }
+
+                    if (activeDataRow && activeDataRow.c) {
+                        document.getElementById('ddml-total').textContent = activeDataRow.c[4] ? activeDataRow.c[4].v : 0;
+                        document.getElementById('ddml-cat').textContent = activeDataRow.c[1] ? activeDataRow.c[1].v : 0;
+                        document.getElementById('ddml-amd').textContent = activeDataRow.c[2] ? activeDataRow.c[2].v : 0;
+                        document.getElementById('ddml-str').textContent = activeDataRow.c[3] ? activeDataRow.c[3].v : 0;
+                        document.getElementById('ddml-time-badge').textContent = timeLabel;
+                    }
+
+                    const formatDiff = (cell) => {
+                        if (!cell || cell.v === null || isNaN(parseFloat(cell.v)) || parseFloat(cell.v) === 0) {
+                            return `<span class="text-gray-500">-</span>`;
+                        }
+                        const val = parseFloat(cell.v);
+                        if (val < 0) {
+                            return `<i class="fa-solid fa-arrow-down text-green-400"></i> <span class="text-green-400">${Math.abs(val)}</span>`;
+                        } else {
+                            return `<i class="fa-solid fa-arrow-up text-red-400"></i> <span class="text-red-400">${val}</span>`;
+                        }
                     };
 
-                    if (trendRow) {
-                        document.getElementById('ddml-trend').innerHTML = generateTrendHTML(trendRow[4]);
-                        document.getElementById('ddml-cat-trend').innerHTML = generateTrendHTML(trendRow[1]);
-                        document.getElementById('ddml-amd-trend').innerHTML = generateTrendHTML(trendRow[2]);
-                        document.getElementById('ddml-str-trend').innerHTML = generateTrendHTML(trendRow[3]);
+                    if (activeDiffRow && activeDiffRow.c) {
+                        document.getElementById('ddml-cat-diff').innerHTML = formatDiff(activeDiffRow.c[1]);
+                        document.getElementById('ddml-amd-diff').innerHTML = formatDiff(activeDiffRow.c[2]);
+                        document.getElementById('ddml-str-diff').innerHTML = formatDiff(activeDiffRow.c[3]);
                     }
                 }
             } catch (error) {
                 console.error("Error fetching DDML:", error);
-                document.getElementById('ddml-date').textContent = "Offline";
+                document.getElementById('ddml-total').textContent = "Err";
             }
         }
 
