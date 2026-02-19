@@ -980,20 +980,49 @@
                         const r = row.c;
                         if (!r) return;
                         
-                        // Extract Data
-                        let date = r[0] ? (r[0].f || r[0].v || '') : '';
+                        // Extract Date & Time
+                        const cellDate = r[0];
+                        let dateObj = null;
+                        let displayDate = "";
+                        let displayTime = "";
                         
-                        // Format Date: Remove time and shorten year
-                        if(date) {
-                            // Split by space to remove time component (e.g., "19/02/2026 14:30:00" -> "19/02/2026")
-                            let parts = date.split(' ');
-                            date = parts[0];
-                            
-                            // If date is dd/mm/yyyy or similar with 4 digit year, shorten it
-                            if(date.match(/\/\d{4}$/)) {
-                                date = date.replace(/\/20(\d{2})$/, '/$1');
-                            }
+                        if (cellDate) {
+                             if (cellDate.v && typeof cellDate.v === 'string' && cellDate.v.startsWith('Date(')) {
+                                 const parts = cellDate.v.match(/\d+/g);
+                                 if (parts) {
+                                     dateObj = new Date(parts[0], parts[1], parts[2], parts[3]||0, parts[4]||0, parts[5]||0);
+                                 }
+                             } else if (cellDate.f) {
+                                 // Fallback string parsing
+                                 displayDate = cellDate.f;
+                             }
                         }
+
+                        let isNew = false;
+                        if (dateObj) {
+                            // Format: DD/MM/YY HH:mm
+                            const yy = dateObj.getFullYear().toString().slice(-2);
+                            const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+                            const dd = String(dateObj.getDate()).padStart(2, '0');
+                            const hh = String(dateObj.getHours()).padStart(2, '0');
+                            const min = String(dateObj.getMinutes()).padStart(2, '0');
+                            
+                            displayDate = `${dd}/${mm}/${yy}`;
+                            displayTime = `${hh}:${min}`;
+
+                            // Check if new (within last 5 minutes)
+                            const now = new Date();
+                            const diffMs = now - dateObj;
+                            if (diffMs >= 0 && diffMs < 5 * 60 * 1000) {
+                                isNew = true;
+                            }
+                        } else if (displayDate) {
+                             // Fallback splitting if simple string
+                             const parts = displayDate.split(' ');
+                             displayDate = parts[0];
+                             if(parts.length > 1) displayTime = parts[1].substring(0,5);
+                        }
+
 
                         const reg = r[1] ? (r[1].f || r[1].v || '') : '';
                         const ddml = r[2] ? (r[2].f || r[2].v || '') : '';
@@ -1001,17 +1030,26 @@
                         const defect = r[4] ? (r[4].f || r[4].v || '') : '';
                         const link = r[5] ? (r[5].f || r[5].v || '') : '#';
 
-                        if (date === '' && reg === '') return;
+                        if (displayDate === '' && reg === '') return;
+
+                        // Create New Badge HTML if new
+                        const newBadge = isNew ? `<span class="ml-1 px-1 py-0.5 bg-red-600 text-white text-[7px] rounded animate-pulse font-bold shadow-sm border border-red-400">NEW</span>` : '';
 
                         html += `
-                            <div class="flex items-center py-1.5 border-b border-gray-700/50 hover:bg-white/5 transition px-1 text-[9px] text-gray-300">
-                                <div class="w-[14%] text-center font-mono text-gray-400 truncate">${date}</div>
-                                <div class="w-[8%] text-center font-bold text-orange-300">${reg}</div>
-                                <div class="w-[12%] text-center text-blue-300">${ddml}</div>
-                                <div class="w-[10%] text-center text-red-300">${exp}</div>
+                            <div class="flex items-center py-2 border-b border-gray-700/50 hover:bg-white/5 transition px-1 text-[9px] text-gray-300">
+                                <div class="w-[14%] text-center font-mono text-gray-400 leading-tight">
+                                    <div>${displayDate}</div>
+                                    <div class="text-[8px] text-gray-500">${displayTime}</div>
+                                </div>
+                                <div class="w-[10%] text-center font-bold text-orange-300 flex flex-col items-center justify-center">
+                                    <span>${reg}</span>
+                                    ${newBadge}
+                                </div>
+                                <div class="w-[12%] text-center text-blue-300 font-mono">${ddml}</div>
+                                <div class="w-[10%] text-center text-red-300 font-mono">${exp}</div>
                                 <div class="flex-1 text-left px-2 truncate text-white" title="${defect}">${defect}</div>
                                 <div class="w-[8%] text-center">
-                                    <a href="${link}" target="_blank" class="bg-blue-600 hover:bg-blue-500 text-white px-1.5 py-0.5 rounded-[2px] text-[8px] uppercase tracking-wide transition">View</a>
+                                    <a href="${link}" target="_blank" class="bg-blue-600 hover:bg-blue-500 text-white px-1.5 py-0.5 rounded-[2px] text-[8px] uppercase tracking-wide transition shadow-sm">View</a>
                                 </div>
                             </div>
                         `;
