@@ -31,11 +31,30 @@
             backdrop-filter: blur(8px);
             border: 1px solid rgba(75, 85, 99, 0.4);
             transition: all 0.3s ease;
+            position: relative; /* Ensure absolute children are relative to card */
         }
         .dashboard-card:hover {
             border-color: rgba(96, 165, 250, 0.6);
             transform: translateY(-2px);
             background: rgba(31, 41, 55, 0.8);
+        }
+
+        /* Fullscreen Styles */
+        .card-fullscreen {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            z-index: 9999 !important; /* Top of everything */
+            margin: 0 !important;
+            border-radius: 0 !important;
+            background: rgba(17, 24, 39, 0.98) !important; /* Dark solid background */
+            backdrop-filter: none !important;
+            transform: none !important;
+            padding: 20px !important;
+            display: flex;
+            flex-direction: column;
         }
 
         /* Custom Scrollbar */
@@ -193,11 +212,11 @@
                         <div class="h-1 w-24 bg-blue-500 mx-auto mt-4 rounded-full"></div>
                     </div>
 
-                    <!-- Change main grid to 8 columns for finer control -->
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-8 gap-4 md:gap-6">
                         
-                        <!-- Dash 1: DDML (Span 2/8 = 1/4) -->
+                        <!-- Dash 1 -->
                         <div class="dashboard-card p-5 rounded-2xl text-white relative overflow-hidden group h-[260px] flex flex-col justify-between lg:col-span-2">
+                            <button onclick="toggleCardFullscreen(this)" class="absolute top-2 right-2 text-gray-500 hover:text-white transition z-20"><i class="fa-solid fa-expand text-xs"></i></button>
                             <div class="relative z-10">
                                 <div class="absolute top-0 right-0 opacity-50 -mt-2 -mr-2"><i class="fa-solid fa-file-invoice text-4xl text-gray-500"></i></div>
                                 <div class="flex items-center justify-between mb-2">
@@ -232,8 +251,9 @@
                             </div>
                         </div>
 
-                        <!-- Dash 2: OTP Chart (Span 2/8 = 1/4) -->
+                        <!-- Dash 2 -->
                         <div class="dashboard-card p-5 rounded-2xl text-white h-[260px] flex flex-col lg:col-span-2">
+                            <button onclick="toggleCardFullscreen(this)" class="absolute top-2 right-2 text-gray-500 hover:text-white transition z-20"><i class="fa-solid fa-expand text-xs"></i></button>
                             <div class="flex items-center justify-between mb-2">
                                 <div class="bg-green-500 bg-opacity-20 p-2 rounded-lg"><i class="fa-solid fa-chart-line text-green-400"></i></div>
                                 <span id="otp-trend" class="text-[9px] font-mono text-blue-300 px-1 border border-blue-500 rounded uppercase tracking-tighter">CONNECTING...</span>
@@ -250,14 +270,17 @@
                             </div>
                         </div>
 
-                        <!-- Dash 3: Red Eye (Span 2/8 = 1/4) -->
+                        <!-- Dash 3 -->
                         <div class="dashboard-card p-5 rounded-2xl text-white h-[260px] flex flex-col relative group lg:col-span-2">
-                            <button onclick="exportRedEyeData()" class="absolute top-2 right-2 text-gray-400 hover:text-white transition opacity-0 group-hover:opacity-100 p-1" title="Export Data"><i class="fa-solid fa-file-export text-xs"></i></button>
-                            <div class="flex items-center justify-between mb-3 shrink-0 mr-4">
+                            <div class="absolute top-2 right-2 flex space-x-2 z-20">
+                                <button onclick="exportRedEyeData()" class="text-gray-500 hover:text-white transition" title="Export Data"><i class="fa-solid fa-file-export text-xs"></i></button>
+                                <button onclick="toggleCardFullscreen(this)" class="text-gray-500 hover:text-white transition" title="Fullscreen"><i class="fa-solid fa-expand text-xs"></i></button>
+                            </div>
+                            <div class="flex items-center justify-between mb-3 shrink-0 mr-10">
                                 <div class="bg-purple-500 bg-opacity-20 p-2 rounded-lg flex items-center gap-2"><i class="fa-solid fa-moon text-purple-400"></i></div>
                                 <span class="text-[10px] font-mono text-purple-300 uppercase tracking-widest text-right">RED EYE FLIGHT<br><span class="text-[9px] text-gray-400">04:00 - 09:00</span></span>
                             </div>
-                            <div class="grid grid-cols-4 gap-1 mb-2 text-xs font-bold text-gray-400 border-b border-gray-600 pb-1 shrink-0">
+                            <div class="grid grid-cols-4 gap-1 mb-2 text-[11px] font-bold text-gray-400 border-b border-gray-600 pb-1 shrink-0">
                                 <div class="text-center">REG</div><div class="text-center">FLT</div><div class="text-center">FROM</div><div class="text-center">STA</div>  
                             </div>
                             <div id="redeye-list" class="flex-1 overflow-y-auto custom-scrollbar relative">
@@ -268,14 +291,17 @@
                             </div>
                         </div>
 
-                        <!-- Dash 4: 36 Hrs (Span 2/8 = 1/4) -->
+                        <!-- Dash 4 -->
                         <div class="dashboard-card p-5 rounded-2xl text-white h-[260px] flex flex-col relative group lg:col-span-2">
-                            <button onclick="export36HrsData()" class="absolute top-2 right-2 text-gray-400 hover:text-white transition opacity-0 group-hover:opacity-100 p-1" title="Export Data"><i class="fa-solid fa-file-export text-xs"></i></button>
-                            <div class="flex items-center justify-between mb-3 shrink-0 mr-4">
+                            <div class="absolute top-2 right-2 flex space-x-2 z-20">
+                                <button onclick="export36HrsData()" class="text-gray-500 hover:text-white transition" title="Export Data"><i class="fa-solid fa-file-export text-xs"></i></button>
+                                <button onclick="toggleCardFullscreen(this)" class="text-gray-500 hover:text-white transition" title="Fullscreen"><i class="fa-solid fa-expand text-xs"></i></button>
+                            </div>
+                            <div class="flex items-center justify-between mb-3 shrink-0 mr-10">
                                 <div class="bg-orange-500 bg-opacity-20 p-2 rounded-lg flex items-center gap-2"><i class="fa-solid fa-clock text-orange-400"></i></div>
                                 <span class="text-[10px] font-mono text-orange-300 uppercase tracking-widest text-right">36 HRS CHK DUE<br><span class="text-[9px] text-gray-400">MONITORING</span></span>
                             </div>
-                            <div class="grid grid-cols-3 gap-1 mb-2 text-xs font-bold text-gray-400 border-b border-gray-600 pb-1 shrink-0">
+                            <div class="grid grid-cols-3 gap-1 mb-2 text-[11px] font-bold text-gray-400 border-b border-gray-600 pb-1 shrink-0">
                                 <div class="col-span-1 text-left pl-2">REG</div>
                                 <div class="col-span-2 text-right pr-2">REMAINING</div>
                             </div>
@@ -287,29 +313,26 @@
                             </div>
                         </div>
 
-                        <!-- Dash 5: New DDML Report (Span 3/8 = 1.5x of Dash 1) -->
+                        <!-- Dash 5: New DDML Report -->
                         <div class="dashboard-card p-5 rounded-2xl text-white h-[260px] flex flex-col relative group lg:col-span-3">
-                            <!-- Header -->
-                            <div class="flex items-center justify-between mb-3 shrink-0 mr-4">
+                            <button onclick="toggleCardFullscreen(this)" class="absolute top-2 right-2 text-gray-500 hover:text-white transition z-20"><i class="fa-solid fa-expand text-xs"></i></button>
+                            <div class="flex items-center justify-between mb-3 shrink-0 mr-10">
                                 <div class="bg-indigo-500 bg-opacity-20 p-2 rounded-lg flex items-center gap-2">
                                     <i class="fa-solid fa-file-medical text-indigo-400"></i>
                                 </div>
                                 <span class="text-[10px] font-mono text-indigo-300 uppercase tracking-widest text-right">NEW DDML REPORT<br><span class="text-[9px] text-gray-400">LIVE FEED</span></span>
                             </div>
                             
-                            <!-- Table Header -->
                             <div class="flex text-[11px] font-bold text-gray-400 border-b border-gray-600 pb-1 shrink-0 space-x-1">
-                                <div class="w-[14%] text-center">DATE</div>
-                                <div class="w-[10%] text-center">REG</div>
+                                <div class="w-[16%] text-center">DATE</div>
+                                <div class="w-[12%] text-center">REG</div>
                                 <div class="w-[12%] text-center">DDML</div>
-                                <div class="w-[10%] text-center">EXP</div>
+                                <div class="w-[12%] text-center">EXP</div>
                                 <div class="flex-1 text-left pl-1">DEFECT</div>
-                                <div class="w-[8%] text-center">LINK</div>
+                                <div class="w-[10%] text-center">LINK</div>
                             </div>
 
-                            <!-- Content -->
                             <div id="new-ddml-list" class="flex-1 overflow-y-auto custom-scrollbar relative">
-                                <!-- Loader -->
                                 <div class="absolute inset-0 flex flex-col items-center justify-center text-gray-400">
                                     <div class="loader w-4 h-4 mb-2 border-2 border-indigo-400 border-t-transparent"></div>
                                     <span class="text-[10px]">Loading...</span>
@@ -317,16 +340,18 @@
                             </div>
                         </div>
 
-                        <!-- Dash 6: Reserved (Span 3/8 = 1.5x of Dash 1) -->
+                        <!-- Dash 6 -->
                         <div class="dashboard-card p-5 rounded-2xl text-white h-[260px] flex flex-col justify-center items-center relative group border-dashed border-gray-600 lg:col-span-3">
+                            <button onclick="toggleCardFullscreen(this)" class="absolute top-2 right-2 text-gray-500 hover:text-white transition z-20"><i class="fa-solid fa-expand text-xs"></i></button>
                             <i class="fa-solid fa-layer-group text-3xl text-gray-500 mb-3 opacity-50"></i>
                             <div class="text-xl font-bold text-gray-400 tracking-widest uppercase">Dash 6</div>
                             <div class="text-[10px] text-gray-500 mt-2 font-mono">RESERVED SPACE (1.5x)</div>
                         </div>
 
-                        <!-- Dash 7: Cockpit Window (Span 2/8 = 1x Normal) -->
+                        <!-- Dash 7 -->
                         <div class="dashboard-card p-5 rounded-2xl text-white h-[260px] flex flex-col relative group border-t-4 border-t-blue-500 lg:col-span-2">
-                            <div class="flex items-center justify-between mb-2 shrink-0">
+                            <button onclick="toggleCardFullscreen(this)" class="absolute top-2 right-2 text-gray-500 hover:text-white transition z-20"><i class="fa-solid fa-expand text-xs"></i></button>
+                            <div class="flex items-center justify-between mb-2 shrink-0 mr-6">
                                 <div class="bg-blue-500 bg-opacity-20 p-2 rounded-lg flex items-center gap-2"><i class="fa-solid fa-plane-up text-blue-400"></i></div>
                                 <span class="text-[10px] font-mono text-blue-300 uppercase tracking-widest text-right">COCKPIT WINDOW<br><span class="text-[9px] text-gray-400">MONITORING</span></span>
                             </div>
@@ -336,7 +361,6 @@
                                     <div class="loader w-4 h-4 mb-2 border-2 border-blue-400 border-t-transparent"></div>
                                     <span class="text-[10px] text-gray-400">Loading...</span>
                                 </div>
-
                                 <div class="flex justify-between items-center border-b border-gray-600/50 pb-1">
                                     <span class="text-xs text-gray-400 font-bold uppercase">Under Monitoring</span>
                                     <span id="cw-total" class="text-xl font-bold text-white">--</span>
@@ -356,13 +380,14 @@
                             </div>
 
                             <a href="https://script.google.com/a/macros/airasia.com/s/AKfycbxvislr4mcYrl6og6M-InSr4xpuSpgTBCD7sGgkwLlmui9TJCLBnM-2vL9ER_njUMm5/exec" target="_blank" class="mt-3 w-full bg-green-600 hover:bg-green-500 text-white text-[10px] font-bold py-2 rounded text-center transition shadow-lg border border-green-500/50 uppercase tracking-wider block">
-                                CLICK FOR MORE INFORMATION
+                                MORE INFO
                             </a>
                         </div>
 
-                        <!-- Oil Consumption: Full Width (Span 8/8) -->
+                        <!-- Oil Consumption -->
                         <div class="col-span-1 md:col-span-2 lg:col-span-8 mt-2">
                             <div class="dashboard-card rounded-2xl overflow-hidden border border-gray-700/50 shadow-2xl relative group flex flex-col h-[600px]">
+                                <button onclick="toggleCardFullscreen(this)" class="absolute top-3 right-10 text-gray-500 hover:text-white transition z-20"><i class="fa-solid fa-expand text-xs"></i></button>
                                 <div class="px-5 py-3 border-b border-gray-700/50 flex items-center justify-between bg-gradient-to-r from-gray-800/80 to-transparent backdrop-blur-md">
                                     <div class="flex items-center gap-3">
                                         <div class="bg-blue-600/20 p-2 rounded-lg border border-blue-500/20 shadow-[0_0_10px_rgba(59,130,246,0.2)]">
@@ -376,7 +401,7 @@
                                             <span class="text-[9px] text-gray-400 font-mono">SOURCE: LOOKER STUDIO</span>
                                         </div>
                                     </div>
-                                    <div class="flex items-center gap-2">
+                                    <div class="flex items-center gap-2 mr-10">
                                         <a href="https://lookerstudio.google.com/reporting/b4e0321f-4cab-48f8-ba96-57ccc3fd29d9/page/tEnnC" target="_blank" class="p-2 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg transition-all" title="Open Full Screen">
                                             <i class="fa-solid fa-up-right-from-square text-xs"></i>
                                         </a>
@@ -396,7 +421,7 @@
                                 </div>
                             </div>
                         </div>
-                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -578,14 +603,10 @@
                 validateUser(user);
             } catch (error) {
                 console.error("Popup Login Error:", error);
-                
-                // Check if it's the specific Safari/Mobile issue
                 if (error.code === 'auth/popup-closed-by-user' || error.code === 'auth/popup-blocked' || error.code === 'auth/cancelled-popup-request') {
                     loadingSubtext.innerText = "Enabling Safari compatibility mode...";
-                    // Fallback to Redirect
                     try {
                         await signInWithRedirect(auth, provider);
-                        // The page will redirect, so no code below this line will run immediately
                     } catch (redirectError) {
                         console.error("Redirect Login Error:", redirectError);
                         showLoginError(redirectError.message);
@@ -596,8 +617,6 @@
             }
         });
 
-        // [3] CHECK REDIRECT RESULT (For Safari/Mobile return)
-        // This runs when the page loads after a redirect login
         if(auth) {
             getRedirectResult(auth)
                 .then((result) => {
@@ -611,7 +630,6 @@
                 });
         }
 
-        // [4] VALIDATION LOGIC
         function validateUser(user) {
             if (user.email.endsWith('@airasia.com')) {
                 showApp(user);
@@ -631,21 +649,18 @@
             appContent.classList.add('flex');
             
             if(!window.chartInterval) {
-                fetchOTPData();
-                fetchDDMLData();
-                fetchRedEyeData();
-                fetch36HrsData();
-                fetchCockpitWindowData();
-                fetchNewDDMLReport(); // ADDED THIS
-                window.chartInterval = setInterval(() => {
-                    fetchOTPData();
-                    fetchDDMLData();
-                    fetchRedEyeData();
-                    fetch36HrsData();
-                    fetchCockpitWindowData();
-                    fetchNewDDMLReport(); // ADDED THIS
-                }, 60000);
+                refreshAllData();
+                window.chartInterval = setInterval(refreshAllData, 60000);
             }
+        }
+
+        function refreshAllData() {
+            fetchOTPData();
+            fetchDDMLData();
+            fetchRedEyeData();
+            fetch36HrsData();
+            fetchCockpitWindowData();
+            fetchNewDDMLReport();
         }
 
         function showLoginError(message) {
@@ -655,7 +670,6 @@
             errorMsg.innerText = message;
         }
 
-        // [5] AUTH STATE OBSERVER
         if(auth) {
             onAuthStateChanged(auth, (user) => {
                 if (user) {
@@ -672,7 +686,6 @@
             });
         }
 
-        // [6] LOGOUT FUNCTION
         logoutBtn.addEventListener('click', () => {
             if(auth) {
                 signOut(auth).then(() => {
@@ -686,18 +699,32 @@
             }
         });
 
-        // --- DASHBOARD JS (Same as before) ---
+        // --- DASHBOARD UI FUNCTIONS ---
         
+        window.toggleCardFullscreen = function(btn) {
+            const card = btn.closest('.dashboard-card');
+            const icon = btn.querySelector('i');
+            
+            if (card.classList.contains('card-fullscreen')) {
+                card.classList.remove('card-fullscreen');
+                icon.classList.replace('fa-compress', 'fa-expand');
+                document.body.style.overflow = '';
+            } else {
+                card.classList.add('card-fullscreen');
+                icon.classList.replace('fa-expand', 'fa-compress');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
         // Mobile Menu
-        const btn = document.getElementById('mobile-menu-btn');
+        const menuBtn = document.getElementById('mobile-menu-btn');
         const sidebar = document.getElementById('header');
-        btn.addEventListener('click', () => sidebar.classList.toggle('-translate-x-full'));
+        menuBtn.addEventListener('click', () => sidebar.classList.toggle('-translate-x-full'));
         
         window.closeMobileMenu = function() { 
             if (window.innerWidth < 768) sidebar.classList.add('-translate-x-full');
         }
 
-        // Toggle Project Menu
         window.toggleProjectMenu = function(menuId) {
             if (window.innerWidth >= 768) return;
             const menu = document.getElementById(menuId);
@@ -781,7 +808,7 @@
             }, 2000);
         };
 
-        // --- FETCH DDML DATA FROM SHEET ---
+        // --- DATA FETCHING ---
         async function fetchDDMLData() {
             const SHEET_ID = '1D9ed8aGAIWbf_MmfN_Lm4b2s9ZkBETnaQ6u06gobil0';
             const SHEET_NAME = 'ชีต1';
@@ -847,7 +874,6 @@
             }
         }
 
-        // --- FETCH RED EYE DATA ---
         async function fetchRedEyeData() {
             const SHEET_ID = '1CEGBX67w-EucpDNWsZBcpEs5G3ZmmqICp8oLdlzKo9c';
             const GID = '0';
@@ -887,17 +913,10 @@
                 listContainer.innerHTML = html;
             } catch (error) {
                 console.error("Error fetching Red Eye Data:", error);
-                listContainer.innerHTML = `
-                    <div class="flex flex-col items-center justify-center h-full text-center">
-                        <div class="text-red-400 text-xs mb-2"><i class="fa-solid fa-lock mb-1"></i><br>Load Failed</div>
-                        <a href="https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit?gid=${GID}" target="_blank" class="text-[9px] bg-gray-700 hover:bg-gray-600 text-white py-1 px-2 rounded border border-gray-500"><i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> Open Sheet</a>
-                        <div class="mt-2 text-[8px] text-gray-500">*Must be "Anyone with link"</div>
-                    </div>
-                `;
+                listContainer.innerHTML = `<div class="text-center text-xs text-red-400 py-4">Load Failed</div>`;
             }
         }
 
-        // --- FETCH 36HRS DATA ---
         async function fetch36HrsData() {
             const SHEET_ID = '1X7VKdTDbFLcMRlfKIUvrTOi9dxSuvFsaA7qrixtEJ4I';
             const SHEET_NAME = 'MAAA';
@@ -936,17 +955,10 @@
                 listContainer.innerHTML = html;
             } catch (error) {
                 console.error("Error fetching 36HRS Data:", error);
-                listContainer.innerHTML = `
-                    <div class="flex flex-col items-center justify-center h-full text-center">
-                        <div class="text-red-400 text-xs mb-2"><i class="fa-solid fa-lock mb-1"></i><br>Load Failed</div>
-                        <a href="https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit" target="_blank" class="text-[9px] bg-gray-700 hover:bg-gray-600 text-white py-1 px-2 rounded border border-gray-500"><i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> Open Sheet</a>
-                        <div class="mt-2 text-[8px] text-gray-500">*Must be "Anyone with link"</div>
-                    </div>
-                `;
+                listContainer.innerHTML = `<div class="text-center text-xs text-red-400 py-4">Load Failed</div>`;
             }
         }
 
-        // --- FETCH NEW DDML REPORT (DASH 5) ---
         async function fetchNewDDMLReport() {
             const SHEET_ID = '19voRUUOGILuqz-GlEZhhDrRBuYFpsm9sog89O_7OMWQ'; 
             const URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=0&headers=1`;
@@ -1030,15 +1042,15 @@
                                     <div>${displayDate}</div>
                                     <div class="text-[9px] text-gray-500">${displayTime}</div>
                                 </div>
-                                <div class="w-[10%] text-center font-bold text-orange-300 flex flex-col items-center justify-center">
+                                <div class="w-[12%] text-center font-bold text-orange-300 flex flex-col items-center justify-center">
                                     <span>${reg}</span>
                                     ${newBadge}
                                 </div>
                                 <div class="w-[12%] text-center text-blue-300 font-mono">${ddml}</div>
-                                <div class="w-[10%] text-center text-red-300 font-mono">${exp}</div>
+                                <div class="w-[12%] text-center text-red-300 font-mono">${exp}</div>
                                 <div class="flex-1 text-left px-2 truncate text-white" title="${defect}">${defect}</div>
-                                <div class="w-[8%] text-center">
-                                    <a href="${link}" target="_blank" class="bg-blue-600 hover:bg-blue-500 text-white px-1.5 py-0.5 rounded-[2px] text-[9px] uppercase tracking-wide transition shadow-sm">View</a>
+                                <div class="w-[10%] text-center">
+                                    <a href="${link}" target="_blank" class="bg-blue-600 hover:bg-blue-500 text-white px-2 py-1 rounded-[2px] text-[10px] uppercase tracking-wide transition shadow-sm">View</a>
                                 </div>
                             </div>
                         `;
@@ -1049,76 +1061,40 @@
                 listContainer.innerHTML = html;
             } catch (error) {
                 console.error("Error fetching NEW DDML Report:", error);
-                listContainer.innerHTML = `
-                    <div class="flex flex-col items-center justify-center h-full text-center">
-                        <div class="text-red-400 text-xs mb-2"><i class="fa-solid fa-lock mb-1"></i><br>Load Failed</div>
-                        <div class="text-[8px] text-gray-500 px-4">Check if Sheet is Public</div>
-                    </div>
-                `;
+                listContainer.innerHTML = `<div class="text-center text-xs text-red-400 py-4">Load Failed</div>`;
             }
         }
 
-        // Chart Logic
         const OPT_DATA_URL = 'https://script.google.com/macros/s/AKfycbzUXDItR3eFn_16B68oz953r_F1PgoQ4kUuyfivYEG0Gb1RGRvSyVd8nKqv9flIgx4x/exec';
         let otpChart = null;
 
         async function fetchOTPData() {
             const trendEl = document.getElementById('otp-trend');
             const valueEl = document.getElementById('otp-value');
-            
-            if (trendEl) {
-                trendEl.textContent = 'SYNCING...';
-                trendEl.classList.replace('text-green-400', 'text-yellow-400');
-            }
+            if (trendEl) trendEl.textContent = 'SYNCING...';
             
             try {
-                const response = await fetch(`${OPT_DATA_URL}?t=${Date.now()}`, {
-                    redirect: 'follow',
-                    credentials: 'omit'
-                });
-                if (!response.ok) throw new Error('Network error');
-                
+                const response = await fetch(`${OPT_DATA_URL}?t=${Date.now()}`, { redirect: 'follow', credentials: 'omit' });
                 const data = await response.json();
-                const validData = data.filter(d => {
-                    const val = parseFloat(d.valueB || d.value);
-                    return !isNaN(val) && val > 0.001; 
-                });
+                const validData = data.filter(d => !isNaN(parseFloat(d.valueB || d.value)) && parseFloat(d.valueB || d.value) > 0.001);
 
-                if (Array.isArray(validData) && validData.length > 0) {
+                if (validData.length > 0) {
                     const labels = validData.map(d => d.date);
-                    const processOTP = (val) => {
-                        if (typeof val === 'string' && val.includes('%')) { return parseFloat(val); }
-                        let n = parseFloat(val);
-                        if (isNaN(n)) return 0;
+                    const valuesB = validData.map(d => {
+                        let n = parseFloat(d.valueB || d.value);
                         return (n > 0 && n <= 1.0) ? (n * 100) : n;
-                    };
-                    const processEngDly = (val) => {
-                        if (typeof val === 'string' && val.includes('%')) { return parseFloat(val); }
-                        let n = parseFloat(val);
-                        if (isNaN(n)) return 0;
-                        return (n > 0 && n <= 0.05) ? (n * 100) : n; 
-                    };
-                    const valuesB = validData.map(d => processOTP(d.valueB || d.value));
-                    const valuesC = validData.map(d => processEngDly(d.valueC || 0));
+                    });
+                    const valuesC = validData.map(d => {
+                        let n = parseFloat(d.valueC || 0);
+                        return (n > 0 && n <= 0.05) ? (n * 100) : n;
+                    });
 
                     updateChart(labels, valuesB, valuesC);
-                    if (valueEl) {
-                        const latestOTP15 = valuesB[valuesB.length - 1];
-                        valueEl.textContent = latestOTP15.toFixed(2) + '%';
-                    }
-                    
-                    if (trendEl) {
-                        trendEl.textContent = 'DUAL ONLINE';
-                        trendEl.classList.replace('text-yellow-400', 'text-green-400');
-                    }
+                    if (valueEl) valueEl.textContent = valuesB[valuesB.length - 1].toFixed(2) + '%';
+                    if (trendEl) trendEl.textContent = 'ONLINE';
                 }
             } catch (err) {
-                console.error('Fetch error:', err);
-                if (trendEl) {
-                    trendEl.textContent = 'RETRYING...';
-                    trendEl.classList.replace('text-green-400', 'text-red-400');
-                    trendEl.classList.replace('text-yellow-400', 'text-red-400');
-                }
+                console.error('OTP error:', err);
             }
         }
 
@@ -1126,7 +1102,6 @@
             const canvas = document.getElementById('otpChart');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
-
             if (otpChart) {
                 otpChart.data.labels = labels;
                 otpChart.data.datasets[0].data = valuesB;
@@ -1138,98 +1113,31 @@
                     data: {
                         labels: labels,
                         datasets: [
-                            {
-                                label: 'OTP15 (%)',
-                                data: valuesB,
-                                borderColor: '#60a5fa',
-                                backgroundColor: 'rgba(96, 165, 250, 0.1)',
-                                borderWidth: 2,
-                                pointRadius: 0,
-                                pointHoverRadius: 4,
-                                fill: true,
-                                tension: 0.4
-                            },
-                            {
-                                label: 'ENG DLY (%)',
-                                data: valuesC,
-                                borderColor: '#f87171',
-                                backgroundColor: 'rgba(248, 113, 113, 0.1)',
-                                borderWidth: 2,
-                                pointRadius: 0,
-                                pointHoverRadius: 4,
-                                fill: true,
-                                tension: 0.4
-                            }
+                            { label: 'OTP15', data: valuesB, borderColor: '#60a5fa', tension: 0.4, fill: true, backgroundColor: 'rgba(96, 165, 250, 0.1)', pointRadius: 0 },
+                            { label: 'ENG DLY', data: valuesC, borderColor: '#f87171', tension: 0.4, fill: true, backgroundColor: 'rgba(248, 113, 113, 0.1)', pointRadius: 0 }
                         ]
                     },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        interaction: { mode: 'index', intersect: false },
-                        animation: { duration: 1000 },
-                        plugins: {
-                            legend: { display: false },
-                            tooltip: {
-                                backgroundColor: 'rgba(0,0,0,0.8)',
-                                titleFont: { size: 10 },
-                                bodyFont: { size: 10 },
-                                callbacks: {
-                                    label: (ctx) => `${ctx.dataset.label.split(' ')[0]}: ${ctx.parsed.y.toFixed(2)}%`
-                                }
-                            }
-                        },
-                        scales: {
-                            x: {
-                                grid: { display: false },
-                                ticks: { color: '#9ca3af', font: { size: 8 }, maxRotation: 0 }
-                            },
-                            y: {
-                                beginAtZero: true,
-                                grid: { color: 'rgba(75, 85, 99, 0.2)', borderDash: [2, 4] },
-                                ticks: { color: '#9ca3af', font: { size: 8 } } 
-                            }
-                        }
-                    }
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { size: 8 } }, y: { ticks: { size: 8 } } } }
                 });
             }
         }
-        
-        // --- FETCH COCKPIT WINDOW DATA ---
+
         async function fetchCockpitWindowData() {
-            const SHEET_ID = '1cEYRPEKytVAeVLgbGJXpCkQaXDsWBkSSUf3BXTeFKfg';
-            const SHEET_NAME = 'ชีต1';
-            const RANGE = 'A2:C2'; 
-            const URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}&range=${RANGE}`;
-            
-            const loadingEl = document.getElementById('cockpit-loading');
-            
+            const URL = `https://docs.google.com/spreadsheets/d/1cEYRPEKytVAeVLgbGJXpCkQaXDsWBkSSUf3BXTeFKfg/gviz/tq?tqx=out:json&sheet=ชีต1&range=A2:C2`;
             try {
-                if(loadingEl) loadingEl.classList.remove('hidden');
-                
                 const res = await fetch(URL);
-                if (!res.ok) { throw new Error(`HTTP Status: ${res.status}`); }
                 const text = await res.text();
-                const jsonText = text.substring(47).slice(0, -2);
-                const json = JSON.parse(jsonText);
-                
+                const json = JSON.parse(text.substring(47).slice(0, -2));
                 if (json.table && json.table.rows.length > 0) {
                     const row = json.table.rows[0].c;
-                    const normalVal = row[0] && row[0].v !== null ? parseInt(row[0].v) : 0;
-                    const obsVal = row[1] && row[1].v !== null ? parseInt(row[1].v) : 0;
-                    const critVal = row[2] && row[2].v !== null ? parseInt(row[2].v) : 0;
-                    const totalVal = normalVal + obsVal + critVal;
-
-                    document.getElementById('cw-normal').textContent = normalVal;
-                    document.getElementById('cw-obs').textContent = obsVal;
-                    document.getElementById('cw-crit').textContent = critVal;
-                    document.getElementById('cw-total').textContent = totalVal;
+                    const n = parseInt(row[0].v || 0), o = parseInt(row[1].v || 0), c = parseInt(row[2].v || 0);
+                    document.getElementById('cw-normal').textContent = n;
+                    document.getElementById('cw-obs').textContent = o;
+                    document.getElementById('cw-crit').textContent = c;
+                    document.getElementById('cw-total').textContent = n + o + c;
                 }
-            } catch (error) {
-                console.error("Error fetching Cockpit Window Data:", error);
-                document.getElementById('cw-total').textContent = "Err";
-            } finally {
-                if(loadingEl) loadingEl.classList.add('hidden');
-            }
+            } catch (e) { console.error(e); }
+            document.getElementById('cockpit-loading').classList.add('hidden');
         }
 
         fetchOTPData();
@@ -1237,7 +1145,7 @@
         fetchRedEyeData();
         fetch36HrsData();
         fetchCockpitWindowData();
-        fetchNewDDMLReport(); // ADDED THIS
+        fetchNewDDMLReport();
     </script>
 </body>
 </html>
