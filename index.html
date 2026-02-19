@@ -225,41 +225,42 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-8 gap-4 md:gap-6">
                         
                         <!-- Dash 1: DDML TODAY & YESTERDAY -->
-                        <div class="dashboard-card p-4 rounded-2xl text-white relative overflow-hidden group h-[260px] flex flex-col lg:col-span-2">
+                        <div class="dashboard-card p-3 rounded-2xl text-white relative overflow-hidden group h-[260px] flex flex-col justify-between lg:col-span-2">
+                            <button onclick="toggleCardFullscreen(this)" class="absolute top-2 right-2 text-gray-500 hover:text-white transition z-20"><i class="fa-solid fa-expand text-xs"></i></button>
+                            
                             <!-- Top Half: TODAY -->
-                            <div class="flex-1 flex flex-col relative z-10">
-                                <button onclick="toggleCardFullscreen(this)" class="absolute top-0 right-0 text-gray-500 hover:text-white transition z-20"><i class="fa-solid fa-expand text-xs"></i></button>
+                            <div class="flex flex-col relative z-10">
                                 <div class="flex items-center gap-2 mb-1 pr-6">
-                                    <div class="bg-blue-600 bg-opacity-40 p-1.5 rounded-lg"><i class="fa-solid fa-clipboard-list text-blue-200 text-sm"></i></div>
-                                    <span class="text-[11px] font-bold text-gray-200 uppercase tracking-widest">DDML TODAY</span>
-                                    <span id="ddml-time-badge" class="ml-auto text-[9px] font-mono text-blue-300 border border-blue-500/30 px-1.5 py-0.5 rounded bg-blue-900/40">--:--</span>
+                                    <div class="bg-blue-600 bg-opacity-40 p-1 rounded-md"><i class="fa-solid fa-clipboard-list text-blue-200 text-xs"></i></div>
+                                    <span class="text-[10px] font-bold text-gray-200 uppercase tracking-widest">DDML TODAY</span>
+                                    <span id="ddml-time-badge" class="ml-auto text-[8px] font-mono text-blue-300 border border-blue-500/30 px-1 py-0.5 rounded bg-blue-900/40">--:--</span>
                                 </div>
                                 
                                 <div class="flex items-end mb-1">
-                                    <div id="ddml-total" class="text-4xl font-bold text-white leading-none">--</div>
-                                    <div id="ddml-total-diff" class="ml-2 mb-1 flex items-center"></div>
-                                    <div class="text-[9px] text-gray-400 mb-1 ml-2 tracking-widest">TOTAL</div>
+                                    <div id="ddml-total" class="text-3xl font-bold text-white leading-none">--</div>
+                                    <div id="ddml-total-diff" class="ml-2 mb-0.5 flex items-center"></div>
+                                    <div class="text-[8px] text-gray-400 mb-0.5 ml-2 tracking-widest">TOTAL</div>
                                 </div>
 
-                                <div class="grid grid-cols-3 gap-1 text-center bg-gray-800/50 rounded-lg p-1.5 border border-gray-700/50 mt-auto">
+                                <div class="grid grid-cols-3 gap-1 text-center bg-gray-800/50 rounded-lg p-1 border border-gray-700/50">
                                     <div>
                                         <div class="text-[8px] text-gray-400 uppercase tracking-wider mb-0.5">CAT</div>
                                         <div class="flex items-center justify-center space-x-1">
-                                            <span id="ddml-cat" class="text-base font-bold text-yellow-400 leading-none">-</span>
+                                            <span id="ddml-cat" class="text-sm font-bold text-yellow-400 leading-none">-</span>
                                             <span id="ddml-cat-diff" class="flex items-center"></span>
                                         </div>
                                     </div>
                                     <div class="border-l border-gray-600/50">
                                         <div class="text-[8px] text-gray-400 uppercase tracking-wider mb-0.5">AMD</div>
                                         <div class="flex items-center justify-center space-x-1">
-                                            <span id="ddml-amd" class="text-base font-bold text-green-400 leading-none">-</span>
+                                            <span id="ddml-amd" class="text-sm font-bold text-green-400 leading-none">-</span>
                                             <span id="ddml-amd-diff" class="flex items-center"></span>
                                         </div>
                                     </div>
                                     <div class="border-l border-gray-600/50">
                                         <div class="text-[8px] text-gray-400 uppercase tracking-wider mb-0.5">STR/FC</div>
                                         <div class="flex items-center justify-center space-x-1">
-                                            <span id="ddml-str" class="text-base font-bold text-red-400 leading-none">-</span>
+                                            <span id="ddml-str" class="text-sm font-bold text-red-400 leading-none">-</span>
                                             <span id="ddml-str-diff" class="flex items-center"></span>
                                         </div>
                                     </div>
@@ -267,47 +268,47 @@
                             </div>
                             
                             <!-- Divider -->
-                            <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-600 to-transparent my-2 relative z-10"></div>
+                            <div class="w-full h-px bg-gray-600/50 my-1.5 relative z-10 shrink-0"></div>
 
                             <!-- Bottom Half: YESTERDAY -->
-                            <div class="flex-1 flex flex-col relative z-10 mt-1">
+                            <div class="flex flex-col relative z-10">
                                 <div class="flex items-center gap-2 mb-1 pr-6">
-                                    <div class="bg-gray-600 bg-opacity-40 p-1.5 rounded-lg"><i class="fa-solid fa-clock-rotate-left text-gray-300 text-xs"></i></div>
-                                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">YESTERDAY</span>
-                                    <span id="yest-time-badge" class="ml-auto text-[8px] font-mono text-gray-400 border border-gray-600/50 px-1.5 py-0.5 rounded bg-gray-800/50">--:--</span>
+                                    <div class="bg-gray-600 bg-opacity-40 p-1 rounded-md"><i class="fa-solid fa-clock-rotate-left text-gray-300 text-[10px]"></i></div>
+                                    <span class="text-[9px] font-bold text-gray-400 uppercase tracking-widest">YESTERDAY</span>
+                                    <span id="yest-time-badge" class="ml-auto text-[8px] font-mono text-gray-400 border border-gray-600/50 px-1 py-0.5 rounded bg-gray-800/50">--:--</span>
                                 </div>
                                 
                                 <div class="flex items-end justify-between mb-1">
                                     <div class="flex items-end">
-                                        <div id="yest-total" class="text-3xl font-bold text-gray-300 leading-none">--</div>
-                                        <div id="yest-total-diff" class="ml-2 mb-1 flex items-center"></div>
-                                        <div class="text-[8px] text-gray-500 mb-1 ml-2 tracking-widest">TOTAL</div>
+                                        <div id="yest-total" class="text-2xl font-bold text-gray-300 leading-none">--</div>
+                                        <div id="yest-total-diff" class="ml-2 mb-0.5 flex items-center"></div>
+                                        <div class="text-[8px] text-gray-500 mb-0.5 ml-2 tracking-widest">TOTAL</div>
                                     </div>
                                     <div class="flex flex-col items-end">
-                                        <div class="text-[8px] text-gray-500 uppercase tracking-widest mb-0.5">CLOSED</div>
-                                        <div class="bg-green-500/20 border border-green-500/30 px-2 py-0.5 rounded text-green-400 font-bold text-lg leading-none" id="yest-closed">--</div>
+                                        <div class="text-[7px] text-gray-500 uppercase tracking-widest mb-0.5">CLOSED</div>
+                                        <div class="bg-green-500/20 border border-green-500/30 px-1.5 py-0.5 rounded text-green-400 font-bold text-sm leading-none" id="yest-closed">--</div>
                                     </div>
                                 </div>
 
-                                <div class="grid grid-cols-3 gap-1 text-center bg-gray-800/30 rounded-lg p-1.5 border border-gray-700/30 mt-auto opacity-80">
+                                <div class="grid grid-cols-3 gap-1 text-center bg-gray-800/30 rounded-lg p-1 border border-gray-700/30 opacity-80">
                                     <div>
                                         <div class="text-[8px] text-gray-500 uppercase tracking-wider mb-0.5">CAT</div>
                                         <div class="flex items-center justify-center space-x-1">
-                                            <span id="yest-cat" class="text-sm font-bold text-yellow-500 leading-none">-</span>
+                                            <span id="yest-cat" class="text-xs font-bold text-yellow-500 leading-none">-</span>
                                             <span id="yest-cat-diff" class="flex items-center"></span>
                                         </div>
                                     </div>
                                     <div class="border-l border-gray-700/50">
                                         <div class="text-[8px] text-gray-500 uppercase tracking-wider mb-0.5">AMD</div>
                                         <div class="flex items-center justify-center space-x-1">
-                                            <span id="yest-amd" class="text-sm font-bold text-green-500 leading-none">-</span>
+                                            <span id="yest-amd" class="text-xs font-bold text-green-500 leading-none">-</span>
                                             <span id="yest-amd-diff" class="flex items-center"></span>
                                         </div>
                                     </div>
                                     <div class="border-l border-gray-700/50">
                                         <div class="text-[8px] text-gray-500 uppercase tracking-wider mb-0.5">STR/FC</div>
                                         <div class="flex items-center justify-center space-x-1">
-                                            <span id="yest-str" class="text-sm font-bold text-red-500 leading-none">-</span>
+                                            <span id="yest-str" class="text-xs font-bold text-red-500 leading-none">-</span>
                                             <span id="yest-str-diff" class="flex items-center"></span>
                                         </div>
                                     </div>
@@ -941,9 +942,24 @@
                         if(aVal === 'DIFF 4') diff4 = rows[i];
                     }
 
+                    // Helper to safely parse and add diffs
+                    const getDiffValue = (primaryRow, secondaryRow, colIndex, shouldAdd) => {
+                        let val1 = 0;
+                        let val2 = 0;
+                        
+                        if (primaryRow && primaryRow.c && primaryRow.c[colIndex] && primaryRow.c[colIndex].v !== null) {
+                            val1 = parseFloat(primaryRow.c[colIndex].v) || 0;
+                        }
+                        
+                        if (shouldAdd && secondaryRow && secondaryRow.c && secondaryRow.c[colIndex] && secondaryRow.c[colIndex].v !== null) {
+                            val2 = parseFloat(secondaryRow.c[colIndex].v) || 0;
+                        }
+                        
+                        return val1 + val2;
+                    };
+
                     // TODAY Logic
                     let activeToday = today2200;
-                    let activeTodayDiff = diff1;
                     let todayTime = "22:00";
                     
                     if (today2200 && today2200.c) {
@@ -952,18 +968,15 @@
                         const d = parseFloat(today2200.c[3]?.v || 0);
                         if (isNaN(b) || isNaN(c) || isNaN(d) || b === 0 || c === 0 || d === 0) {
                             activeToday = today1000;
-                            activeTodayDiff = diff2;
                             todayTime = "10:00";
                         }
                     } else {
                         activeToday = today1000;
-                        activeTodayDiff = diff2;
                         todayTime = "10:00";
                     }
 
                     // YESTERDAY Logic
                     let activeYest = yest2200;
-                    let activeYestDiff = diff3;
                     let yestTime = "22:00";
                     
                     if (yest2200 && yest2200.c) {
@@ -972,20 +985,15 @@
                         const d = parseFloat(yest2200.c[3]?.v || 0);
                         if (isNaN(b) || isNaN(c) || isNaN(d) || b === 0 || c === 0 || d === 0) {
                             activeYest = yest1000;
-                            activeYestDiff = diff4;
                             yestTime = "10:00";
                         }
                     } else {
                         activeYest = yest1000;
-                        activeYestDiff = diff4;
                         yestTime = "10:00";
                     }
 
-                    const formatDiff = (cell, isTotal=false) => {
-                        if (!cell || cell.v === null || isNaN(parseFloat(cell.v)) || parseFloat(cell.v) === 0) {
-                            return ``; 
-                        }
-                        const val = parseFloat(cell.v);
+                    const formatCalculatedDiff = (val, isTotal=false) => {
+                        if (val === 0 || isNaN(val)) return ``; 
                         const textSize = isTotal ? 'text-sm' : 'text-[9px]';
                         const iconSize = isTotal ? 'text-sm' : 'text-[8px]';
                         
@@ -996,29 +1004,50 @@
                         }
                     };
 
-                    const updateSection = (prefix, dataRow, diffRow, timeLabel) => {
-                        if (dataRow && dataRow.c) {
-                            document.getElementById(`${prefix}-total`).textContent = dataRow.c[4]?.v !== undefined ? dataRow.c[4].v : '-';
-                            document.getElementById(`${prefix}-cat`).textContent = dataRow.c[1]?.v !== undefined ? dataRow.c[1].v : '-';
-                            document.getElementById(`${prefix}-amd`).textContent = dataRow.c[2]?.v !== undefined ? dataRow.c[2].v : '-';
-                            document.getElementById(`${prefix}-str`).textContent = dataRow.c[3]?.v !== undefined ? dataRow.c[3].v : '-';
-                            document.getElementById(`${prefix}-time-badge`).textContent = timeLabel;
-                            
-                            if(prefix === 'yest') {
-                                document.getElementById('yest-closed').textContent = dataRow.c[5]?.v !== undefined ? dataRow.c[5].v : '-';
-                            }
+                    // TODAY Rendering
+                    if (activeToday && activeToday.c) {
+                        document.getElementById('ddml-total').textContent = activeToday.c[4]?.v !== undefined ? activeToday.c[4].v : '-';
+                        document.getElementById('ddml-cat').textContent = activeToday.c[1]?.v !== undefined ? activeToday.c[1].v : '-';
+                        document.getElementById('ddml-amd').textContent = activeToday.c[2]?.v !== undefined ? activeToday.c[2].v : '-';
+                        document.getElementById('ddml-str').textContent = activeToday.c[3]?.v !== undefined ? activeToday.c[3].v : '-';
+                        document.getElementById('ddml-time-badge').textContent = todayTime;
+                        
+                        let useBothDiffs = (activeToday === today2200);
+                        if (useBothDiffs) {
+                            document.getElementById('ddml-cat-diff').innerHTML = formatCalculatedDiff(getDiffValue(diff1, diff2, 1, true));
+                            document.getElementById('ddml-amd-diff').innerHTML = formatCalculatedDiff(getDiffValue(diff1, diff2, 2, true));
+                            document.getElementById('ddml-str-diff').innerHTML = formatCalculatedDiff(getDiffValue(diff1, diff2, 3, true));
+                            document.getElementById('ddml-total-diff').innerHTML = formatCalculatedDiff(getDiffValue(diff1, diff2, 4, true), true);
+                        } else {
+                            document.getElementById('ddml-cat-diff').innerHTML = formatCalculatedDiff(getDiffValue(diff2, null, 1, false));
+                            document.getElementById('ddml-amd-diff').innerHTML = formatCalculatedDiff(getDiffValue(diff2, null, 2, false));
+                            document.getElementById('ddml-str-diff').innerHTML = formatCalculatedDiff(getDiffValue(diff2, null, 3, false));
+                            document.getElementById('ddml-total-diff').innerHTML = formatCalculatedDiff(getDiffValue(diff2, null, 4, false), true);
                         }
-                        if (diffRow && diffRow.c) {
-                            document.getElementById(`${prefix}-cat-diff`).innerHTML = formatDiff(diffRow.c[1]);
-                            document.getElementById(`${prefix}-amd-diff`).innerHTML = formatDiff(diffRow.c[2]);
-                            document.getElementById(`${prefix}-str-diff`).innerHTML = formatDiff(diffRow.c[3]);
-                            const totalDiffEl = document.getElementById(`${prefix}-total-diff`);
-                            if (totalDiffEl) totalDiffEl.innerHTML = formatDiff(diffRow.c[4], true);
-                        }
-                    };
+                    }
 
-                    updateSection('ddml', activeToday, activeTodayDiff, todayTime);
-                    updateSection('yest', activeYest, activeYestDiff, yestTime);
+                    // YESTERDAY Rendering
+                    if (activeYest && activeYest.c) {
+                        document.getElementById('yest-total').textContent = activeYest.c[4]?.v !== undefined ? activeYest.c[4].v : '-';
+                        document.getElementById('yest-cat').textContent = activeYest.c[1]?.v !== undefined ? activeYest.c[1].v : '-';
+                        document.getElementById('yest-amd').textContent = activeYest.c[2]?.v !== undefined ? activeYest.c[2].v : '-';
+                        document.getElementById('yest-str').textContent = activeYest.c[3]?.v !== undefined ? activeYest.c[3].v : '-';
+                        document.getElementById('yest-time-badge').textContent = yestTime;
+                        document.getElementById('yest-closed').textContent = activeYest.c[5]?.v !== undefined ? activeYest.c[5].v : '-';
+                        
+                        let useBothDiffs = (activeYest === yest2200);
+                        if (useBothDiffs) {
+                            document.getElementById('yest-cat-diff').innerHTML = formatCalculatedDiff(getDiffValue(diff3, diff4, 1, true));
+                            document.getElementById('yest-amd-diff').innerHTML = formatCalculatedDiff(getDiffValue(diff3, diff4, 2, true));
+                            document.getElementById('yest-str-diff').innerHTML = formatCalculatedDiff(getDiffValue(diff3, diff4, 3, true));
+                            document.getElementById('yest-total-diff').innerHTML = formatCalculatedDiff(getDiffValue(diff3, diff4, 4, true), true);
+                        } else {
+                            document.getElementById('yest-cat-diff').innerHTML = formatCalculatedDiff(getDiffValue(diff4, null, 1, false));
+                            document.getElementById('yest-amd-diff').innerHTML = formatCalculatedDiff(getDiffValue(diff4, null, 2, false));
+                            document.getElementById('yest-str-diff').innerHTML = formatCalculatedDiff(getDiffValue(diff4, null, 3, false));
+                            document.getElementById('yest-total-diff').innerHTML = formatCalculatedDiff(getDiffValue(diff4, null, 4, false), true);
+                        }
+                    }
                 }
             } catch (error) {
                 console.error("Error fetching DDML:", error);
