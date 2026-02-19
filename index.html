@@ -31,7 +31,7 @@
             backdrop-filter: blur(8px);
             border: 1px solid rgba(75, 85, 99, 0.4);
             transition: all 0.3s ease;
-            position: relative; /* Ensure absolute children are relative to card */
+            position: relative;
         }
         .dashboard-card:hover {
             border-color: rgba(96, 165, 250, 0.6);
@@ -48,10 +48,10 @@
             bottom: 0 !important;
             width: 100vw !important;
             height: 100vh !important;
-            z-index: 49 !important; /* High, but below Sidebar (z-50) */
+            z-index: 49 !important; 
             margin: 0 !important;
             border-radius: 0 !important;
-            background: rgba(17, 24, 39, 0.98) !important; /* Solid dark bg */
+            background: rgba(17, 24, 39, 0.98) !important; 
             backdrop-filter: none !important;
             transform: none !important;
             padding: 20px !important;
@@ -60,10 +60,9 @@
             overflow-y: auto !important;
         }
 
-        /* Desktop Adjustment: Offset by sidebar width (16rem/64 tailwind units) */
         @media (min-width: 768px) {
             .card-fullscreen {
-                left: 16rem !important; /* 64 * 0.25rem = 16rem */
+                left: 16rem !important;
                 width: calc(100vw - 16rem) !important;
             }
         }
@@ -225,24 +224,24 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-8 gap-4 md:gap-6">
                         
-                        <!-- Dash 1: DDML TODAY & WIP LOWER HALF -->
+                        <!-- Dash 1: DDML TODAY & YESTERDAY -->
                         <div class="dashboard-card p-4 rounded-2xl text-white relative overflow-hidden group h-[260px] flex flex-col lg:col-span-2">
-                            <!-- Top Half -->
+                            <!-- Top Half: TODAY -->
                             <div class="flex-1 flex flex-col relative z-10">
                                 <button onclick="toggleCardFullscreen(this)" class="absolute top-0 right-0 text-gray-500 hover:text-white transition z-20"><i class="fa-solid fa-expand text-xs"></i></button>
-                                <div class="flex items-center gap-2 mb-2 pr-6">
+                                <div class="flex items-center gap-2 mb-1 pr-6">
                                     <div class="bg-blue-600 bg-opacity-40 p-1.5 rounded-lg"><i class="fa-solid fa-clipboard-list text-blue-200 text-sm"></i></div>
                                     <span class="text-[11px] font-bold text-gray-200 uppercase tracking-widest">DDML TODAY</span>
                                     <span id="ddml-time-badge" class="ml-auto text-[9px] font-mono text-blue-300 border border-blue-500/30 px-1.5 py-0.5 rounded bg-blue-900/40">--:--</span>
                                 </div>
                                 
-                                <div class="flex items-end mb-2">
+                                <div class="flex items-end mb-1">
                                     <div id="ddml-total" class="text-4xl font-bold text-white leading-none">--</div>
                                     <div id="ddml-total-diff" class="ml-2 mb-1 flex items-center"></div>
                                     <div class="text-[9px] text-gray-400 mb-1 ml-2 tracking-widest">TOTAL</div>
                                 </div>
 
-                                <div class="grid grid-cols-3 gap-1 text-center bg-gray-800/50 rounded-lg p-2 border border-gray-700/50 mt-auto">
+                                <div class="grid grid-cols-3 gap-1 text-center bg-gray-800/50 rounded-lg p-1.5 border border-gray-700/50 mt-auto">
                                     <div>
                                         <div class="text-[8px] text-gray-400 uppercase tracking-wider mb-0.5">CAT</div>
                                         <div class="flex items-center justify-center space-x-1">
@@ -268,12 +267,51 @@
                             </div>
                             
                             <!-- Divider -->
-                            <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-600 to-transparent my-3 relative z-10"></div>
+                            <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-600 to-transparent my-2 relative z-10"></div>
 
-                            <!-- Bottom Half (Placeholder for future) -->
-                            <div class="flex-1 flex flex-col justify-center items-center relative z-10 opacity-40">
-                                <i class="fa-solid fa-hammer text-xl mb-2 text-gray-400"></i>
-                                <span class="text-[10px] text-gray-400 uppercase tracking-widest">LOWER HALF (WIP)</span>
+                            <!-- Bottom Half: YESTERDAY -->
+                            <div class="flex-1 flex flex-col relative z-10 mt-1">
+                                <div class="flex items-center gap-2 mb-1 pr-6">
+                                    <div class="bg-gray-600 bg-opacity-40 p-1.5 rounded-lg"><i class="fa-solid fa-clock-rotate-left text-gray-300 text-xs"></i></div>
+                                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">YESTERDAY</span>
+                                    <span id="yest-time-badge" class="ml-auto text-[8px] font-mono text-gray-400 border border-gray-600/50 px-1.5 py-0.5 rounded bg-gray-800/50">--:--</span>
+                                </div>
+                                
+                                <div class="flex items-end justify-between mb-1">
+                                    <div class="flex items-end">
+                                        <div id="yest-total" class="text-3xl font-bold text-gray-300 leading-none">--</div>
+                                        <div id="yest-total-diff" class="ml-2 mb-1 flex items-center"></div>
+                                        <div class="text-[8px] text-gray-500 mb-1 ml-2 tracking-widest">TOTAL</div>
+                                    </div>
+                                    <div class="flex flex-col items-end">
+                                        <div class="text-[8px] text-gray-500 uppercase tracking-widest mb-0.5">CLOSED</div>
+                                        <div class="bg-green-500/20 border border-green-500/30 px-2 py-0.5 rounded text-green-400 font-bold text-lg leading-none" id="yest-closed">--</div>
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-3 gap-1 text-center bg-gray-800/30 rounded-lg p-1.5 border border-gray-700/30 mt-auto opacity-80">
+                                    <div>
+                                        <div class="text-[8px] text-gray-500 uppercase tracking-wider mb-0.5">CAT</div>
+                                        <div class="flex items-center justify-center space-x-1">
+                                            <span id="yest-cat" class="text-sm font-bold text-yellow-500 leading-none">-</span>
+                                            <span id="yest-cat-diff" class="flex items-center"></span>
+                                        </div>
+                                    </div>
+                                    <div class="border-l border-gray-700/50">
+                                        <div class="text-[8px] text-gray-500 uppercase tracking-wider mb-0.5">AMD</div>
+                                        <div class="flex items-center justify-center space-x-1">
+                                            <span id="yest-amd" class="text-sm font-bold text-green-500 leading-none">-</span>
+                                            <span id="yest-amd-diff" class="flex items-center"></span>
+                                        </div>
+                                    </div>
+                                    <div class="border-l border-gray-700/50">
+                                        <div class="text-[8px] text-gray-500 uppercase tracking-wider mb-0.5">STR/FC</div>
+                                        <div class="flex items-center justify-center space-x-1">
+                                            <span id="yest-str" class="text-sm font-bold text-red-500 leading-none">-</span>
+                                            <span id="yest-str-diff" class="flex items-center"></span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -848,7 +886,7 @@
         async function fetchDDMLData() {
             const SHEET_ID = '1D9ed8aGAIWbf_MmfN_Lm4b2s9ZkBETnaQ6u06gobil0';
             const SHEET_NAME = 'ชีต1';
-            const RANGE = 'A1:E12'; 
+            const RANGE = 'A1:F14'; 
             const URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}&range=${RANGE}&headers=0`;
             try {
                 const res = await fetch(URL, { credentials: 'omit' });
@@ -869,48 +907,78 @@
                 if (json.table && json.table.rows.length > 0) {
                     const rows = json.table.rows;
                     
-                    let row1000 = null;
-                    let row2200 = null;
-                    let diff1Row = null;
-                    let diff2Row = null;
+                    let dateStrings = [];
+                    for(let i=0; i<rows.length; i++) {
+                        const aVal = String(rows[i]?.c?.[0]?.v || rows[i]?.c?.[0]?.f || '').trim();
+                        if(aVal.includes('_')) {
+                            const datePart = aVal.split('_')[0];
+                            if(datePart.match(/^\d{4}-\d{2}-\d{2}$/) && !dateStrings.includes(datePart)) {
+                                dateStrings.push(datePart);
+                            }
+                        }
+                    }
+                    
+                    const todayStr = dateStrings[0];
+                    const yestStr = dateStrings[1];
+                    
+                    let today1000 = null, today2200 = null;
+                    let yest1000 = null, yest2200 = null;
+                    let diff1 = null, diff2 = null, diff3 = null, diff4 = null;
                     
                     for(let i=0; i<rows.length; i++) {
                         if(!rows[i] || !rows[i].c || !rows[i].c[0]) continue;
                         const aVal = String(rows[i].c[0].v || rows[i].c[0].f || '').trim();
                         
-                        if(!row2200 && aVal.endsWith('2200')) row2200 = rows[i];
-                        if(!row1000 && aVal.endsWith('1000')) row1000 = rows[i];
+                        if(todayStr && aVal === todayStr + '_2200') today2200 = rows[i];
+                        if(todayStr && aVal === todayStr + '_1000') today1000 = rows[i];
                         
-                        if(aVal === 'DIFF 1') diff1Row = rows[i];
-                        if(aVal === 'DIFF 2') diff2Row = rows[i];
+                        if(yestStr && aVal === yestStr + '_2200') yest2200 = rows[i];
+                        if(yestStr && aVal === yestStr + '_1000') yest1000 = rows[i];
+                        
+                        if(aVal === 'DIFF 1') diff1 = rows[i];
+                        if(aVal === 'DIFF 2') diff2 = rows[i];
+                        if(aVal === 'DIFF 3') diff3 = rows[i];
+                        if(aVal === 'DIFF 4') diff4 = rows[i];
                     }
 
-                    let activeDataRow = row2200;
-                    let activeDiffRow = diff1Row;
-                    let timeLabel = "22:00";
-
-                    if (row2200 && row2200.c) {
-                        const bVal = row2200.c[1] ? parseFloat(row2200.c[1].v) : 0;
-                        const cVal = row2200.c[2] ? parseFloat(row2200.c[2].v) : 0;
-                        const dVal = row2200.c[3] ? parseFloat(row2200.c[3].v) : 0;
-                        
-                        if (isNaN(bVal) || isNaN(cVal) || isNaN(dVal) || (bVal === 0 && cVal === 0 && dVal === 0)) {
-                            activeDataRow = row1000;
-                            activeDiffRow = diff2Row;
-                            timeLabel = "10:00";
+                    // TODAY Logic
+                    let activeToday = today2200;
+                    let activeTodayDiff = diff1;
+                    let todayTime = "22:00";
+                    
+                    if (today2200 && today2200.c) {
+                        const b = parseFloat(today2200.c[1]?.v || 0);
+                        const c = parseFloat(today2200.c[2]?.v || 0);
+                        const d = parseFloat(today2200.c[3]?.v || 0);
+                        if (isNaN(b) || isNaN(c) || isNaN(d) || b === 0 || c === 0 || d === 0) {
+                            activeToday = today1000;
+                            activeTodayDiff = diff2;
+                            todayTime = "10:00";
                         }
                     } else {
-                        activeDataRow = row1000;
-                        activeDiffRow = diff2Row;
-                        timeLabel = "10:00";
+                        activeToday = today1000;
+                        activeTodayDiff = diff2;
+                        todayTime = "10:00";
                     }
 
-                    if (activeDataRow && activeDataRow.c) {
-                        document.getElementById('ddml-total').textContent = activeDataRow.c[4] ? activeDataRow.c[4].v : 0;
-                        document.getElementById('ddml-cat').textContent = activeDataRow.c[1] ? activeDataRow.c[1].v : 0;
-                        document.getElementById('ddml-amd').textContent = activeDataRow.c[2] ? activeDataRow.c[2].v : 0;
-                        document.getElementById('ddml-str').textContent = activeDataRow.c[3] ? activeDataRow.c[3].v : 0;
-                        document.getElementById('ddml-time-badge').textContent = timeLabel;
+                    // YESTERDAY Logic
+                    let activeYest = yest2200;
+                    let activeYestDiff = diff3;
+                    let yestTime = "22:00";
+                    
+                    if (yest2200 && yest2200.c) {
+                        const b = parseFloat(yest2200.c[1]?.v || 0);
+                        const c = parseFloat(yest2200.c[2]?.v || 0);
+                        const d = parseFloat(yest2200.c[3]?.v || 0);
+                        if (isNaN(b) || isNaN(c) || isNaN(d) || b === 0 || c === 0 || d === 0) {
+                            activeYest = yest1000;
+                            activeYestDiff = diff4;
+                            yestTime = "10:00";
+                        }
+                    } else {
+                        activeYest = yest1000;
+                        activeYestDiff = diff4;
+                        yestTime = "10:00";
                     }
 
                     const formatDiff = (cell, isTotal=false) => {
@@ -928,16 +996,29 @@
                         }
                     };
 
-                    if (activeDiffRow && activeDiffRow.c) {
-                        document.getElementById('ddml-cat-diff').innerHTML = formatDiff(activeDiffRow.c[1]);
-                        document.getElementById('ddml-amd-diff').innerHTML = formatDiff(activeDiffRow.c[2]);
-                        document.getElementById('ddml-str-diff').innerHTML = formatDiff(activeDiffRow.c[3]);
-                        
-                        const totalDiffEl = document.getElementById('ddml-total-diff');
-                        if (totalDiffEl) {
-                            totalDiffEl.innerHTML = formatDiff(activeDiffRow.c[4], true);
+                    const updateSection = (prefix, dataRow, diffRow, timeLabel) => {
+                        if (dataRow && dataRow.c) {
+                            document.getElementById(`${prefix}-total`).textContent = dataRow.c[4]?.v !== undefined ? dataRow.c[4].v : '-';
+                            document.getElementById(`${prefix}-cat`).textContent = dataRow.c[1]?.v !== undefined ? dataRow.c[1].v : '-';
+                            document.getElementById(`${prefix}-amd`).textContent = dataRow.c[2]?.v !== undefined ? dataRow.c[2].v : '-';
+                            document.getElementById(`${prefix}-str`).textContent = dataRow.c[3]?.v !== undefined ? dataRow.c[3].v : '-';
+                            document.getElementById(`${prefix}-time-badge`).textContent = timeLabel;
+                            
+                            if(prefix === 'yest') {
+                                document.getElementById('yest-closed').textContent = dataRow.c[5]?.v !== undefined ? dataRow.c[5].v : '-';
+                            }
                         }
-                    }
+                        if (diffRow && diffRow.c) {
+                            document.getElementById(`${prefix}-cat-diff`).innerHTML = formatDiff(diffRow.c[1]);
+                            document.getElementById(`${prefix}-amd-diff`).innerHTML = formatDiff(diffRow.c[2]);
+                            document.getElementById(`${prefix}-str-diff`).innerHTML = formatDiff(diffRow.c[3]);
+                            const totalDiffEl = document.getElementById(`${prefix}-total-diff`);
+                            if (totalDiffEl) totalDiffEl.innerHTML = formatDiff(diffRow.c[4], true);
+                        }
+                    };
+
+                    updateSection('ddml', activeToday, activeTodayDiff, todayTime);
+                    updateSection('yest', activeYest, activeYestDiff, yestTime);
                 }
             } catch (error) {
                 console.error("Error fetching DDML:", error);
