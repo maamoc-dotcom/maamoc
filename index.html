@@ -667,21 +667,18 @@
             appContent.classList.add('flex');
             
             if(!window.chartInterval) {
-                fetchOTPData();
-                fetchDDMLData();
-                fetchRedEyeData();
-                fetch36HrsData();
-                fetchCockpitWindowData();
-                fetchNewDDMLReport(); // ADDED THIS
-                window.chartInterval = setInterval(() => {
-                    fetchOTPData();
-                    fetchDDMLData();
-                    fetchRedEyeData();
-                    fetch36HrsData();
-                    fetchCockpitWindowData();
-                    fetchNewDDMLReport(); // ADDED THIS
-                }, 60000);
+                refreshAllData();
+                window.chartInterval = setInterval(refreshAllData, 60000);
             }
+        }
+
+        function refreshAllData() {
+            fetchOTPData();
+            fetchDDMLData();
+            fetchRedEyeData();
+            fetch36HrsData();
+            fetchCockpitWindowData();
+            fetchNewDDMLReport();
         }
 
         function showLoginError(message) {
@@ -1008,14 +1005,11 @@
                 
                 let html = '';
                 if (json.table && json.table.rows.length > 0) {
-                    json.table.rows.forEach(row => {
-                        const r = row.c;
-                        if (!r) return;
-                        
-                        const cellDate = r[0];
+                    
+                    // 1. Process data for Sorting
+                    const rows = json.table.rows.filter(r => r.c).map(r => {
+                        const cellDate = r.c[0];
                         let dateObj = null;
-                        let displayDate = "";
-                        let displayTime = "";
                         
                         if (cellDate) {
                              if (cellDate.v && typeof cellDate.v === 'string' && cellDate.v.startsWith('Date(')) {
@@ -1024,12 +1018,27 @@
                                      dateObj = new Date(parts[0], parts[1], parts[2], parts[3]||0, parts[4]||0, parts[5]||0);
                                  }
                              } else if (cellDate.f) {
-                                 displayDate = cellDate.f;
+                                 // Simple string parsing fallback
+                                 const d = new Date(cellDate.f);
+                                 dateObj = isNaN(d) ? new Date(0) : d;
                              }
                         }
+                        return { data: r.c, dateObj: dateObj || new Date(0) };
+                    });
 
-                        let isNew = false;
-                        if (dateObj) {
+                    // 2. Sort by Date Descending (Newest first)
+                    rows.sort((a, b) => b.dateObj - a.dateObj);
+
+                    // 3. Render
+                    rows.forEach(item => {
+                        const r = item.data;
+                        const dateObj = item.dateObj;
+                        
+                        let displayDate = "";
+                        let displayTime = "";
+                        
+                        // Use parsed Date Object for display formatting
+                        if (dateObj.getTime() !== 0) {
                             const yy = dateObj.getFullYear().toString().slice(-2);
                             const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
                             const dd = String(dateObj.getDate()).padStart(2, '0');
@@ -1038,16 +1047,20 @@
                             
                             displayDate = `${dd}/${mm}/${yy}`;
                             displayTime = `${hh}:${min}`;
-
-                            const now = new Date();
-                            const diffMs = now - dateObj;
-                            if (diffMs >= 0 && diffMs < 5 * 60 * 1000) {
-                                isNew = true;
-                            }
-                        } else if (displayDate) {
-                             const parts = displayDate.split(' ');
+                        } else if (r[0] && r[0].f) {
+                             // Fallback to string splitting if date parse failed but string exists
+                             const parts = r[0].f.split(' ');
                              displayDate = parts[0];
                              if(parts.length > 1) displayTime = parts[1].substring(0,5);
+                        }
+
+                        let isNew = false;
+                        if (dateObj.getTime() !== 0) {
+                            const now = new Date();
+                            const diffMs = now - dateObj;
+                            if (diffMs >= 0 && diffMs < 5 * 60 * 1000) { // 5 minutes
+                                isNew = true;
+                            }
                         }
 
                         const reg = r[1] ? (r[1].f || r[1].v || '') : '';
