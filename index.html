@@ -284,9 +284,17 @@
                                         <div id="yest-total-diff" class="ml-2 mb-0.5 flex items-center"></div>
                                         <div class="text-[8px] text-gray-500 mb-0.5 ml-2 tracking-widest">TOTAL</div>
                                     </div>
-                                    <div class="flex flex-col items-end">
-                                        <div class="text-[7px] text-gray-500 uppercase tracking-widest mb-0.5">CLOSED</div>
-                                        <div class="bg-green-500/20 border border-green-500/30 px-1.5 py-0.5 rounded text-green-400 font-bold text-sm leading-none" id="yest-closed">--</div>
+                                    
+                                    <!-- OPENED and CLOSED container -->
+                                    <div class="flex space-x-2 items-end">
+                                        <div class="flex flex-col items-end">
+                                            <div class="text-[7px] text-gray-500 uppercase tracking-widest mb-0.5">OPENED</div>
+                                            <div class="bg-orange-500/20 border border-orange-500/30 px-1.5 py-0.5 rounded text-orange-400 font-bold text-sm leading-none" id="yest-opened">--</div>
+                                        </div>
+                                        <div class="flex flex-col items-end">
+                                            <div class="text-[7px] text-gray-500 uppercase tracking-widest mb-0.5">CLOSED</div>
+                                            <div class="bg-green-500/20 border border-green-500/30 px-1.5 py-0.5 rounded text-green-400 font-bold text-sm leading-none" id="yest-closed">--</div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -918,7 +926,7 @@
         async function fetchDDMLData() {
             const SHEET_ID = '1D9ed8aGAIWbf_MmfN_Lm4b2s9ZkBETnaQ6u06gobil0';
             const SHEET_NAME = 'ชีต1';
-            const RANGE = 'A1:F14'; 
+            const RANGE = 'A1:G14'; // เปลี่ยน RANGE ให้คลุมถึงคอลัมน์ G เพื่อดึงข้อมูล OPENED
             const URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}&range=${RANGE}&headers=0`;
             try {
                 const res = await fetch(URL, { credentials: 'omit' });
@@ -972,6 +980,14 @@
                         if(aVal === 'DIFF 3') diff3 = rows[i];
                         if(aVal === 'DIFF 4') diff4 = rows[i];
                     }
+
+                    // ดึงค่า OPENED จาก G4 (Row index 3, Column index 6)
+                    let openedValue = '-';
+                    try {
+                        if (rows[3] && rows[3].c && rows[3].c[6] !== undefined && rows[3].c[6] !== null) {
+                            openedValue = rows[3].c[6].v !== null ? rows[3].c[6].v : '-';
+                        }
+                    } catch(e) { console.error("Error fetching OPENED value from G4", e); }
 
                     // Helper to safely parse and add diffs
                     const getDiffValue = (primaryRow, secondaryRow, colIndex, shouldAdd) => {
@@ -1064,7 +1080,9 @@
                         document.getElementById('yest-amd').textContent = activeYest.c[2]?.v !== undefined ? activeYest.c[2].v : '-';
                         document.getElementById('yest-str').textContent = activeYest.c[3]?.v !== undefined ? activeYest.c[3].v : '-';
                         document.getElementById('yest-time-badge').textContent = yestTime;
+                        
                         document.getElementById('yest-closed').textContent = activeYest.c[5]?.v !== undefined ? activeYest.c[5].v : '-';
+                        document.getElementById('yest-opened').textContent = openedValue; // แสดงค่าของ OPENED
                         
                         let useBothDiffs = (activeYest === yest2200);
                         if (useBothDiffs) {
